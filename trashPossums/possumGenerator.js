@@ -1,7 +1,7 @@
 const fs = require("fs");
 const myArgs = process.argv.slice(2);
 const { createCanvas, loadImage } = require("canvas");
-const { layers, width, height } = require("./input/config.js");
+const { layers, width, height } = require("./.vscode/input/config.js");
 const console = require("console");
 const canvas = createCanvas(width, height);
 const ctx = canvas.getContext("2d");
