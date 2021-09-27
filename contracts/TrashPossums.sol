@@ -10,7 +10,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, ERC721Burnable {
+
     using Counters for Counters.Counter;
+
     event Mint(address indexed from, uint256 indexed tokenId);
 
     Counters.Counter private _tokenIdCounter;
@@ -60,8 +62,7 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
 
     constructor() ERC721("Trash Possums", "TRASH") {
         addAvailablePossums();
-    }
-    constructor() ERC721("TrashPossums", "TPM") {}
+    }   
 
     function pause() public onlyOwner {
         _pause();
@@ -292,4 +293,5 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }
+
 };
