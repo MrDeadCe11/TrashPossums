@@ -38,10 +38,11 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
 
     // Each transaction allows the user to mint only 27 NFTs. One user can't mint more than 177 NFTs.
     uint256 private maxPossumsPerWallet = 177;
-    uint256 private maxPossumsPerTransaction = 27;
+    uint256 private maxPossumsPerTransaction = 3;
 
     // Setting Mint date to 3pm UTC, 03/09/2021
     uint256 private startMintDate = 1630681200;
+    //uint8 private royalties = 7/100;
 
     // Price per NFT: 0.07 ETH
     uint256 private possumPrice = 70000000000000000;
@@ -72,12 +73,13 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         _unpause();
     }
 
-    function safeMint(address to, bytes32 _ipfsUri) public onlyOwner {
+    function safeMint(address to, string memory _ipfsUri) public onlyOwner {
         uint256 tokenId= _tokenIdCounter.current();
         
         _safeMint(to, tokenId );
-        _setTokenUri(tokenId, _ipfsUri);
+        _setTokenURI(tokenId, _ipfsUri);
         _tokenIdCounter.increment();
+        emit Mint(to, tokenId);
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
@@ -172,50 +174,67 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         payable
         callerNotAContract
         mintingStarted
-    {
+        {
         require(
             msg.value >= possumPrice * amount,
             "Not enough Ether to claim the possums"
         );
 
         require(
-            claimedPossumPerWallet[msg.sender] + amount <= maxPossumPerWallet,
+            claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
             "You cannot claim more possums"
         );
 
         require(
-            availablePossum.length >= amount,
+            availablePossums.length >= amount,
             "No Possum left to be claimed"
         );
 
         require(
-            amount <= maxPossumPerTransaction,
+            amount <= maxPossumsPerTransaction,
             "Max 27 per tx"
         );
 
         uint256[] memory tokenIds = new uint256[](amount);
 
-        claimedPossumPerWallet[msg.sender] += amount;
-        totalMintedPossum += amount;
+        claimedPossumsPerWallet[msg.sender] += amount;
+        totalMintedPossums += amount;
 
         for (uint256 i; i < amount; i++) {
             tokenIds[i] = getPossumToBeClaimed();
         }
 
         _batchMint(msg.sender, tokenIds);
-    }
+            }
+        
+  function _batchMint(address to, uint256[] memory tokenIds)
+        internal
+        virtual
+    {
+        require(to != address(0), "ERC721: mint to the zero address");
+        claimedPossumsPerWallet[to] += tokenIds.length;
 
+        for (uint256 i; i < tokenIds.length; i++) {
+            require(!_exists(tokenIds[i]), "ERC721: token already minted");
+
+            _beforeTokenTransfer(address(0), to, tokenIds[i]);
+
+           /// _owners[tokenIds[i]] = to;
+
+            emit Transfer(address(0), to, tokenIds[i]);
+        }
+    }
     /**
      * @dev Returns the tokenId by index
-     */
-    function tokenByIndex(uint256 tokenId) external view returns (uint256) {
-        require(
-            _exists(tokenId),
-            "ERC721: operator query for nonexistent token"
-        );
+    //  */
+    // function tokenByIndex(uint256 tokenId) external view returns (uint256) {
+    //     require(
+    //         _exists(tokenId),
+    //         "ERC721: operator query for nonexistent token"
+    //     );
 
-        return tokenId;
-    }
+    //     return tokenId;
+    // }
     /**
      * @dev Returns the base URI for the tokens API.
      */
@@ -247,7 +266,7 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     /**
      * @dev Returns the total supply
      */
-    function totalSupply() external view virtual returns (uint256) {
+    function totalSupply() public view override returns (uint256) {
         return totalMintedPossums;
     }
 
@@ -294,4 +313,4 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         return baseURI;
     }
 
-};
+}
