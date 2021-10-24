@@ -1,5 +1,19 @@
 <template>
-  <Modal caption="Greek Possum" />
+  <div v-if="showModal">
+    <Modal @close="toggleModal">
+      <h1>{{ nftTitle }}</h1>
+      <p>{{ text }}</p>
+      <template v-slot:links>
+        <a href="https://twitter.com/trash_possums"
+          ><img class="linkImg" src="./assets/twitterLogo.png" />
+        </a>
+        <a href="https://discord.gg/gz2hMPFk6s"
+          ><img class="linkImg" src="./assets/discordLogo.png"
+        /></a>
+      </template>
+    </Modal>
+  </div>
+  <button @click="toggleModal">open modal</button>
 </template>
 
 <script>
@@ -10,6 +24,18 @@ export default {
   name: "App",
   components: {
     Modal,
+  },
+  data() {
+    return {
+      showModal: false,
+      nftTitle: "Greek Possum",
+      text: "This possum is probably trying to be greek.",
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
   },
 };
 </script>
@@ -26,5 +52,10 @@ export default {
 .possum {
   max-width: 200px;
   max-height: 200px;
+}
+.linkImg {
+  max-height: 25px;
+  max-width: 25px;
+  padding: 8px;
 }
 </style>
