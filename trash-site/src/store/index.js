@@ -1,4 +1,4 @@
-import { createStore } from '../../node_modules/vuex';
+import { createStore } from 'vuex';
 
 import user from '../store/modules/user';
 

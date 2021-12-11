@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { ref } from '../../node_modules/vue';
+import { ref } from 'vue';
 export default {
   setup() {
     let showMenu = ref(false);
