@@ -20,7 +20,7 @@ export default {
 
 <style>
 #app{
-    background-color: rgba(17, 24, 39);    
+    background-color: #1d262d;    
 }
 
 @font-face {

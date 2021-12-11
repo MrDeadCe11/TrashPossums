@@ -1,5 +1,5 @@
 <template>
-  <div class="image w-full rounded">  
+  <div class="w-full rounded">  
    <img :src="image.image"
    :alt="image.name" />  
   </div>

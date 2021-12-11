@@ -22,18 +22,21 @@
 
 </div>
 </div>
+<Footer />
+
 </div>
 </template>
 
 <script>
 import Gallery from '../components/Gallery.vue'
+import Footer from '../components/Footer.vue'
 import { computed, ref } from 'vue'
 import pfpImagesArr from '../store/modules/pfpImagesArr'
 
 
 export default {
   name:  'Home',
-  components: {Gallery},
+  components: {Gallery, Footer},
   setup() {
   const pfpImages = ref([...pfpImagesArr]) 
 

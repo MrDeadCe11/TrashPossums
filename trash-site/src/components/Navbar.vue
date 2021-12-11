@@ -22,7 +22,7 @@
             text-gray-100
             md:text-2xl        
           ">
-          <img src='../assets/logo.png' class="w-96 justify-self-center"/>
+          <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961' class="w-96 justify-self-center"/>
         </router-link>
         <!-- Mobile menu button -->
         <div @click="toggleNav" class="flex ml-10 md:hidden">
