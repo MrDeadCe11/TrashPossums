@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '../../node_modules/vue'
 export default {
   props: ['image'],
   setup(props) {

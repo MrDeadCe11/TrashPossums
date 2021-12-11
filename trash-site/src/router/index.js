@@ -1,5 +1,5 @@
 
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "../../node_modules/vue-router";
 import Home from "../views/Home.vue"
 import Roadmap from "../views/Roadmap.vue"
 import Team from '../views/Team.vue'
