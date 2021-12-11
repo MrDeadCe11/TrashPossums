@@ -1,4 +1,4 @@
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue"
 import Roadmap from "../views/Roadmap.vue"
