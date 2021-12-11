@@ -27,7 +27,7 @@
 
 <script>
 import Gallery from '../components/Gallery.vue'
-import { computed, ref } from 'vue'
+import { computed, ref } from '../../node_modules/vue'
 import pfpImagesArr from '../store/modules/pfpImagesArr'
 
 
