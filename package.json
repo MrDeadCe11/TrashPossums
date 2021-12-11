@@ -7,9 +7,11 @@
     "show": false
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@openzeppelin/contracts": "^4.3.2",
+    "buefy": "^0.9.13",
     "hardhat": "^2.6.4",
-    "hardhat-gas-reporter": "^1.0.4",
+    "hardhat-gas-reporter": "^1.0.4",    
     "vue": "^2.6.14"
   },
   "devDependencies": {
