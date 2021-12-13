@@ -12,7 +12,7 @@
     <div class="mb-5 flex col-span-4 flex-row">               
     <p class="text-xl text-white-light ml-5">The year is 100 AD (Anno Didelphis) and the possums have become sentient.  Living in the garbage left by mankind they... Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto, unde! Sint accusantium, dicta vel ut deleniti deserunt fugit expedita distinctio rem eaque enim! Laboriosam vel cumque ducimus at obcaecati, laudantium nulla. Reprehenderit, deserunt! Cupiditate in veritatis amet similique quis eos at sit temporibus aspernatur illum numquam, culpa optio exercitationem dolor placeat sunt consequatur fugiat maxime quos dolorum, atque ratione corporis molestias. Nam odit error velit distinctio culpa dolorum tempore qui nemo officia mollitia veritatis neque, blanditiis asperiores aperiam, exercitationem itaque obcaecati nostrum! Autem ratione dicta delectus dolorem obcaecati optio id laboriosam quae illo. Deleniti consequuntur commodi ea. Sunt, beatae laborum!</p>
     </div>
-    <div class="col-span-2 ml-10">
+    <div class="col-span-2">
     <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>  
   </div> 
 
