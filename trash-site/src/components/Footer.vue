@@ -1,5 +1,5 @@
 <template>
-<hr  class="color-brown-light m-auto" width="90%">
+<hr  class="color-white-light m-auto" width="90%">
 <div class="footer grid grid-cols-3 grid-flow-col gap-4">
     <div class="col my-10 ml-10" >
         <form action="" class="email-form">
@@ -11,7 +11,7 @@
     <div  class="
     col m-auto
           row-start-1   
-          w-80 p-2     
+          w-3/6 p-2     
           ">
      <router-link
           to="/"

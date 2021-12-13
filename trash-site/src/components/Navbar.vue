@@ -13,17 +13,14 @@
         z-50
       "
     >
-      <div class="flex items-center justify-between">
+    
+      <div class="grid grid-cols-3 grid-rows-1 mw-2/6">
         <router-link
           to="/"
-          class="
-            text-xl
-            font-bold
-            text-gray-100
-            md:text-2xl        
-          ">
-          <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961' class="w-96 justify-self-center"/>
+         > 
+          <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961'/>
         </router-link>
+        <div></div>
         <!-- Mobile menu button -->
         <div @click="toggleNav" class="flex ml-10 md:hidden">
           <button
@@ -43,6 +40,7 @@
           </button>
         </div>
       </div>
+      
 
       <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
       <ul
