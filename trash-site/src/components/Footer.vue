@@ -1,25 +1,26 @@
 <template>
 <hr  class="color-white-light m-auto" width="90%">
-<div class="footer grid grid-cols-3 grid-flow-col gap-4">
-    <div class="col my-10 ml-10" >
+<div class="footer grid grid-cols-6 grid-flow-col justify-between gap-4">
+    <div class="my-20 ml-10" >
         <form action="" class="email-form">
+        <label class="text-white-light text-center">get on the mailing list</label>
+        <div class="flex">
         <input class="m-0 email-input-text" required="" type="email" name="mailinglist" id="mailingList" placeholder="email">
-        <button class="email-submit"></button>
-        <p class="text-white-light inline-block ml-5 font-bold">get on the mailing list</p>
+        <button class="email-submit text-white-light">button</button>
+        </div>
     </form>
     </div>
     <div  class="
-    col m-auto
-          row-start-1   
-          w-3/6 p-2     
+    col-start-3 justify-center align-middle m-auto            
+         col-span-2 p-2     
           ">
      <router-link
           to="/"
          >
-          <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961' class=""/>
+          <img src='https://ik.imagekit.io/trashpossums/assets/group-logo_-k58ey1ZcL.png?updatedAt=1639170276005' class=""/>
         </router-link>
 </div>
-<div class="col text-white-light justify-items-end">&#169; Trash Possums</div>
+<div class="align-middle col-start-6 col-span-2 inline-block text-center mt-20 text-white-light ">&#169; Trash Possums</div>
     
 </div>
 </template>
@@ -32,7 +33,7 @@ export default {
 
 <style>
 hr{
-    color: #e3e9e9;
-    height: 5px;
-}
+    border-color: #e3e9e9;
+    height: 2px;
+   }
 </style>
