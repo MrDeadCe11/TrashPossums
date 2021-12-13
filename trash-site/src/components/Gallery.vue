@@ -1,5 +1,5 @@
 <template>
- <div class="grid md:grid-cols-2 min-w-min w-5/6 ml-10 sm:grid-cols-1">
+ <div class="grid md:grid-cols-2 w-5/6 ml-5 sm:grid-cols-1">
      <div v-for="image in images.slice( sliceStart,sliceEnd)" :key="image.id"  >        
         <SingleImage :image="image" />   
       

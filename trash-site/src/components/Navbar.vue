@@ -5,24 +5,30 @@
         px-10
         py-0
         mx-0
-        md:flex md:justify-between md:items-center
+        md:flex
         fixed
         bg-brown-dark
         w-screen
         top-0
         z-50
+        gap-4
+        grid
+        grid-cols-6
+        grid-rows-1
+        md:justify-between
+        sm:justify-center
       "
     >
-    
-      <div class="grid grid-cols-3 grid-rows-1 mw-2/6">
+     
+      <div class="min-w-min ml-5 max-w-sm col-span-3">
         <router-link
           to="/"
          > 
           <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961'/>
         </router-link>
-        <div></div>
+        </div>
         <!-- Mobile menu button -->
-        <div @click="toggleNav" class="flex ml-10 md:hidden">
+        <div @click="toggleNav" class="flex ml-10 col-start-6 md:hidden">
           <button
             type="button"
             class="
@@ -39,7 +45,7 @@
             </svg>
           </button>
         </div>
-      </div>
+      <div></div>
       
 
       <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
@@ -49,12 +55,13 @@
           flex-col
           mt-8
           space-y-2
-          md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0
+         
+          md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0          
         "
       >
-        <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
+        <li class="text-brown-light hover:text-yellow-light  active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
         <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/roadmap'>ROADMAP</router-link></li>
-         <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
+        <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
         <li class="text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5"><router-link to='/purchase'>BUY A POSSUM</router-link></li>
        
       </ul>
