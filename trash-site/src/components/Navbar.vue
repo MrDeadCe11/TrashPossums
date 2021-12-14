@@ -17,10 +17,11 @@
         grid-rows-1
         md:justify-between
         sm:justify-center
+        
       "
     >
      
-      <div class="min-w-min ml-5 max-w-sm col-span-3">
+      <div class="min-w-min p-2 ml-5 mt-2 max-w-sm col-span-3">
         <router-link
           to="/"
          > 
@@ -45,24 +46,24 @@
             </svg>
           </button>
         </div>
-      <div></div>
+     
       
 
       <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
       <ul
         :class="showMenu ? 'flex' : 'hidden'"
         class="
-          flex-col
-          mt-8
-          space-y-2
+        grid grid-cols-6 grid-rows-4 grid-flow-col-dense
+          gap-0
+          w-96
          
-          md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0          
+          md:space-y-0 md:items-center md:w-1/3 md:space-x-10 md:mt-0 md:flex       
         "
       >
-        <li class="text-brown-light hover:text-yellow-light  active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
-        <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/roadmap'>ROADMAP</router-link></li>
-        <li class="text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
-        <li class="text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5"><router-link to='/purchase'>BUY A POSSUM</router-link></li>
+        <li class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
+        <li class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/roadmap'>ROADMAP</router-link></li>
+        <li class="col-span-5 text-brown-light  hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
+        <li class="col-span-5 text-center text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5"><router-link to='/purchase'>BUY A POSSUM</router-link></li>
        
       </ul>
     </nav>
