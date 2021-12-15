@@ -1,6 +1,6 @@
 <template>
-  <div class="mainnav">
-    <nav
+  <div class="mainnav" >
+    <nav 
       class="       
         px-10
         py-0
@@ -30,7 +30,7 @@
         </router-link>
         </div>
         <!-- Mobile menu button -->
-        <div @click="toggleNav" class="flex ml-10 col-start-6 md:hidden">
+        <div @click.prevent="toggleNav" class="flex ml-10 col-start-6 md:hidden">
           <button
             type="button"
             class="
@@ -61,10 +61,10 @@
           md:space-y-0 md:items-center md:w-1/3 md:mb-0 md:space-x-10 md:mt-0 md:flex       
         "
       >
-        <li class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
-        <li class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/roadmap'>ROADMAP</router-link></li>
-        <li class="col-span-5 text-brown-light  hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
-        <li class="col-span-5 text-center text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5"><router-link to='/purchase'>BUY A POSSUM</router-link></li>
+        <li @click="toggleNav" class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/'>HOME</router-link></li>
+        <li @click="toggleNav" class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/roadmap'>ROADMAP</router-link></li>
+        <li @click="toggleNav" class="col-span-5 text-brown-light  hover:text-yellow-light active:text-yellow-light"><router-link to="/team">THE TEAM</router-link></li>
+        <li @click="toggleNav" class="col-span-5 text-center text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5"><router-link to='/purchase'>BUY A POSSUM</router-link></li>
        
       </ul>
     </nav>
@@ -76,7 +76,9 @@ import { ref } from 'vue';
 export default {
   setup() {
     let showMenu = ref(false);
-    const toggleNav = () => (showMenu.value = !showMenu.value);
+    const toggleNav = () => {
+      showMenu.value = !showMenu.value
+      console.log("toggleNav")};
     return { showMenu, toggleNav };
   },
 };

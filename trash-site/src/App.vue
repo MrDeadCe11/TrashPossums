@@ -8,6 +8,10 @@ export default {
         Navbar, Footer
     },
     setup () {
+        function clicked () {
+            console.log("app clicked")
+        }
+        return {clicked}
        
     },
 }
@@ -16,8 +20,8 @@ export default {
 <template>
  <Navbar/>
  
-<div>   
-<router-view /> 
+<div >   
+<router-view/> 
 </div>
 
 <Footer/>

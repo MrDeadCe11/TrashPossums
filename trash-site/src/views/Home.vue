@@ -1,5 +1,5 @@
 <template>
-<div class="mt-16" style="transition:opacity 400ms ease 0s, transform 400ms ease 0s; transform: none; opacity: 1;">
+<div class="mt-16" @click.self="$emit('appclicked', $event.target.value)" style="transition:opacity 400ms ease 0s, transform 400ms ease 0s; transform: none; opacity: 1;">
 <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5" >
     <div class="m-auto col-span-6 w-5/6">
   <img  src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920" class="relative m-5 h-auto w-auto"/>

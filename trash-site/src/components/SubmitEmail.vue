@@ -4,7 +4,7 @@
             <font-awesome-icon :icon="['fas', 'envelope']" style="filter:invert(100%)"/></button>
             </div>
              <div v-if="modal" class="fixed">        
-        <Modal class="border-4 flexbox max-w-sm mx-auto my-auto" @toggle="toggleModal"><slot>
+        <Modal class="mx-auto my-auto" @toggle="toggleModal"><slot>
             <h1 class="text-center text-2xl text-white-light mb-2"> Join the Mailing list </h1>
             <form class="" @submit.prevent="submitEmail" @submit="toggleModal">
             <input placeholder="enter your email" type="email" required class="text-white-light ml-3 w-3/4 bg-gray-dark border-2 pl-2 shadow-xl">
