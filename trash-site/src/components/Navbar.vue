@@ -4,10 +4,10 @@
       class="       
         px-10
         py-0
-        mx-0
+        mx-0        
         md:flex
         fixed
-        bg-brown-dark
+       bg-brown-dark     
         w-screen
         top-0
         z-50
@@ -17,7 +17,8 @@
         grid-rows-1
         md:justify-between
         sm:justify-center
-        
+        border-b-4
+        border-brown-light     
       "
     >
      

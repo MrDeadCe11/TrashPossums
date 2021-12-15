@@ -36,4 +36,7 @@ export default {
     font-style: normal;
     font-language-override: normal;
 }
+h1{
+  font-family: "Banco";  
+}
 </style>
