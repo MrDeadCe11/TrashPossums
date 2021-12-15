@@ -56,8 +56,8 @@
         grid grid-cols-6 grid-rows-4 grid-flow-col-dense
           gap-0
           w-96
-         
-          md:space-y-0 md:items-center md:w-1/3 md:space-x-10 md:mt-0 md:flex       
+          mb-5
+          md:space-y-0 md:items-center md:w-1/3 md:mb-0 md:space-x-10 md:mt-0 md:flex       
         "
       >
         <li class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light"><router-link to='/'>HOME</router-link></li>

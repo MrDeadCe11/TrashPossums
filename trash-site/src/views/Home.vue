@@ -1,7 +1,7 @@
 <template>
 <div style="transition:opacity 400ms ease 0s, transform 400ms ease 0s; transform: none; opacity: 1;">
 <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5" >
-    <div class="m-auto col-span-6 w-5/6">
+    <div class="m-auto mt-10 col-span-6 w-5/6">
   <img  src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920" class="relative m-5 h-auto w-auto"/>
   </div> 
    
@@ -10,7 +10,7 @@
     The Trash Possums are Coming!
     </h1>  
     <div class="mb-5 flex col-span-4 flex-row">               
-    <p class="text-xl text-white-light ml-5">The year is 100 AD (Anno Didelphis) and the possums have become sentient.  Living in the garbage left by mankind they... Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto, unde! Sint accusantium, dicta vel ut deleniti deserunt fugit expedita distinctio rem eaque enim! Laboriosam vel cumque ducimus at obcaecati, laudantium nulla. Reprehenderit, deserunt! Cupiditate in veritatis amet similique quis eos at sit temporibus aspernatur illum numquam, culpa optio exercitationem dolor placeat sunt consequatur fugiat maxime quos dolorum, atque ratione corporis molestias. Nam odit error velit distinctio culpa dolorum tempore qui nemo officia mollitia veritatis neque, blanditiis asperiores aperiam, exercitationem itaque obcaecati nostrum! Autem ratione dicta delectus dolorem obcaecati optio id laboriosam quae illo. Deleniti consequuntur commodi ea. Sunt, beatae laborum!</p>
+    <p class="text-xl text-white-light ml-5"> In the year 2421, centuries after irradiated hurricanes caused the evolution of rabies into an incurable pestilence across the globe. With humanity long extinct, the Trash 'Possums have risen. Shaping their entire society around humans' pop culture icons, which they regard as deities. The Trash Possums have improved on tech left by humanity and traverse the near infinite expanse of the universe along with improving the earth left by humans. </p>
     </div>
     <div class="col-span-2">
     <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>  
