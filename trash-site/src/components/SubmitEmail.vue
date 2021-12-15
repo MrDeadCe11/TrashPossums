@@ -1,7 +1,8 @@
 <template>
-      <div class="ml-10 justify-self-center self-center p-10" >
-           <button @click="toggleModal" class="p-2 sm:inline-block md:flex bg-gray-light rounded-full border-4 border-black-dark"> 
-            <font-awesome-icon :icon="['fas', 'envelope']" /></button>
+
+      <div class="mt-auto mb-auto">
+           <button @click="toggleModal" class="p-2 flex bg-gray-dark rounded-full border-4 border-white-light"> 
+            <font-awesome-icon :icon="['fas', 'envelope']" style="filter:invert(100%)"/></button>
             </div>
              <div v-if="modal" class="fixed">        
         <Modal class="border-4 flexbox max-w-sm mx-auto my-auto place-content-center" @toggle="toggleModal"><slot>

@@ -1,5 +1,5 @@
 <template>
-<div class="purchase my-20">
+<div class="purchase mt-24">
    <h1 class="font-bold text-white-light text-2xl"> 
      Purchase A Possum
    </h1>

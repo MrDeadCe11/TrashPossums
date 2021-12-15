@@ -2,7 +2,7 @@
   <div class="team h-auto m-auto p-5 ml-5 mt-24 justify-content-center text-white-light">
      <h1 class="text-5xl">The Team</h1> 
     
-      <div class="mb-3 w-4/6 m-auto overflow-y-auto bg-gray-light rounded p-2">
+      <div class="mb-3 w-4/6 m-auto overflow-y-auto shadow-2xl shadow-white-light/50 bg-gray-light rounded p-2">
         <div class=" rounded-xl" style="background-postition: 10px 10px; margin-right: 8px;">
         <h1 class="text-xl w-full text-yellow-light ">Stoney O'Possum</h1>           
         <div class="float-right ml-6 -mt-7  sm:aspect-w-16 sm:aspect-h-9 sm:w-44">
