@@ -1,6 +1,6 @@
 <template>
 <hr  class="color-white-light m-auto" width="90%">
-<div class="flex p-5">
+<div class="flex p-2">
      <div class="flex m-auto">
           <h1 class="text-white-light mt-auto mb-auto mr-2">Join the Mailing List</h1>
     <SubmitEmail/>
