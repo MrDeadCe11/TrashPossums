@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "hardhat/console.sol";
 
 contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, ERC721Burnable {
 
@@ -34,10 +35,10 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         _;
     }
       //  total NFTs
-    uint256 public totalPossums = 7777;
+    uint256 public constant totalPossums = 1249;
 
     // Each transaction allows the user to mint only 27 NFTs. One user can't mint more than 177 NFTs.
-    uint256 private maxPossumsPerWallet = 177;
+    uint256 public constant maxPossumsPerWallet = 27;
     uint256 private maxPossumsPerTransaction = 3;
 
     // Setting Mint date to 3pm UTC, 03/09/2021
@@ -49,9 +50,9 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
 
     uint256 private totalMintedPossums = 0;
 
-    uint256 public premintCount = 277;
+    uint256 private premintCount = 277;
 
-    bool public premintingComplete = false;
+    bool private premintingComplete = false;
 
     // IPFS base URI for NFT metadata for OpenSea
     string private baseURI = "https://ipfs.io/ipfs/QmSRkmEDKWUeHi5FiNpQUBAcCq7rKinhf5Pbu8ZPZNkP8r/";
@@ -59,11 +60,17 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     // Ledger of NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
 
-    uint16[] availablePossums;
+    // array of available possum ids
+    uint256[] private availablePossums;
 
-    constructor() ERC721("Trash Possums", "TRASH") {
-        addAvailablePossums();
-    }   
+    // map of possum uris by ID
+    mapping(uint256 => string) private possumUris;
+
+    // have we added all the possums?
+    bool private possumsAdded = false;
+
+    constructor() ERC721("Trash Possums", "TRASHPOSS") {
+     }   
 
     function pause() public onlyOwner {
         _pause();
@@ -73,13 +80,20 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         _unpause();
     }
 
-    function safeMint(address to, string memory _ipfsUri) public onlyOwner {
-        uint256 tokenId= _tokenIdCounter.current();
-        
+    function _mintPossum(address to, uint256 tokenId) internal {
+        require(totalMintedPossums<= totalPossums, "all Possums have been minted" );
+        string memory _ipfsUri = possumUris[tokenId];    
         _safeMint(to, tokenId );
-        _setTokenURI(tokenId, _ipfsUri);
-        _tokenIdCounter.increment();
+        _setTokenURI(tokenId, _ipfsUri);       
+         totalMintedPossums++;
+         claimedPossumsPerWallet[to]++;                
         emit Mint(to, tokenId);
+    }
+    function mintPossum(address to)internal {
+        require(totalMintedPossums<= totalPossums, "All possums have been minted");
+        //require(msg.value >= possumPrice, "You need to pay the correct amount for the possum" );
+        uint256 tokenId = getPossumToBeClaimed();
+        _mintPossum(to, tokenId);
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
@@ -141,10 +155,18 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     /**
      * @dev Adds all Possums to the available list.
      */
-    function addAvailablePossums() internal onlyOwner {
-        for (uint16 i = 0; i <= 7776; i++) {
+    function addAvailablePossums() external onlyOwner returns(bool) {
+        require(possumsAdded == false);
+        for (uint16 i = 0; i <= totalPossums; i++) {
             availablePossums.push(i);
         }
+        possumsAdded = true;
+
+        return possumsAdded;
+    }
+
+    function addPossumUri(uint256 tokenId, string calldata ipfsUri) external onlyOwner {
+        possumUris[tokenId] = ipfsUri;
     }
 
     /**
@@ -159,7 +181,7 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         totalMintedPossums += premintCount;
 
         for (uint256 i; i < premintCount; i++) {
-            _mint(msg.sender, getPossumToBeClaimed());
+            mintPossum(msg.sender);
         }
         premintingComplete = true;
     }
@@ -169,16 +191,16 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     /**
      * @dev Claim up to 27 Possums at once
      */
-    function mintPossum(uint256 amount)
+    function mintPossums(uint256 amount)
         external
         payable
         callerNotAContract
         mintingStarted
         {
-        require(
-            msg.value >= possumPrice * amount,
-            "Not enough Ether to claim the possums"
-        );
+        // require(
+        //     msg.value >= possumPrice * amount,
+        //     "Not enough Ether to claim the possums"
+        // );
 
         require(
             claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
@@ -193,37 +215,32 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
         require(
             amount <= maxPossumsPerTransaction,
             "Max 27 per tx"
-        );
-
-        uint256[] memory tokenIds = new uint256[](amount);
-
-        claimedPossumsPerWallet[msg.sender] += amount;
-        totalMintedPossums += amount;
-
+        );            
+      
         for (uint256 i; i < amount; i++) {
-            tokenIds[i] = getPossumToBeClaimed();
+           mintPossum(msg.sender);
+           console.log("minting 1 possum", msg.sender, address(this));
         }
-
-        _batchMint(msg.sender, tokenIds);
+       
             }
         
-  function _batchMint(address to, uint256[] memory tokenIds)
-        internal
-        virtual
-    {
-        require(to != address(0), "ERC721: mint to the zero address");
-        claimedPossumsPerWallet[to] += tokenIds.length;
+//   function _batchMint(address to, uint256[] memory tokenIds)
+//         internal
+//         virtual
+//     {
+//         require(to != address(0), "ERC721: mint to the zero address");
+//         claimedPossumsPerWallet[to] += tokenIds.length;
 
-        for (uint256 i; i < tokenIds.length; i++) {
-            require(!_exists(tokenIds[i]), "ERC721: token already minted");
+//         for (uint256 i; i < tokenIds.length; i++) {
+//             require(!_exists(tokenIds[i]), "ERC721: token already minted");
 
-            _beforeTokenTransfer(address(0), to, tokenIds[i]);
+//             _beforeTokenTransfer(address(0), to, tokenIds[i]);
 
-           /// _owners[tokenIds[i]] = to;
+//            mintPossum(to);
 
-            emit Transfer(address(0), to, tokenIds[i]);
-        }
-    }
+//             emit Transfer(address(0), to, tokenIds[i]);
+//         }
+//     }
     /**
      * @dev Returns the tokenId by index
     //  */
@@ -248,7 +265,13 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     function getAvailablePossums() external view returns (uint256) {
         return availablePossums.length;
     }
-
+ /**
+ should return nft balance of wallet
+  */
+   function balanceOf(address addr1) public view override returns (uint256){
+       return claimedPossumsPerWallet[addr1];
+   }
+    
     /**
      * @dev Returns the claim price
      */
@@ -275,16 +298,15 @@ contract TrashPossums is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, O
     /**
      * @dev Returns a random available possum to be claimed
      */
-    function getPossumToBeClaimed() private returns (uint256) {
-        uint256 random = _getRandomNumber(availablePossums.length);
-        uint256 tokenId = uint256(availablePossums[random]);
-
+    function getPossumToBeClaimed() private returns (uint256 tokenId) {
+        uint256 random = _getRandomNumber(availablePossums.length);       
+        tokenId = uint256(availablePossums[random]);
         availablePossums[random] = availablePossums[
             availablePossums.length - 1
         ];
         availablePossums.pop();
 
-        return tokenId;
+        return tokenId;     
     }
 
     /**

@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1636671171669,
-      "contentHash": "e6d128330a7218a3b5b6c04e012fe508",
+      "lastModificationDate": 1639690200611,
+      "contentHash": "53d450766c40cfd3f14d1922cedf2479",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -34,7 +34,8 @@
         "@openzeppelin/contracts/security/Pausable.sol",
         "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
-        "@openzeppelin/contracts/utils/Counters.sol"
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.2"
@@ -613,6 +614,40 @@
       ],
       "artifacts": [
         "IERC721Enumerable"
+      ]
+    },
+    "/home/someguy/Code/trashPossums/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1637080367736,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
       ]
     }
   }
