@@ -34,11 +34,11 @@
 
      <div class="mb-3 w-4/6 m-auto overflow-y-auto bg-gray-light rounded p-2">
         <div class=" rounded-xl" style="background-postition: 10px 10px; margin-right: 8px;">
-        <h1 class="text-xl w-full text-yellow-light">JLD</h1>           
+        <h1 class="text-xl w-full text-yellow-light">Marsu Poss: Starbage Hauler</h1>           
         <div class="float-right ml-6 -mt-7  sm:aspect-w-16 sm:aspect-h-9 sm:w-44">
         <img class="rounded-lg" src="https://ik.imagekit.io/trashpossums/assets/E5649160-1121-4CDD-8EB8-D2A2FB36FA10_ABvFzZupcSM.png?updatedAt=1639522052774" alt="JLD">
       </div>      
-        <p class="ml-10" >He Draws stuff</p> 
+        <p class="ml-10" >A spacefaring rogue trader and seeker of trash from across the Milky Way. Aboard the starbage hauler Hopium, with his tail droid Mr. Pinchy, he naps and hauls and collects his way through the galaxy looking for anything and everything that can better possumkind.</p> 
      </div>       
     </div>
 

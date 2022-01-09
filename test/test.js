@@ -10,49 +10,73 @@ describe("Trash Possums", function () {
   let addr2;
   let addresses;
   let provider;
+  let tokenId1;
+  let tokenId2;
   let trashPossums;
+
   const testUri =
-    "ipfs://bafybeihkoviema7g3gxyt6la7vd5ho32ictqbilu3wnlo3rs7ewhnp7lly/";
-  it("should successfully deploy the contract",async function () {
+    "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
+ 
+    before ("should successfully deploy the contract",async function () {
     provider = ethers.getDefaultProvider();
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     [owner, addr1, addr2, ...addresses] = await ethers.getSigners();
     trashPossums = await TrashPossums.deploy();
     const deployed = await trashPossums.deployed();
-     assert(deployed)
+    assert(deployed)
   });
-  it("should add all possums to the available array", async function(){
-   const tx= await trashPossums.addAvailablePossums();
-   const availPoss = await trashPossums.getAvailablePossums()
-   console.log("addr1 balance",availPoss.toNumber());
-   assert(availPoss.toNumber() === 1250);
+  
+  it("should get owner", async function() {
+const tx = await trashPossums.owner();
 
+console.log(tx);
+    assert(tx === owner.address);
   })
 
   it("should mint an nft to the owner address", async function () {
-    const tx = await trashPossums.mintPossums(1);
+    
+    const tx = await trashPossums.connect(owner).mintPossums(1);    
     const promise = await tx.wait();
-
-    assert(promise.events[0].args.to === owner.address);
-  });
-  
+    const event = promise.events.find(event => event.event === "Mint")
+    const toAddress = event.args.mintedTo;
+    tokenId1 = promise.events[0].args.tokenId.toNumber();
+    console.log("minted to", toAddress, "Token Id", tokenId1)
+    assert(toAddress === owner.address);
+  });  
 
   it("should mint an nft to addr1", async function () {
      const tx = await trashPossums.connect(addr1).mintPossums(1);
     const promise = await tx.wait();
-    
-    assert(promise.events[0].args.to === addr1.address);
+    const event = promise.events.find(event => event.event === "Mint")
+    const toAddress = event.args.mintedTo;
+    tokenId2 = promise.events[0].args.tokenId.toNumber();
+    assert(toAddress === addr1.address);
   });
 
-  it("should return the number nfts owned by an address(addr1)", async function () {
+  it("should return the number nfts owned by an address(addr1, owner)", async function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);
     const tx = await trashPossums.balanceOf(addr1.address);
     console.log("addr1 balance",tx.toNumber(), "owner balance", ownerbal.toNumber())
-    assert(tx.toNumber() === 1);
+    assert(tx.toNumber() === 1  && ownerbal.toNumber() === 1);
   });
-  it("should transfer NFT 0 from addr1 to addr2", async function () {
-    const tx =await trashPossums.safeTransferFrom(owner.address, addr1.address, 0)
+
+  it("should transfer first minted nft from owner to addr2", async function () {
+    const tx =await trashPossums.connect(owner)['safeTransferFrom(address,address,uint256)'](owner.address, addr1.address, tokenId1)
+    const promise = await tx.wait();   
+    const event = promise.events.find(e=> e.event ==="Transfer")
+    assert(event.args.to === addr1.address)
+  })
+  it("should premint 100 possums", async function () {
+    const tx = await trashPossums.premintPossums();
     const promise = await tx.wait();
-    
-  } )
+    const balance = await trashPossums.balanceOf(owner.address);
+assert(balance.toNumber() === 101)
+
+  })
+  it("should return owner of token by id",  async function (){
+    const poss1 = await trashPossums.ownerOf(tokenId1);
+    const poss2 = await trashPossums.ownerOf(tokenId2);
+    console.log(poss1, poss2)
+    assert(poss1 === addr1.address)
+  })
 });

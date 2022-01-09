@@ -2,14 +2,14 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1639690200611,
-      "contentHash": "53d450766c40cfd3f14d1922cedf2479",
+      "lastModificationDate": 1641758815515,
+      "contentHash": "b567cc543d6aff55e8a0cb65ab07e83a",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -18,7 +18,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -33,7 +34,6 @@
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/security/Pausable.sol",
         "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
         "@openzeppelin/contracts/utils/Counters.sol",
         "hardhat/console.sol"
       ],
@@ -45,14 +45,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-      "lastModificationDate": 1637080370028,
-      "contentHash": "a4f6dccf3f15b6844e357f737a572388",
+      "lastModificationDate": 1640055024046,
+      "contentHash": "ead7082e39cf31875ff89b22f473500d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -61,7 +61,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -87,14 +88,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
-      "lastModificationDate": 1637080370852,
-      "contentHash": "55752434e41be58192ecbaa3beb4b7cc",
+      "lastModificationDate": 1640055024050,
+      "contentHash": "88095889e59d16821879a8083f906503",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -103,7 +104,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -124,14 +126,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
-      "lastModificationDate": 1637080370852,
-      "contentHash": "94da923c22e9773af388607307182c80",
+      "lastModificationDate": 1640055024050,
+      "contentHash": "580a443491d9d70eb064b0130fc3cd01",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -140,7 +142,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -160,14 +163,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1637080368428,
-      "contentHash": "662437c05ba6f3706097c8d5ca68a52a",
+      "lastModificationDate": 1640055024082,
+      "contentHash": "9c2dccab8e3a43a18c41e358763fe4d8",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -176,7 +179,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -196,14 +200,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1637080368424,
-      "contentHash": "4fe56b59ced59d87df6b796758f62895",
+      "lastModificationDate": 1640055024082,
+      "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -212,7 +216,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -232,14 +237,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol": {
-      "lastModificationDate": 1637080370852,
-      "contentHash": "c451d6197061b5e0d446b7171af0dc01",
+      "lastModificationDate": 1640055024046,
+      "contentHash": "7bbd5ca6e396f0ad628cfbf0031d9e32",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -248,7 +253,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -269,14 +275,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
-      "lastModificationDate": 1637080368420,
-      "contentHash": "b7811964d33f23b2d45ed3ebb76a4548",
+      "lastModificationDate": 1640055024006,
+      "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -285,7 +291,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -303,14 +310,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1637080370028,
-      "contentHash": "53919d6975f2c0f3dffee5e3a1064116",
+      "lastModificationDate": 1640055024070,
+      "contentHash": "27d219ec6f69478d065fdbfa7931da68",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -319,7 +326,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -339,14 +347,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1637080370028,
-      "contentHash": "9a367cecca6fed80a3e975b7e6b3bd5c",
+      "lastModificationDate": 1640055024070,
+      "contentHash": "592df588492d45fdcf46b3cb608c0fbf",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -355,7 +363,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -373,14 +382,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1637080370852,
-      "contentHash": "8aa69ca8424167555baaaa9f607801db",
+      "lastModificationDate": 1640055024070,
+      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -389,7 +398,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -409,14 +419,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1637080368420,
-      "contentHash": "c5f6c4e4df069c789e7d84b4c3011913",
+      "lastModificationDate": 1640055023998,
+      "contentHash": "4cff8b2ea0d958750786b4e3ca308445",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -425,7 +435,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -443,14 +454,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1637080368420,
-      "contentHash": "851485d5b925529b1a2f34a0be077891",
+      "lastModificationDate": 1640055024006,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -459,7 +470,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -477,14 +489,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1637080368420,
-      "contentHash": "62142442bed149f965c5ed971fae4182",
+      "lastModificationDate": 1640055024322,
+      "contentHash": "9c54c6c065d9e590fdcdd72c451425b9",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -493,7 +505,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -511,14 +524,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1637080370044,
-      "contentHash": "a9a5319dff9088c6ffe757ea1c2a6729",
+      "lastModificationDate": 1640055024022,
+      "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -527,7 +540,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -547,14 +561,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1637080370044,
-      "contentHash": "9a04322bb8f6b8f2767d8358d1d2537b",
+      "lastModificationDate": 1640055024066,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -563,7 +577,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -581,14 +596,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
-      "lastModificationDate": 1637080370852,
-      "contentHash": "e57b2ff1645fb57408d6f87ee861dcb6",
+      "lastModificationDate": 1640055024070,
+      "contentHash": "f69eb47f667b846a8698697d25eeff4e",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -597,7 +612,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
@@ -617,14 +633,14 @@
       ]
     },
     "/home/someguy/Code/trashPossums/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1637080367736,
+      "lastModificationDate": 1640055024134,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -633,7 +649,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ],
               "": [
                 "ast"
