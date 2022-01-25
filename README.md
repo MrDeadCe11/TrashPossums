@@ -1,15 +1,17 @@
-# Basic Sample Hardhat Project
+# Rrash Possums Nft contract and website
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This is a work in progress for the Trash possums minting dapp.
+the website is made with Vue3(vite) and tailwind css.
+The smart contract is written and tested in HardHat.
 
-Try running some of the following tasks:
+The contract uses Chainlink VRF to randomly select token ids out of an array of the remaining id's.  hopefully this will help with the manipulation of the nft drop.  When you mint the nft you will get a random ID selected by the chainlink vrf.  done in the "getPossumToBeClaimed" function on the main contract.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+this is a work in progress...
+
+
+check it out 
+
+clone the repo,
+install dependencies,
+npx hardhat test.
+
