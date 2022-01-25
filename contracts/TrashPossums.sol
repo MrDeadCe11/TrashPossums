@@ -44,6 +44,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     string private baseURI;
     bytes32 internal keyHash;
     uint256 internal fee;
+    address VRFCoordinator;  
 
     //MAPPINGS//
 
@@ -51,14 +52,10 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     mapping(address => uint256) private claimedPossumsPerWallet;
     // array of available possums
     uint256[] availablePossums = new uint[](totalPossums);
-    // map of possum uris by ID
-    mapping(uint256 => string) private possumUris;
-    //mapping of possums with assigned uris
-    mapping(uint256 => bool) private assignedUri;
- 
+   
     //Global Variables
     uint256 randomResult;
-    address VRFCoordinator;    
+     
 
     constructor(
         uint256 _possumPrice,
@@ -225,12 +222,6 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     function getNumberOfAvailablePossums() external view returns (uint256) {
         return availablePossums.length;
     }
- /**
- should return nft balance of wallet
-  */
-   function balanceOf(address addr1) public view override returns (uint256){
-       return claimedPossumsPerWallet[addr1];
-   }
     
     /**
      * @dev Returns the claim price

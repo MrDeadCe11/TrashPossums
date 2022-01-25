@@ -77,14 +77,13 @@ describe("Trash Possums", function () {
     let transfer = await linkContract.connect(owner).transfer( "0x721b6F1630013410c964a1F5bB4fDBA07921ac68" , ethers.utils.parseEther("29"));
     transfer.wait();
     let balance = await linkContract.connect(owner).balanceOf(trashPossums.address);
-    console.log("contract balance", balance);
+    console.log("contract balance", balance.toString());
     assert(balance > 0)  
   })
 
   it("should premint 100 possums", async function () {
     const tx = await trashPossums.premintPossums();
     const promise = await tx.wait();
-    console.log("owner wallet",owner.address)
     const balance = await trashPossums.balanceOf(owner.address);
 assert(balance.toNumber() === 100)
 
@@ -92,8 +91,7 @@ assert(balance.toNumber() === 100)
   
   it("should get owner", async function() {
 const tx = await trashPossums.owner();
-console.log("get owner",tx);
-    assert(tx === owner.address);
+ assert(tx === owner.address);
   })
 
   it("should mint an nft to the addr2 address", async function () {
@@ -101,10 +99,9 @@ console.log("get owner",tx);
     const tx = await trashPossums.connect(addr2).mintPossums(1);    
     const promise = await tx.wait();
     const event = promise.events.find(event => event.event === "Mint")
-    console.log("event", event.args);
     const toAddress = event.args[0];
     tokenId1 = event.args[1] ;
-    console.log("minted to", toAddress, "Token Id", tokenId1.toNumber(), "addr2", addr2.address)
+    // console.log("minted to", toAddress, "Token Id", tokenId1.toNumber(), "addr2", addr2.address)
     assert(toAddress === addr2.address);
   });  
 
@@ -120,7 +117,6 @@ console.log("get owner",tx);
   it("should return the number nfts owned by an address(addr1, owner)", async function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);
     const tx = await trashPossums.balanceOf(addr1.address);
-    console.log("addr1 balance",tx.toNumber(), "owner balance", ownerbal.toNumber())
     assert(tx.toNumber() === 1  && ownerbal.toNumber() === 100);
   });
 
@@ -134,7 +130,6 @@ console.log("get owner",tx);
   it("should return owner of token by id",  async function (){
     const poss1 = await trashPossums.ownerOf(tokenId1);
     const poss2 = await trashPossums.ownerOf(tokenId2);
-    console.log(poss1, poss2)
-    assert(poss1 === addr1.address)
+   assert(poss1 === addr1.address && poss2 === addr1.address)
   })
 });
