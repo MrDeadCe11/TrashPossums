@@ -69,16 +69,17 @@ describe("Trash Possums", function () {
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
     
     
+  
+    assert(deployed)
+  });
+
+  it("should fund the contract with chainlink", async function(){
     let transfer = await linkContract.connect(owner).transfer( "0x721b6F1630013410c964a1F5bB4fDBA07921ac68" , ethers.utils.parseEther("29"));
     transfer.wait();
     let balance = await linkContract.connect(owner).balanceOf(trashPossums.address);
     console.log("contract balance", balance);
-    assert(deployed)
-  });
-
-  // it("should fund the contract with 20 chainlink", async function(){
-  
-  // })
+    assert(balance > 0)  
+  })
 
   it("should premint 100 possums", async function () {
     const tx = await trashPossums.premintPossums();

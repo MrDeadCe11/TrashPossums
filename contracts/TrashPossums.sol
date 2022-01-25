@@ -50,7 +50,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     // Ledger of NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
     // array of available possums
-    uint256[] availablePossums = new uint[](10000);
+    uint256[] availablePossums = new uint[](totalPossums);
     // map of possum uris by ID
     mapping(uint256 => string) private possumUris;
     //mapping of possums with assigned uris
@@ -88,7 +88,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     function mintPossum(address to, uint256 tokenId) internal {
         require(totalMintedPossums <= totalPossums, "all Possums have been minted" );
          _safeMint(to, tokenId );
-         _setTokenURI(tokenId, baseURI)               
+         _setTokenURI(tokenId, baseURI);               
          totalMintedPossums++;
          claimedPossumsPerWallet[to]++;
          emit Mint(to, tokenId);
@@ -185,7 +185,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         //     msg.value >= possumPrice * amount,
         //     "Not enough Ether to claim the possums"
         // );
-
+        require(amount > 0, "need to mint at least 1 NFT");
         require(
             claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
             "You cannot claim more possums"
@@ -193,7 +193,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
         require(
             availablePossums.length >= amount,
-            "No Possum left to be claimed"
+            "No Possums left to be claimed"
         );
 
         require(
