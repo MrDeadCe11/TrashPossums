@@ -197,7 +197,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
             amount <= maxPossumsPerTransaction,
             "Max 27 per tx"
         );            
-        console.log("msg.sender",msg.sender);
+        
         for (uint256 i; i < amount; i++) {
            uint256 possid = getPossumToBeClaimed();
            mintPossum(msg.sender, possid);
@@ -222,6 +222,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     function getNumberOfAvailablePossums() external view returns (uint256) {
         return availablePossums.length;
     }
+
     
     /**
      * @dev Returns the claim price
