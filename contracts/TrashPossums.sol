@@ -82,7 +82,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         _unpause();
     }
      
-    function mintPossum(address to, uint256 tokenId) internal {
+    function mint(address to, uint256 tokenId) internal {
         require(totalMintedPossums <= totalPossums, "all Possums have been minted" );
          _safeMint(to, tokenId );
          _setTokenURI(tokenId, baseURI);               
@@ -157,10 +157,9 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         require(
             availablePossums.length >= premintCount,
             "No Possums left to be claimed"
-        );
-        totalMintedPossums += premintCount;
+        );      
         for (uint256 i; i < premintCount; i++) {
-            mintPossum(msg.sender, i);
+            mint(msg.sender, i);
             availablePossums[i] = availablePossums.length - 1;            
             availablePossums.pop();
         }
@@ -200,7 +199,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         
         for (uint256 i; i < amount; i++) {
            uint256 possid = getPossumToBeClaimed();
-           mintPossum(msg.sender, possid);
+           mint(msg.sender, possid);
            console.log("minting 1 possum to", msg.sender, address(this), possid);
         }
        
@@ -329,6 +328,6 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         return baseURI;
     }
 
-    receive() external payable { }
+    receive() external payable {}
 
 } 

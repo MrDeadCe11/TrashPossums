@@ -137,4 +137,9 @@ const tx = await trashPossums.owner();
     const price = await trashPossums.getPossumPrice();
     assert(price.toString() === ethers.utils.parseEther("26").toString())
   })
+  it("should return the total supply", async function () {
+    const supply = await trashPossums.totalSupply();
+    assert(supply.toNumber() === 102)
+  })
+  it("")
 });
