@@ -36,8 +36,6 @@ describe("Trash Possums", function () {
     const VRFAbi = [
       "function requestRandomness(bytes32, uint256)returns (bytes32)",
       "function rawFulfillRandomness(bytes32, uint256)",
-
-
     ]
 
   const testUri = "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
@@ -67,9 +65,6 @@ describe("Trash Possums", function () {
 
     
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
-    
-    
-  
     assert(deployed)
   });
 
@@ -131,5 +126,15 @@ const tx = await trashPossums.owner();
     const poss1 = await trashPossums.ownerOf(tokenId1);
     const poss2 = await trashPossums.ownerOf(tokenId2);
    assert(poss1 === addr1.address && poss2 === addr1.address)
+  })
+  it("should return the price of the possums", async function(){
+    const price = await trashPossums.getPossumPrice();
+    assert(price.toString() === ethers.utils.parseEther("25").toString())
+  })
+  it("should change the possum price to 26 ether", async function(){
+    const tx = await trashPossums.setPossumPrice(ethers.utils.parseEther("26"));
+    const promise = await tx.wait();
+    const price = await trashPossums.getPossumPrice();
+    assert(price.toString() === ethers.utils.parseEther("26").toString())
   })
 });

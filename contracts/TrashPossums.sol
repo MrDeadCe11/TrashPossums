@@ -227,7 +227,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
      * @dev Returns the claim price
      */
-    function getpossumPrice() external view returns (uint256) {
+    function getPossumPrice() external view returns (uint256) {
         return possumPrice;
     }
 
@@ -331,4 +331,4 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
     receive() external payable { }
 
-}
+} 
