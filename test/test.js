@@ -33,10 +33,13 @@ describe("Trash Possums", function () {
     // An event triggered whenever anyone transfers to someone else
     "event Transfer(address indexed from, address indexed to, uint amount)"];
   
-    const VRFAbi = [
+  const VRFAbi = [
       "function requestRandomness(bytes32, uint256)returns (bytes32)",
+
       "function rawFulfillRandomness(bytes32, uint256)",
-    ]
+
+      ""
+  ]
 
   const testUri = "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
  
@@ -61,10 +64,9 @@ describe("Trash Possums", function () {
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
     const deployed = await trashPossums.deployed();
-    console.log("contract deployed at", trashPossums.address)
-
-    
+    console.log("contract deployed at", trashPossums.address)    
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
+    
     assert(deployed)
   });
 
