@@ -9,8 +9,12 @@
     <h1 class="d-flex col-span-6 mb-3 ml-10 font-bold text-4xl text-white-light">
     The Trash Possums are Coming!
     </h1>  
-    <div class="mb-5 flex col-span-4 flex-row">               
+    <div class="mb-5 flex col-span-5 flex-row">               
     <p class="text-xl text-white-light ml-5"> In the year 2421, centuries after irradiated hurricanes caused the evolution of rabies into an incurable pestilence across the globe. With humanity long extinct, the Trash 'Possums have risen. Shaping their entire society around humans' pop culture icons, which they regard as deities. The Trash Possums have improved on tech left by humanity and traverse the near infinite expanse of the universe along with improving the earth left by humans. </p>
+    
+    </div>
+    <div class="mb-5 flex col-span-3 flex-row">
+      <p class="text-xl text-white-light ml-5">Trash possums are an NFT collection using chainlink VRF to create a totally fair launch. Each token ID is selected randomly using chainlink vrf making it impossible to predict which possum will be minted next.   </p>
     </div>
     <div class="col-span-2">
     <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>  

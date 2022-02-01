@@ -143,5 +143,4 @@ const tx = await trashPossums.owner();
     const supply = await trashPossums.totalSupply();
     assert(supply.toNumber() === 102)
   })
-  it("")
 });
