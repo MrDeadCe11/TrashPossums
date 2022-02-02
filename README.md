@@ -1,4 +1,4 @@
-# Rrash Possums Nft contract and website
+# Trash Possums minting dapp
 
 This is a work in progress for the Trash possums minting dapp.
 the website is made with Vue3(vite) and tailwind css.
