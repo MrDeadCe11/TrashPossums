@@ -1,6 +1,6 @@
 export default {
     state: () => ({
-        name: 'Paul'
+        name: ''
     }),
 
     getters: {},

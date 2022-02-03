@@ -177,10 +177,10 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         callerNotAContract
         mintingStarted
         {
-        // require(
-        //     msg.value >= possumPrice * amount,
-        //     "Not enough Ether to claim the possums"
-        // );
+        require(
+            msg.value >= possumPrice * amount,
+            "Not enough Ether to claim the possums"
+        );
         require(amount > 0, "need to mint at least 1 NFT");
         require(
             claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
@@ -194,7 +194,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
         require(
             amount <= maxPossumsPerTransaction,
-            "Max 27 per tx"
+            "Max 27 per wallet"
         );            
         
         for (uint256 i; i < amount; i++) {
@@ -249,48 +249,17 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
      * @dev Returns a random available possum to be claimed uses availablePossums array initialized to 0.
      */
-    // function getPossumToBeClaimed() private returns (uint256 tokenId) {
+    
 
-    //     _getRandomNumber(); 
-    //     uint256 random = randomResult;
-    //     console.log("random number", random);
-        
-    //     //checks availiblePossums array which is initialized at a length of 10,000 all zeros
-    //     //if possum at random index is 0 and the possum at the last position is 0 mint the random id and assign the index value to the index of the last position of the array.  then pop the last array position
-    //     if(availablePossums[random] == 0 && availablePossums[availablePossums.length-1] == 0) {    
-    //     tokenId = random;
-    //     availablePossums[random] = availablePossums.length - 1;
-    //     availablePossums.pop();
-    //      return tokenId;
-    //     }
-    //     //if the random array index is not 0 and the last position is zero mint the posum with id stored at random index then assign the value to the index to the final position of the array.  pop the array.
-    //      if( availablePossums[random] != 0 && availablePossums[availablePossums.length - 1] ==0){
-    //         tokenId = availablePossums[random];
-    //         availablePossums[random]= availablePossums.length - 1;
-    //         availablePossums.pop();
-    //          return tokenId;
-    //     }  
-    //     // if the random index is not zero and the last position is not zero then assign the value in the last array position to the random postion and pop the array.
-    //     if (availablePossums[random] != 0 && availablePossums[availablePossums.length -1] != 0){
-    //         tokenId = availablePossums[random];
-    //         availablePossums[random] = availablePossums[availablePossums.length -1];
-    //         availablePossums.pop();
-    //          return tokenId;
-    //     }
-    //     //if random index is zero and last position is not zero then assign the value in the last array position to the random position and pop the array.
-    //     if(availablePossums[random] == 0 && availablePossums[availablePossums.length-1] !=0){
-    //         tokenId = random;
-    //         availablePossums[random] = availablePossums[availablePossums.length-1];
-    //         availablePossums.pop();
-    //          return tokenId;
-    //     }
-            
-    // }
+    function getPossumToBeClaimed() private returns (uint256 tokenId) {     
+    uint256 randomInit = randomResult;
+    _getRandomNumber();
+    
+    require(randomInit != randomResult);
 
-    function getPossumToBeClaimed() private returns (uint256 tokenId) {
-    _getRandomNumber(); 
     uint256 random = randomResult;
-    console.log("random number", random);
+
+     console.log("random number", random);
     
     // checks availiblePossums array which is initialized at a length of 10,000 all zeros
     // if possum at random index is 0 and the possum at the last position is 0 mint the random 
@@ -325,7 +294,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
        availablePossums[random] = availablePossums[availablePossums.length-1];
     }
     
-    // Jared: only do this if you can guarantee that when you get here it's a valid operation/return value 
+    //only do this if you can guarantee that when you get here it's a valid operation/return value 
     availablePossums.pop();
     return tokenId;
 }
@@ -333,10 +302,10 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
     @dev Chainlink VRF consumer
     //  */
-    //  function _getRandomNumber() private returns (bytes32 requestId){
-    //      require(LINK.balanceOf(address(this)) >= fee, "Not enough Link  in contract to get random number");
-    //      return requestRandomness(keyHash, fee);
-    //  }
+     function _getRandomNumber() private returns (bytes32 requestId){
+         require(LINK.balanceOf(address(this)) >= fee, "Not enough Link  in contract to get random number");
+         return requestRandomness(keyHash, fee);
+     }
 
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override{
         require(msg.sender == VRFCoordinator  && requestId > 0, "only VRF Coordinator can fulfill");
@@ -348,22 +317,22 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
      * @dev Generates a pseudo-random number.
     */
 
-    function _getRandomNumber() private returns (uint256) {
-        uint256 random = uint256(
-            keccak256(
-                abi.encodePacked(
-                    availablePossums.length,
-                    blockhash(block.number - 1),
-                    block.coinbase,
-                    block.difficulty,
-                    msg.sender
-                )
-            )
-        );
-        console.log("random number",random % availablePossums.length);
-        randomResult = (random % availablePossums.length) -1;
-        return randomResult ;
-    }
+    // function _getRandomNumber() private returns (uint256) {
+    //     uint256 random = uint256(
+    //         keccak256(
+    //             abi.encodePacked(
+    //                 availablePossums.length,
+    //                 blockhash(block.number - 1),
+    //                 block.coinbase,
+    //                 block.difficulty,
+    //                 msg.sender
+    //             )
+    //         )
+    //     );
+    //     console.log("random number",random % availablePossums.length);
+    //     randomResult = (random % availablePossums.length) -1;
+    //     return randomResult ;
+    // }
      
 
     /**
