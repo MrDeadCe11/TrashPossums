@@ -23,8 +23,8 @@ async function main() {
 
  const [deployer] = await hre.ethers.getSigners();
  console.log('deployiing with account: ',deployer.address)
-  // We get the contract to deploy
-  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
+ 
+ const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
   const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
 
   await trashPossums.deployed();

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
@@ -54,7 +55,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     uint256[] availablePossums = new uint[](totalPossums);
    
     //Global Variables
-    uint256 randomIdOffset;
+    uint256 private randomIdOffset;
      
 
     constructor(
@@ -127,11 +128,20 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
      // ONLY OWNER
 
     /**
-     * @dev Allows to withdraw the Ether in the contract to the address of the owner.
+     * @dev Allows to withdraw any ether in the contract to the address of the owner.
      */
     function withdraw() external onlyOwner {
         uint256 totalBalance = address(this).balance;
         payable(msg.sender).transfer(totalBalance);
+    }
+
+    /**
+    * @dev allows withdrawal of any erc20 from the contract
+     */
+    function withdrawErc20(IERC20 token) external onlyOwner {
+        require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
+            uint256 totalBalance = token.balanceOf(address(this));
+            token.transfer(msg.sender, totalBalance);
     }
 
     /**
@@ -148,6 +158,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         possumPrice = _possumPrice;
     }
 
+   
    
     /**
      * @dev Prem
@@ -222,6 +233,12 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         return availablePossums.length;
     }
 
+/**
+* @dev Returns the randomly selected ID offset
+ */
+    function getOffset() public view returns(uint256){
+        return randomIdOffset;
+    }
     
     /**
      * @dev Returns the claim price
@@ -253,40 +270,40 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
     function getPossumToBeClaimed() private returns (uint256 tokenId) {     
    
-    uint256 random = _getPseudoRandomNumber();
-    
-    // checks availiblePossums array which is initialized at a length of 10,000 all zeros
-    // if possum at random index is 0 and the possum at the last position is 0 mint the random 
-    //   id and assign the index value to the index of the last position of the array.  
-    //   then pop the last array position
-    if(availablePossums[random] == 0 && availablePossums[availablePossums.length-1] == 0) {    
-        tokenId = random;
-        availablePossums[random] = availablePossums.length - 1;
-    }
-    // if the random array index is not 0 and the last position is zero mint the posum with 
-    //   id stored at random index then assign the value to the index to the final position of the array.  pop the array.
-    else if( availablePossums[random] != 0 && availablePossums[availablePossums.length - 1] == 0) {
-        tokenId = availablePossums[random];
-        availablePossums[random]= availablePossums.length - 1;
-    }  
-    // if the random index is not zero and the last position is not zero then assign the value 
-    //   in the last array position to the random postion and pop the array.
-    else if (availablePossums[random] != 0 && availablePossums[availablePossums.length -1] != 0) {
-        tokenId = availablePossums[random];
-        availablePossums[random] = availablePossums[availablePossums.length -1];
-    }
-    // if random index is zero and last position is not zero then assign the value in the last 
-    // array position to the random position and pop the array.
-  
-    // else if (availablePossums[random] == 0 && availablePossums[availablePossums.length-1] != 0) {
-    //     tokenId = random;
-    //     availablePossums[random] = availablePossums[availablePossums.length-1];
-    // }
+        uint256 random = _getPseudoRandomNumber();
+            
+            // checks availiblePossums array which is initialized at a length of 10,000 all zeros
+            // if possum at random index is 0 and the possum at the last position is 0 mint the random 
+            //   id and assign the index value to the index of the last position of the array.  
+            //   then pop the last array position
+            if(availablePossums[random] == 0 && availablePossums[availablePossums.length-1] == 0) {    
+                tokenId = random;
+                availablePossums[random] = availablePossums.length - 1;
+            }
+            // if the random array index is not 0 and the last position is zero mint the posum with 
+            //   id stored at random index then assign the value to the index to the final position of the array.  pop the array.
+            else if( availablePossums[random] != 0 && availablePossums[availablePossums.length - 1] == 0) {
+                tokenId = availablePossums[random];
+                availablePossums[random]= availablePossums.length - 1;
+            }  
+            // if the random index is not zero and the last position is not zero then assign the value 
+            //   in the last array position to the random postion and pop the array.
+            else if (availablePossums[random] != 0 && availablePossums[availablePossums.length -1] != 0) {
+                tokenId = availablePossums[random];
+                availablePossums[random] = availablePossums[availablePossums.length -1];
+            }
+            // if random index is zero and last position is not zero then assign the value in the last 
+            // array position to the random position and pop the array.
+        
+            // else if (availablePossums[random] == 0 && availablePossums[availablePossums.length-1] != 0) {
+            //     tokenId = random;
+            //     availablePossums[random] = availablePossums[availablePossums.length-1];
+            // }
 
-    else {
-         tokenId = random;
-       availablePossums[random] = availablePossums[availablePossums.length-1];
-    }
+            else {
+                tokenId = random;
+                availablePossums[random] = availablePossums[availablePossums.length-1];
+            }
     
     //only do this if you can guarantee that when you get here it's a valid operation/return value 
     availablePossums.pop();
@@ -303,7 +320,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override{
         require(msg.sender == VRFCoordinator  && requestId > 0, "only VRF Coordinator can fulfill");
-        randomIdOffset = (randomness % availablePossums.length) - 1;
+        randomIdOffset = (randomness % 9999);
     }
 
     //  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override virtual;

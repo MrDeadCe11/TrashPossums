@@ -19,7 +19,10 @@
       Fair launch and minting
     </h1>
    <div class="mb-5 flex col-span-4 row-start-auto">
-      <p class="text-xl text-white-light ml-5">Trash Possums is an NFT collection using chainlink VRF to create a totally fair launch. Each token ID is selected randomly using chainlink vrf making it impossible (hopefully) to predict which possum will be minted next.   </p>
+      <p class="text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
+         After either all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
+         VRF to offset the IDs to their final value.  
+        All metadata and properties will be released on the start mint date and the final ids will be revealed after minting is complete. </p>
     </div>
     
   
