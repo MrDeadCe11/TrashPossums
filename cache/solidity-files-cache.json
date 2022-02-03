@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1643309420938,
-      "contentHash": "efe23cafa6d468281878a1bb01c2f09b",
+      "lastModificationDate": 1643914475389,
+      "contentHash": "c580258033d4f395617e16c739e6b8fd",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.4",

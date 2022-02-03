@@ -11,7 +11,7 @@ describe("Trash Possums", function () {
   let trashPossums;
  
   const startMintDate = 23698260; //approx noon on feb 20th 2022
-  const possumPrice = ethers.BigNumber.from("25000000000000000000");
+  const possumPrice = ethers.utils.parseEther('.002');  
   
   const VRFAddressMumbai = "0x8C7382F9D8f56b33781fE506E897a4F1e2d17255";
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
@@ -87,13 +87,13 @@ assert(balance.toNumber() === 100)
   })
   
   it("should get owner", async function() {
-const tx = await trashPossums.owner();
- assert(tx === owner.address);
+    const tx = await trashPossums.owner();
+    assert(tx === owner.address);
   })
 
-  it("should mint an nft to the addr2 address", async function () {
+   it("should mint an nft to the addr2 address", async function () {
     
-    const tx = await trashPossums.connect(addr2).mintPossums(1);    
+    const tx = await trashPossums.connect(addr2).mintPossums(1, {value: possumPrice});    
     const promise = await tx.wait();
     const event = promise.events.find(event => event.event === "Mint")
     const toAddress = event.args[0];
@@ -103,7 +103,7 @@ const tx = await trashPossums.owner();
   });  
 
   it("should mint an nft to addr1", async function () {
-     const tx = await trashPossums.connect(addr1).mintPossums(1);
+     const tx = await trashPossums.connect(addr1).mintPossums(1, {value: possumPrice});
     const promise = await tx.wait();
     const event = promise.events.find(event => event.event === "Mint")
     const toAddress = event.args[0];
@@ -130,8 +130,8 @@ const tx = await trashPossums.owner();
    assert(poss1 === addr1.address && poss2 === addr1.address)
   })
   it("should return the price of the possums", async function(){
-    const price = await trashPossums.getPossumPrice();
-    assert(price.toString() === ethers.utils.parseEther("25").toString())
+    const price = await trashPossums.getPossumPrice();    
+    assert(price.toString() === possumPrice.toString())
   })
   it("should change the possum price to 26 ether", async function(){
     const tx = await trashPossums.setPossumPrice(ethers.utils.parseEther("26"));

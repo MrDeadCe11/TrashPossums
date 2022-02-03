@@ -54,7 +54,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     uint256[] availablePossums = new uint[](totalPossums);
    
     //Global Variables
-    uint256 randomResult;
+    uint256 randomIdOffset;
      
 
     constructor(
@@ -252,14 +252,8 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     
 
     function getPossumToBeClaimed() private returns (uint256 tokenId) {     
-    uint256 randomInit = randomResult;
-    _getRandomNumber();
-    
-    require(randomInit != randomResult);
-
-    uint256 random = randomResult;
-
-     console.log("random number", random);
+   
+    uint256 random = _getPseudoRandomNumber();
     
     // checks availiblePossums array which is initialized at a length of 10,000 all zeros
     // if possum at random index is 0 and the possum at the last position is 0 mint the random 
@@ -309,7 +303,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override{
         require(msg.sender == VRFCoordinator  && requestId > 0, "only VRF Coordinator can fulfill");
-        randomResult = (randomness % availablePossums.length) - 1;
+        randomIdOffset = (randomness % availablePossums.length) - 1;
     }
 
     //  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override virtual;
@@ -317,22 +311,22 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
      * @dev Generates a pseudo-random number.
     */
 
-    // function _getRandomNumber() private returns (uint256) {
-    //     uint256 random = uint256(
-    //         keccak256(
-    //             abi.encodePacked(
-    //                 availablePossums.length,
-    //                 blockhash(block.number - 1),
-    //                 block.coinbase,
-    //                 block.difficulty,
-    //                 msg.sender
-    //             )
-    //         )
-    //     );
-    //     console.log("random number",random % availablePossums.length);
-    //     randomResult = (random % availablePossums.length) -1;
-    //     return randomResult ;
-    // }
+    function _getPseudoRandomNumber() private view returns (uint256) {
+        uint256 random = uint256(
+            keccak256(
+                abi.encodePacked(
+                    availablePossums.length,
+                    blockhash(block.number - 1),
+                    block.coinbase,
+                    block.difficulty,
+                    msg.sender
+                )
+            )
+        );
+        console.log("random number",random % availablePossums.length);
+        uint256 randomResult = (random % availablePossums.length) -1;
+        return randomResult ;
+    }
      
 
     /**
