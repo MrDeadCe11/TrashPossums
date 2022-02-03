@@ -6,7 +6,7 @@
   </div> 
    
   
-    <h1 class="d-flex col-span-6 mb-3 ml-10 text-4xl text-white-light">
+    <h1 class="d-flex col-span-6 mb-3 ml- 10 text-4xl text-white-light">
     The Trash Possums are Coming!
     </h1>  
     <div class="mb-5 flex col-span-4 flex-row">               
@@ -22,22 +22,22 @@
       <p class="text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
          After either all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
          VRF to offset the IDs to their final value.  
-        All metadata and properties will be released on the start mint date and the final ids will be revealed after minting is complete. </p>
+        All metadata and properties will be released on the start mint date and the final ids will be revealed after minting is complete or after. </p>
     </div>
     
   <div class="roadmap h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8">
    <div class="text-base m-auto max-w-4xl p-5 rounded-md border-white-light border-4 shadow-xl">
-   <h1 class="font-bold text-2xl"> 
+   <h1 class="font-bold text-3xl"> 
 Roadmap:
    </h1>
     <br>
    <ul class="ml-8">    
-      <li><p>10%  We pay back our wives’ boyfriends</p></li>
-      <li><p>20%  Special edition pog run.</p></li>
-      <li><p>40%  Trash Possum Series 2 Launch </p></li>
-      <li><p>60%  Roach Buddies</p></li>
-      <li><p>80%  Buy Metaverse property and construct “Possum Town”</p></li>
-      <li><p>100%  Roach pet battle game?</p></li>
+      <li><p> <span class="font-bold text-xl"> 10% </span> We pay back our wives’ boyfriends</p></li>
+      <li><p> <span class="font-bold text-xl"> 20% </span> Special edition pog run.</p></li>
+      <li><p> <span class="font-bold text-xl"> 40% </span> Trash Possum Series 2 Launch </p></li>
+      <li><p> <span class="font-bold text-xl"> 60% </span> Roach Buddies</p></li>
+      <li><p> <span class="font-bold text-xl"> 80% </span> Buy Metaverse property and construct “Possum Town”</p></li>
+      <li><p> <span class="font-bold text-xl"> 100%</span>  Roach pet battle game?</p></li>
   <br>
   </ul>
    </div>
