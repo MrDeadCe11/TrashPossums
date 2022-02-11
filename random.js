@@ -76,25 +76,23 @@ function setOffset(){
 let finalArray = [];
 
     function offsetArray(){    
-        for(i=0; i < premintNumber; i++){
+        for(i=0; i < premintNumber -1; i++){
             finalArray.push(randoms[i])
         }
 
-        for(i=premintNumber; i< (randoms.length); i++){
+        for(i=(premintNumber -1); i< (randoms.length -1); i++){
           const id = randoms[i] + offset
         console.log("ID", randoms[i], " + OFFSET",offset, "=", id)
             if(id > arraysize -1 ){
-                const n = (id - (arraysize -1) )+(premintNumber -1)
-                console.log("premint", premintNumber, "+ id", n)               
-                finalArray.push(n)
-                
-            } 
-            else{
-                console.log("less than premint", id)
-                finalArray.push(id)
+                const n = (id - (arraysize -1) )+(premintNumber -1);
+                console.log("premint", premintNumber, "+ id", n);               
+                finalArray.push(n);                
+            } else {
+                console.log("less than array size", id);
+                finalArray.push(id);
                 }
             }
-            return finalArray.sort((a,b)=> a-b)
+            return finalArray.sort((a,b)=> a-b);
     }
 
 function execute (_premintNumber, _arraysize){
