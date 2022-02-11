@@ -1,7 +1,7 @@
 <template>
 <div class="mt-16" @click.self="$emit('appclicked', $event.target.value)" style="transition:opacity 400ms ease 0s, transform 400ms ease 0s; transform: none; opacity: 1;">
 <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5" >
-    <div class="m-auto col-span-6 w-5/6">
+    <div class="m-auto col-span-6 row-span-6 w-5/6">
   <img  src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920" class="relative m-5 h-auto w-auto"/>
   </div> 
    
@@ -20,7 +20,7 @@
     </h1>
    <div class="mb-5 flex col-span-4">
       <p class="text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
-         After either all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
+         After all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
          VRF to offset the IDs to their final value.  
         All metadata and properties will be released on the start mint date and the final ids will be revealed after minting is complete or after. </p>
     </div>
@@ -60,9 +60,7 @@ export default {
   components: {Gallery, Footer},
   setup() {
   const pfpImages = ref([...pfpImagesArr]) 
-
   const sliceStart = computed(()=> Math.floor(Math.random()*19))
-
   const sliceEnd = computed(()=> sliceStart.value + 4)
  
   return { pfpImages, sliceStart, sliceEnd}

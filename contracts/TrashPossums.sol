@@ -13,11 +13,10 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, Ownable, VRFConsumerBase{
 
-    event Mint(address indexed mintedTo, uint256 indexed tokenId);
-        
+            
     modifier mintingStarted() {
         require(
-            startMintDate != 0 && startMintDate <= block.timestamp,
+            startMintDate != 0 && startMintDate <= block.number,
             "You are too early"
         );
         _;
@@ -45,17 +44,21 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     string private baseURI;
     bytes32 internal keyHash;
     uint256 internal fee;
-    address VRFCoordinator;  
+    address VRFCoordinator; 
+    uint256 private  claimDate;
 
     //MAPPINGS//
 
-    // Ledger of NFTs minted and owned by each unique wallet address.
+    // Ledger of number NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
+    //mapping to track reserved possums before final offset occurs
+    mapping(address => uint256[]) private reservedPossums;
     // array of available possums
     uint256[] availablePossums = new uint[](totalPossums);
    
     //Global Variables
     uint256 private randomIdOffset;
+    bool randomIdOffsetExecuted;
      
 
     constructor(
@@ -65,7 +68,8 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         address _VRFAddress,
         address _linkToken,
         bytes32 _keyHash,
-        uint256 _fee
+        uint256 _fee,
+        uint256 _claimDate
         ) ERC721("Trash Possums", "TPOSS") VRFConsumerBase(_VRFAddress, _linkToken){
             possumPrice = _possumPrice;
             startMintDate = _startMintDate;
@@ -73,6 +77,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
             keyHash = _keyHash; 
             fee = _fee;
             VRFCoordinator = _VRFAddress;
+            claimDate = _claimDate;
                  }   
 
     function pause() public onlyOwner {
@@ -88,8 +93,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
          _safeMint(to, tokenId );
          _setTokenURI(tokenId, baseURI);               
          totalMintedPossums++;
-         claimedPossumsPerWallet[to]++;
-         emit Mint(to, tokenId);
+         claimedPossumsPerWallet[to]++;        
     }
    
     
@@ -138,10 +142,9 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
     * @dev allows withdrawal of any erc20 from the contract
      */
-    function withdrawErc20(IERC20 token) external onlyOwner {
+    function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
         require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
-            uint256 totalBalance = token.balanceOf(address(this));
-            token.transfer(msg.sender, totalBalance);
+            token.transfer(payable(msg.sender), _amount);
     }
 
     /**
@@ -161,7 +164,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
    
    
     /**
-     * @dev Prem
+     * @dev Premint possums
      */
     function premintPossums() external onlyOwner {
         require(!premintingComplete, "You can only premint the Possums once");
@@ -177,12 +180,18 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         premintingComplete = true;
     }
 
+    function executeOffset() public {
+        require(!randomIdOffsetExecuted);
+        require(availablePossums.length == 0 || block.number > claimDate);
+        _getRandomNumber();
+        randomIdOffsetExecuted = true;        
+    }
     // END ONLY OWNER FUNCTIONS
 
     /**
-     * @dev Claim up to 27 Possums at once
+     * @dev RESERVE up to 27 Possums at once
      */
-    function mintPossums(uint256 amount)
+    function reservePossums(uint256 amount)
         external
         payable
         callerNotAContract
@@ -190,33 +199,44 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         {
         require(
             msg.value >= possumPrice * amount,
-            "Not enough Ether to claim the possums"
+            "Not enough Ether to reserve these possums"
         );
         require(amount > 0, "need to mint at least 1 NFT");
         require(
             claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
-            "You cannot claim more possums"
+            "You cannot reserve more possums"
         );
 
         require(
             availablePossums.length >= amount,
-            "No Possums left to be claimed"
+            "No Possums left"
         );
 
         require(
             amount <= maxPossumsPerTransaction,
-            "Max 27 per wallet"
+            "Max 27 per transaction"
         );            
-        
+        require(getOffset() == 0);
+
         for (uint256 i; i < amount; i++) {
            uint256 possid = getPossumToBeClaimed();
-           mint(msg.sender, possid);
-           console.log("minting 1 possum to", msg.sender, address(this), possid);
+           reservedPossums[msg.sender].push(possid);
+           console.log("reserving possum to", msg.sender, possid);
         }
        
     }
         
-
+    function claimPossums() public callerNotAContract{
+        require(reservedPossums[msg.sender].length > 0, "you have no reserved possums");
+        uint256 finalId;
+        for(uint256 i; i < reservedPossums[msg.sender].length; i++){
+            uint256 id = reservedPossums[msg.sender][i] + randomIdOffset;
+            if( id > totalPossums){
+                finalId = id - (totalPossums - 100);
+            }
+            mint(msg.sender, finalId);
+        }
+    }
 
   
     /**
@@ -233,13 +253,34 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         return availablePossums.length;
     }
 
-/**
-* @dev Returns the randomly selected ID offset
- */
+    /**
+    * @dev Returns the randomly selected ID offset
+    */
     function getOffset() public view returns(uint256){
         return randomIdOffset;
     }
-    
+
+    /**
+     * @dev Returns number of reserved possums for a wallet
+     */
+
+     function getNumberOfReservedPossums(address _wallet)public view returns(uint256){
+         return reservedPossums[_wallet].length;
+     }
+
+      /**
+     * @dev Returns ids of the reserved possums for a wallet.
+     */
+    function getReservedPossumIds(address _wallet) public view returns(uint256[] memory reservedIds){
+        require(reservedPossums[_wallet].length > 0, "Wallet has no reserved possums");
+        
+        reservedIds = new uint256[](reservedPossums[_wallet].length);
+
+            for(uint256 i; i < reservedPossums[_wallet].length; i++ ){
+                reservedIds[i] = reservedPossums[_wallet][i];
+            }
+    }
+
     /**
      * @dev Returns the claim price
      */
@@ -252,6 +293,12 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
      */
     function getMintingStartDate() external view returns (uint256) {
         return startMintDate;
+    }
+     /**
+    * @dev Returns the randomly selected ID offset
+    */
+    function getClaimDate() public view returns(uint256){
+        return claimDate;
     }
 
     /**
@@ -313,6 +360,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
     @dev Chainlink VRF consumer
     //  */
+
      function _getRandomNumber() private returns (bytes32 requestId){
          require(LINK.balanceOf(address(this)) >= fee, "Not enough Link  in contract to get random number");
          return requestRandomness(keyHash, fee);

@@ -62,7 +62,7 @@ describe("Trash Possums", function () {
   //console.log("VRF Address", VRFContract.address)
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
-    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
+    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
     const deployed = await trashPossums.deployed();
     console.log("contract deployed at", trashPossums.address)    
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
@@ -102,8 +102,8 @@ assert(balance.toNumber() === 100)
     assert(toAddress === addr2.address);
   });  
 
-  it("should mint an nft to addr1", async function () {
-     const tx = await trashPossums.connect(addr1).mintPossums(1, {value: possumPrice});
+  it("should reserve an nft to addr1", async function () {
+     const tx = await trashPossums.connect(addr1).reservePossums(1, {value: possumPrice});
     const promise = await tx.wait();
     const event = promise.events.find(event => event.event === "Mint")
     const toAddress = event.args[0];
