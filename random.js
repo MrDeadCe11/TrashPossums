@@ -59,7 +59,8 @@ function pickRandoms(){
         const rand = pickRandom();       
         randoms.push(rand);
     }
-    return randoms.sort((a,b)=> a-b);
+    return randoms
+    //.sort((a,b)=> a-b);
 }
 
 
@@ -74,19 +75,27 @@ function setOffset(){
 
 let finalArray = [];
 
-function offsetArray(){    
-    for(i=0; i< (randoms.length - premintNumber); i++){
-    const id = randoms[i] + offset
-        if(id + premintNumber >= arraysize -1){
-            const finalId = premintNumber + (id - (arraysize - 1))
-            finalArray.push(finalId + (premintNumber - 1))
-        } 
-        else{
-            finalArray.push(id)
-            }
+    function offsetArray(){    
+        for(i=0; i < premintNumber; i++){
+            finalArray.push(randoms[i])
         }
-        return finalArray.sort((a,b)=> a-b)
-}
+
+        for(i=premintNumber; i< (randoms.length); i++){
+          const id = randoms[i] + offset
+        console.log("ID", randoms[i], " + OFFSET",offset, "=", id)
+            if(id > arraysize -1 ){
+                const n = (id - (arraysize -1) )+(premintNumber -1)
+                console.log("premint", premintNumber, "+ id", n)               
+                finalArray.push(n)
+                
+            } 
+            else{
+                console.log("less than premint", id)
+                finalArray.push(id)
+                }
+            }
+            return finalArray.sort((a,b)=> a-b)
+    }
 
 function execute (_premintNumber, _arraysize){
     premintNumber = _premintNumber;
@@ -100,4 +109,4 @@ function execute (_premintNumber, _arraysize){
 }
 
 fillArray();
-execute(10, 90);
+execute(15, 60);
