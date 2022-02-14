@@ -1,4 +1,5 @@
 
+
 let array = [];
 let arraysize
 let premintNumber;
@@ -69,30 +70,36 @@ function pickRandoms(){
 let offset = 0;
 
 function setOffset(){
-   offset = Math.floor(Math.random() * randoms.length);
+   offset = Math.floor(Math.random() * (randoms.length /2));
    console.log("offset", offset);
 }
 
 let finalArray = [];
 
     function offsetArray(){    
-        for(i=0; i < premintNumber -1; i++){
+        for(i=0; i < premintNumber; i++){
             finalArray.push(randoms[i])
         }
 
-        for(i=(premintNumber -1); i< (randoms.length -1); i++){
+        for(i=premintNumber; i< (arraysize); i++){
           const id = randoms[i] + offset
-        console.log("ID", randoms[i], " + OFFSET",offset, "=", id)
+      
             if(id > arraysize -1 ){
-                const n = (id - (arraysize -1) )+(premintNumber -1);
-                console.log("premint", premintNumber, "+ id", n);               
+                const n = (id - (arraysize -1) )+(premintNumber -1);                           
                 finalArray.push(n);                
             } else {
-                console.log("less than array size", id);
-                finalArray.push(id);
+                 finalArray.push(id);
                 }
             }
             return finalArray.sort((a,b)=> a-b);
+    }
+
+    function checkFinal() {
+        let checkset = new Set();
+        for(i=0; i<= arraysize-1; i++){
+            checkset.add(finalArray[i])
+        }
+        return checkset.size
     }
 
 function execute (_premintNumber, _arraysize){
@@ -103,8 +110,8 @@ function execute (_premintNumber, _arraysize){
     console.log("pickrandoms",pickRandoms(), "randoms length", randoms.length)
     setOffset();
     console.log("OFFSET",offsetArray(), "length", finalArray.length)
-
+    console.log("checkset", checkFinal())
 }
 
 fillArray();
-execute(15, 60);
+execute(100, 10000);
