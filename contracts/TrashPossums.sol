@@ -184,6 +184,9 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         require(!randomIdOffsetExecuted);
         require(availablePossums.length == 0 || block.number > claimDate);
         _getRandomNumber();
+        ///////////////////REMOVE BEFORE PUBLISHING CONTRACT/////////////////
+        randomIdOffset = 10;
+        //////////////////////////////////////////////////////////////////////
         randomIdOffsetExecuted = true;        
     }
     // END ONLY OWNER FUNCTIONS
@@ -261,6 +264,10 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     */
     function getOffset() public view returns(uint256){
         return randomIdOffset;
+    }
+
+    function offsetExecuted() public view returns(bool){
+        return randomIdOffsetExecuted;
     }
 
     /**
@@ -391,7 +398,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
                 )
             )
         );
-        console.log("random number",random % availablePossums.length);
+        console.log("random number",random % availablePossums.length -1);
         uint256 randomResult = (random % availablePossums.length -1);
         return randomResult ;
     }

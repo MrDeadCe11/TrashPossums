@@ -7,7 +7,7 @@ const {
 describe("Trash Possums", function () {
   let owner, addr1, addr2, addresses;
   let provider;
-  let tokenId1, tokenId2;
+  let tokenId1, tokenId2, tokenId3, reserveId1, reserveId2, reserveId3;
   let trashPossums;
  
   const startMintDate = 23698260; //approx noon on feb 20th 2022
@@ -80,7 +80,7 @@ describe("Trash Possums", function () {
 
   it("should premint 100 possums", async function () {
     const tx = await trashPossums.premintPossums();
-    const promise = await tx.wait();
+    await tx.wait();
     const balance = await trashPossums.balanceOf(owner.address);
 assert(balance.toNumber() === 100)
 
@@ -95,36 +95,71 @@ assert(balance.toNumber() === 100)
     await expect(trashPossums.connect(addr2).reservePossums(2, {value: possumPrice})).to.be.revertedWith("Not enough Ether to reserve these possums");
   });  
 
+ 
+
   it("should reserve an nft to addr1", async function () {
      const tx = await trashPossums.connect(addr1).reservePossums(1, {value: possumPrice});
-    const promise = await tx.wait();
-   const reserved = await trashPossums.getNumberOfReservedPossums(addr1.address)
-    assert(reserved.toNumber() === 1);
+    await tx.wait();
+    const idArray = await trashPossums.getReservedPossumIds(addr1.address);
+    reserveId1 = idArray[0].toNumber();
+    assert(idArray.length === 1);
   });
+
+  let addr2Poss = []
 
   it("should reserve 2 nfts to address 2", async function(){
     const tx = await trashPossums.connect(addr2).reservePossums(2, {value: (possumPrice * 2)});
     await tx.wait();
-    const possnum = await trashPossums.getNumberOfReservedPossums(addr2.address);
+    const possnum = await trashPossums.getNumberOfReservedPossums(addr2.address);  
     expect(possnum.toNumber()).to.equal(2)
   });
+  
 
   it("should get the ids of reserved possums for addr2", async function(){
-    const tx = await trashPossums.getReservedPossumIds(addr2.address);
-    console.log(tx)
-    assert(tx.length === 2);
+    const idArray = await trashPossums.getReservedPossumIds(addr2.address);
+     //store token ids for later use
+      reserveId2 = idArray[0].toNumber();
+      reserveId3 = idArray[1].toNumber();
+   assert(idArray.length === 2);
   });
 
-  
+  it("should not be able to claim nfts before offset", async function(){
+    await expect(trashPossums.connect(addr1).claimPossums()).to.be.revertedWith("Possums not ready to be claimed")
+  })
+
+  it("should execute offset",async function(){
+    const tx = await trashPossums.executeOffset();
+    tx.wait();
+    expect(await trashPossums.offsetExecuted()).to.be.equal(true);
+  } )
+
+  it("should claim the nft reserved by addr1", async function(){
+    const tx = await trashPossums.connect(addr1).claimPossums()
+    const promise = await tx.wait()
+    const event = promise.events.find(e=> e.event === "Transfer")
+    tokenId1 = event.args.tokenId.toNumber();
+  expect(event.args.to).to.equal(addr1.address);
+  expect(event.args.tokenId.toNumber()).to.equal(reserveId1 + 10);
+  })
+
+  it("should claim nfts reserved by adress 2", async function(){
+    const tx = await trashPossums.connect(addr2).claimPossums();
+    const promise = await tx.wait();    
+    const transfers = promise.events.filter(e=>e.event === "Transfer");
+    tokenId2 = transfers[0].args.tokenId;
+    tokenId3 = transfers[1].args.tokenId;    
+    assert(transfers[0].args.to === addr2.address && transfers[1].args.to === addr2.address)
+  })
 
   it("should return the number nfts owned by an address(addr1, owner)", async function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);
     const tx = await trashPossums.balanceOf(addr1.address);
+   
     assert(tx.toNumber() === 1  && ownerbal.toNumber() === 100);
   });
 
   it("should transfer first minted nft from addr2 to addr1", async function () {
-    const tx =await trashPossums.connect(addr2)['safeTransferFrom(address,address,uint256)'](addr2.address, addr1.address, tokenId1)
+    const tx =await trashPossums.connect(addr2)['safeTransferFrom(address,address,uint256)'](addr2.address, addr1.address, tokenId2)
     const promise = await tx.wait();   
     const event = promise.events.find(e=> e.event ==="Transfer")
     assert(event.args.to === addr1.address)
@@ -133,6 +168,7 @@ assert(balance.toNumber() === 100)
   it("should return owner of token by id",  async function (){
     const poss1 = await trashPossums.ownerOf(tokenId1);
     const poss2 = await trashPossums.ownerOf(tokenId2);
+    console.log(poss1, poss2)
    assert(poss1 === addr1.address && poss2 === addr1.address)
   })
   it("should return the price of the possums", async function(){
@@ -147,6 +183,6 @@ assert(balance.toNumber() === 100)
   })
   it("should return the total supply", async function () {
     const supply = await trashPossums.totalSupply();
-    assert(supply.toNumber() === 102)
+    assert(supply.toNumber() === 103)
   })
 });
