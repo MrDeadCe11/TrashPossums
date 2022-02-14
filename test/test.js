@@ -91,25 +91,31 @@ assert(balance.toNumber() === 100)
     assert(tx === owner.address);
   })
 
-   it("should mint an nft to the addr2 address", async function () {
-    
-    const tx = await trashPossums.connect(addr2).mintPossums(1, {value: possumPrice});    
-    const promise = await tx.wait();
-    const event = promise.events.find(event => event.event === "Mint")
-    const toAddress = event.args[0];
-    tokenId1 = event.args[1] ;
-    // console.log("minted to", toAddress, "Token Id", tokenId1.toNumber(), "addr2", addr2.address)
-    assert(toAddress === addr2.address);
+   it("should not reserve possums without correct payment", async function () {
+    await expect(trashPossums.connect(addr2).reservePossums(2, {value: possumPrice})).to.be.revertedWith("Not enough Ether to reserve these possums");
   });  
 
   it("should reserve an nft to addr1", async function () {
      const tx = await trashPossums.connect(addr1).reservePossums(1, {value: possumPrice});
     const promise = await tx.wait();
-    const event = promise.events.find(event => event.event === "Mint")
-    const toAddress = event.args[0];
-    tokenId2 = event.args[1];
-    assert(toAddress === addr1.address);
+   const reserved = await trashPossums.getNumberOfReservedPossums(addr1.address)
+    assert(reserved.toNumber() === 1);
   });
+
+  it("should reserve 2 nfts to address 2", async function(){
+    const tx = await trashPossums.connect(addr2).reservePossums(2, {value: (possumPrice * 2)});
+    await tx.wait();
+    const possnum = await trashPossums.getNumberOfReservedPossums(addr2.address);
+    expect(possnum.toNumber()).to.equal(2)
+  });
+
+  it("should get the ids of reserved possums for addr2", async function(){
+    const tx = await trashPossums.getReservedPossumIds(addr2.address);
+    console.log(tx)
+    assert(tx.length === 2);
+  });
+
+  
 
   it("should return the number nfts owned by an address(addr1, owner)", async function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);

@@ -228,11 +228,14 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         
     function claimPossums() public callerNotAContract{
         require(reservedPossums[msg.sender].length > 0, "you have no reserved possums");
+        require(randomIdOffset != 0, "Possums not ready to be claimed");
         uint256 finalId;
         for(uint256 i; i < reservedPossums[msg.sender].length; i++){
             uint256 id = reservedPossums[msg.sender][i] + randomIdOffset;
-            if( id > totalPossums){
-                finalId = id - (totalPossums - 100);
+            if( id > totalPossums - 1){
+                finalId = (id - (totalPossums -1)) + (premintCount -1);
+            } else {
+                finalId = id;
             }
             mint(msg.sender, finalId);
         }
@@ -265,7 +268,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
      */
 
      function getNumberOfReservedPossums(address _wallet)public view returns(uint256){
-         return reservedPossums[_wallet].length;
+           return reservedPossums[_wallet].length;
      }
 
       /**
@@ -389,7 +392,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
             )
         );
         console.log("random number",random % availablePossums.length);
-        uint256 randomResult = (random % availablePossums.length) -1;
+        uint256 randomResult = (random % availablePossums.length -1);
         return randomResult ;
     }
      
