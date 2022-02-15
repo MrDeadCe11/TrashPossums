@@ -12,7 +12,7 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-  const startMintDate = 24557141; //approx noon on feb 20th 2022
+  const startMintDate = 1642282339; //approx noon on feb 20th 2022
   const possumPrice = hre.ethers.utils.parseEther(".02");
   const testUri = "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
   const VRFAddressMumbai = "0x8C7382F9D8f56b33781fE506E897a4F1e2d17255";
@@ -25,7 +25,7 @@ async function main() {
  console.log('deployiing with account: ',deployer.address)
  
  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
-  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
+  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
 
   await trashPossums.deployed();
 

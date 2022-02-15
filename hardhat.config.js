@@ -46,6 +46,7 @@ module.exports = {
     mumbai: {
       url: MUMBAI_RPC_URL,
       accounts: [PRIVATE_KEY]
+      
       },
     },
   

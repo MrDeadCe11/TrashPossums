@@ -13,7 +13,8 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, Ownable, VRFConsumerBase{
 
-            
+           event Reserved(address indexed to, uint256 indexed tokenId);
+
     modifier mintingStarted() {
         console.log(block.timestamp);
         require(
@@ -30,6 +31,8 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         );
         _;
     }
+    //EVENTS//
+
       //  CONSTANTS //
     uint256 public constant totalPossums = 10000 ;    
     uint256 public constant maxPossumsPerWallet = 54;
@@ -151,7 +154,8 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
         require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
             token.transfer(payable(msg.sender), _amount);
-    }
+                       
+        }
 
     /**
      * @dev Sets the base URI for the API that provides the NFT data.
@@ -228,9 +232,9 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         require(getOffset() == 0);
 
         for (uint256 i; i < amount; i++) {
-           uint256 possid = getPossumToBeClaimed();
-           reservedPossums[msg.sender].push(possid);
-           console.log("reserving possum to", msg.sender, possid);
+           uint256 possId = getPossumToBeClaimed();
+           reservedPossums[msg.sender].push(possId);
+          emit Reserved(msg.sender, possId);
         }
        
     }
@@ -410,7 +414,6 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
                 )
             )
         );
-        console.log("random number",random % availablePossums.length -1);
         uint256 randomResult = (random % availablePossums.length -1);
         return randomResult ;
     }
