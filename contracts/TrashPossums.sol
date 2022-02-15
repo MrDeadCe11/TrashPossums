@@ -15,8 +15,9 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
 
             
     modifier mintingStarted() {
+        console.log(block.timestamp);
         require(
-            startMintDate != 0 && startMintDate <= block.number,
+            startMintDate != 0 && startMintDate <= block.timestamp,
             "You are too early"
         );
         _;
@@ -46,7 +47,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     uint256 internal fee;
     address VRFCoordinator; 
     uint256 private  claimDate;
-
+   
     //MAPPINGS//
 
     // Ledger of number NFTs minted and owned by each unique wallet address.
@@ -78,7 +79,7 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
             fee = _fee;
             VRFCoordinator = _VRFAddress;
             claimDate = _claimDate;
-                 }   
+                   }   
 
     function pause() public onlyOwner {
         _pause();
@@ -134,9 +135,14 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     /**
      * @dev Allows to withdraw any ether in the contract to the address of the owner.
      */
-    function withdraw() external onlyOwner {
+    function withdraw() external payable onlyOwner {
         uint256 totalBalance = address(this).balance;
-        payable(msg.sender).transfer(totalBalance);
+       
+        //payable(owner()).transfer(totalBalance);
+        // send all Ether to owner
+        // Owner can receive Ether since the address of owner is payable
+        (bool success, ) = payable(owner()).call{value: totalBalance}("");
+        require(success, "Failed to send Ether");
     }
 
     /**
@@ -181,8 +187,8 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
     }
 
     function executeOffset() public {
-        require(!randomIdOffsetExecuted);
-        require(availablePossums.length == 0 || block.number > claimDate);
+        require(!randomIdOffsetExecuted, "offset already executed");
+        require(availablePossums.length == 0 || block.timestamp > claimDate, "Cannot execute offset yet");
         _getRandomNumber();
         ///////////////////REMOVE BEFORE PUBLISHING CONTRACT/////////////////
         randomIdOffset = 10;
@@ -298,6 +304,12 @@ contract TrashPossums is ERC721, ERC721URIStorage, ERC721Enumerable, Pausable, O
         return possumPrice;
     }
 
+    /**
+    * @dev Returns the balance of the contract
+    */
+    function getBalance()external view returns (uint256){
+        return address(this).balance;
+    }
     /**
      * @dev Returns the minting start date
      */
