@@ -1,4 +1,5 @@
 const { expect, assert } = require("chai");
+const { link } = require("ethereum-waffle");
 const { ethers } = require("hardhat");
 const {
   isCallTrace,
@@ -87,7 +88,6 @@ describe("Trash Possums", function () {
   const sendEth = await addr1.sendTransaction({to: owner.address, value: ethers.utils.parseEther("1")})
  
   const ownerbal = await provider.getBalance(owner.address);
-  console.log(ownerbal, sendEth.value)
 
   assert(sendEth.value.toString() === ethers.utils.parseEther("1").toString())
   })
@@ -222,5 +222,12 @@ describe("Trash Possums", function () {
     await tx.wait();
     const ownerBal = await provider.getBalance(owner.address);    
     assert(startBal < ownerBal);
+  })
+
+  it("should withdraw ERC20 from contract", async function(){
+    const startBal = await linkContract.balanceOf(owner.address);
+    await trashPossums.connect(owner).withdrawErc20(linkContract.address, 1);
+    const endBal = await linkContract.balanceOf(owner.address);
+    assert(startBal < endBal)
   })
 });
