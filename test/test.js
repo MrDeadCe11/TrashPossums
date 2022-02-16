@@ -9,10 +9,12 @@ describe("Trash Possums", function () {
   let owner, addr1, addr2, addr3, addresses;
   let provider;
   let tokenId1, tokenId2, tokenId3, reserveId1, reserveId2, reserveId3;
-  let trashPossums;
+  let trashPossums, randomness;
  const startMintDate =  1642282339;
   //approx noon on feb 20th 2022
   const possumPrice = ethers.utils.parseEther('2');  
+  const possumCount = ethers.BigNumber.from("10000")
+  const premintCount = ethers.BigNumber.from("100")
   
   const VRFAddressMumbai = "0x8C7382F9D8f56b33781fE506E897a4F1e2d17255";
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
@@ -44,7 +46,7 @@ describe("Trash Possums", function () {
 
   const testUri = "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
  
-  before ("should successfully deploy the contract",async function () {
+  before ("should successfully deploy the contracts",async function () {
     provider = ethers.provider;      
     [owner, addr1, addr2, addr3, ...addresses] = await ethers.getSigners();
    
@@ -61,26 +63,39 @@ describe("Trash Possums", function () {
   //linkContract = await ethers.getContractFactory("ChainlinkToken")
   //VRFContract = await ethers.getContractFactory("VRFCoordinatorMock") 
   //console.log("VRF Address", VRFContract.address)
+  console.log("Deploying contracts with account", owner.address)
+    const Random =  await ethers.getContractFactory("Randomness");
+
+    randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate, possumCount);
+  //VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate
+    const deployedRandomness = await randomness.deployed();
+
+    console.log("randomness deployed at", randomness.address)
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     
-    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
+    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, startMintDate,VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, possumCount );
     
     const deployed = await trashPossums.deployed();
     
-    console.log("contract deployed at", trashPossums.address)    
+    console.log("TrashPossums deployed at", trashPossums.address)    
     
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
     
-    assert(deployed)
+    assert(deployed, deployedRandomness)
   });
 
   it("should fund the contract with chainlink", async function(){
-    let transfer = await linkContract.connect(owner).transfer( "0x721b6F1630013410c964a1F5bB4fDBA07921ac68" , ethers.utils.parseEther("29"));
+    let transfer = await linkContract.connect(owner).transfer(randomness.address , ethers.utils.parseEther("10"));
+
     transfer.wait();
-    let balance = await linkContract.connect(owner).balanceOf(trashPossums.address);
-    console.log("contract balance", balance.toString());
-    assert(balance > 0)  
+    let transferTrash = await linkContract.connect(owner).transfer(trashPossums.address , ethers.utils.parseEther("10"));
+    transferTrash.wait();
+
+    let balance = await linkContract.connect(owner).balanceOf(randomness.address);
+    const trashBalance = await linkContract.connect(owner).balanceOf(trashPossums.address);
+    
+    assert(balance > 0 && trashBalance > 0)  
   })
 
   it("should transfer eth from wallet 1 to owner", async function(){
@@ -102,6 +117,7 @@ describe("Trash Possums", function () {
   
   it("should get owner", async function() {
     const tx = await trashPossums.owner();
+    console.log("owner",tx)
     assert(tx === owner.address);
   })
 
