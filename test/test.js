@@ -66,7 +66,7 @@ describe("Trash Possums", function () {
   console.log("Deploying contracts with account", owner.address)
     const Random =  await ethers.getContractFactory("Randomness");
 
-    randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate, possumCount);
+    randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
   //VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate
     const deployedRandomness = await randomness.deployed();
 
@@ -74,7 +74,7 @@ describe("Trash Possums", function () {
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     
-    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, startMintDate,VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, possumCount );
+    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, startMintDate,VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, randomness.address );
     
     const deployed = await trashPossums.deployed();
     
@@ -106,11 +106,24 @@ describe("Trash Possums", function () {
 
   assert(sendEth.value.toString() === ethers.utils.parseEther("1").toString())
   })
-  
+
+  it("should set the trash address in randomness contract", async function(){
+    const tx = await randomness.connect(owner).setTrash(trashPossums.address);
+    tx.wait()
+    const trash = await randomness.getTrash();
+    assert(trash.toString() === trashPossums.address)
+  })
+
   it("should premint 100 possums", async function () {
-    const tx = await trashPossums.premintPossums();
+    const test = await trashPossums.getAvailablePossums();
+    const alsotest = await randomness.getAvailablePossums();
+    console.log("test", test, alsotest)
+    const tx = await trashPossums.connect(owner).premintPossums();
     await tx.wait();
     const balance = await trashPossums.balanceOf(owner.address);
+    const test2 = await trashPossums.getAvailablePossums();
+    const alsotest2 = await randomness.getAvailablePossums();
+    console.log("test2", test2, alsotest2)
     assert(balance.toNumber() === 100)
 
   })
@@ -119,7 +132,8 @@ describe("Trash Possums", function () {
     const tx = await trashPossums.owner();
     console.log("owner",tx)
     assert(tx === owner.address);
-  })
+  })  
+ 
 
   it("should not reserve possums without correct payment", async function () {
     await expect(trashPossums.connect(addr2).reservePossums(2, {value: possumPrice})).to.be.revertedWith("Not enough Ether to reserve these possums");
@@ -137,7 +151,7 @@ describe("Trash Possums", function () {
     const sentEth = possumPrice.mul(2)
     const tx = await trashPossums.connect(addr2).reservePossums(2, {value: sentEth});
     await tx.wait();
-    const possnum = await trashPossums.getNumberOfReservedPossums(addr2.address);  
+    const possnum = await trashPossums.getReservedPossumsPerWallet(addr2.address);  
     expect(possnum.toNumber()).to.equal(2)
   });
   
@@ -150,7 +164,7 @@ describe("Trash Possums", function () {
     const sentEth = possumPrice.mul(27);
     const tx = await trashPossums.connect(addr3).reservePossums(27, {value: sentEth});
    await tx.wait();
-   const possnum = await trashPossums.getNumberOfReservedPossums(addr3.address);
+   const possnum = await trashPossums.getReservedPossumsPerWallet(addr3.address);
     expect(possnum.toNumber()).to.equal(27);
   })
 
@@ -167,9 +181,9 @@ describe("Trash Possums", function () {
   })
 
   it("should execute offset",async function(){
-    const tx = await trashPossums.executeOffset();
+    const tx = await randomness.executeOffset();
     tx.wait();
-    expect(await trashPossums.offsetExecuted()).to.be.equal(true);
+    expect(await randomness.offsetExecuted()).to.be.equal(true);
   } )
 
   it("should claim the nft reserved by addr1", async function(){

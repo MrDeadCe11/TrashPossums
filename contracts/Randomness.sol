@@ -1,84 +1,65 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.10;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "hardhat/console.sol";
 
-contract Randomness is VRFConsumerBase {
+
+
+contract Randomness is Ownable, VRFConsumerBase {
     
     //Global Variables for Chainlinki VRF
-    uint256 internal fee;
-    address VRFCoordinator; 
-    bytes32 internal keyHash; 
+    uint256 public fee;
+    address VRFCoordinator;
+    bytes32 public keyHash; 
     
     //Variables
-    uint256 internal randomIdOffset;    
-    uint256 internal  claimableDate;
-    address trash;
-    uint256 internal premintNumber = 100;
-    bool public premintSet;    
-    bool public trashSet;
+    uint256 public randomIdOffset;    
+    uint256 public  claimableDate;
     bool public randomIdOffsetExecuted;
-    bool public premintingComplete;
-    uint256 public arrayLength;
-
-
-     
+    address trashAddress;
+    bool public premintExecuted;
+             
       // array of available possums
-    uint256[] availablePossums = new uint[](10000);
+    uint256[] availablePossums =  new uint256[](10000);
 
     constructor(
         address _VRFAddress,
         address _linkToken,
         bytes32 _keyHash,
         uint256 _fee,
-        uint256 _claimableDate,
-        uint256 _arrayLength
-        
+        uint256 claimableDate   
         )VRFConsumerBase(_VRFAddress, _linkToken){
                 keyHash = _keyHash; 
                 VRFCoordinator = _VRFAddress;
-                fee = _fee;   
-                claimableDate = _claimableDate;
-                arrayLength = _arrayLength;
-               
+                fee = _fee;                        
                }
 
-    modifier onlyTrash(){
-        require(msg.sender == trash, "only child contract can call this");
-        _;
-    }
-    
-    function setTrash(address _trash) internal returns(address){
-        require(!trashSet, "trash has already been set");
-        trash = _trash;
-        trashSet = true;
-        return trash;
-    }
+       
    
-   function gettrash()public view returns(address){
-       return trash;
+   modifier onlyTrash () {
+       require(msg.sender == trashAddress, "only Trash can call this");
+       _;
    }
+
     /**
     * @dev Returns the randomly selected ID offset
     */
-    function getOffset() public view returns(uint256){
+    function getOffset() external view returns(uint256){
         return randomIdOffset;
     }
 
-    function offsetExecuted() public view returns(bool){
+    function offsetExecuted() external view returns(bool){
         return randomIdOffsetExecuted;
     }
 
-    function getPremintNumber() public view returns(uint256){
-        return premintNumber;
-    }
-
-    function getAvailablePossums() public view returns(uint256){
+    function getAvailablePossums() external view returns(uint256){
         return availablePossums.length;
     }
 
-    function executeOffset() public returns(bool){
-        require(!randomIdOffsetExecuted, "offset already executed");
+    function executeOffset() external returns(bool){
+        require(randomIdOffset == 0, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
         _getRandomNumber();
         ///////////////////REMOVE BEFORE PUBLISHING CONTRACT/////////////////
@@ -88,23 +69,41 @@ contract Randomness is VRFConsumerBase {
         return randomIdOffsetExecuted;     
     }
 
-    /**
-     * @dev Premint possums
-     */
-    function premintPossums() external virtual onlyTrash {
-        require(!premintingComplete, "You can only premint the Possums once");
-        require(
-            availablePossums.length >= premintNumber,
-            "No Possums left to be claimed"
-        );      
-        for (uint256 i; i < premintNumber; i++) {
-           // mint(msg.sender, i);
-            availablePossums[i] = availablePossums.length - 1;            
-            availablePossums.pop();
-        }
-        premintingComplete = true;
+    function executePremint(uint256 _premintCount) external onlyTrash {
+           require(!premintExecuted, "can only premint once");
+            for(uint256 i; i<_premintCount; i++){
+                availablePossums[i] = availablePossums.length -1;
+                availablePossums.pop();
+            }     
+            premintExecuted = true;   
+
     }
-    
+
+    function setTrash(address trash) external onlyOwner {
+        trashAddress = trash;
+        }
+
+    function getTrash() public view returns(address){
+        return trashAddress;
+    }
+
+    function setArray(uint256 index, uint256 key) external onlyTrash{
+        availablePossums[index] = key -(1 + index);
+    }
+    function popArray() external onlyTrash{
+       availablePossums.pop();
+    }
+
+    function setClaimable (uint256 _claimable) external onlyOwner{
+        
+        claimableDate = _claimable;
+    }
+
+    function getClaimableDate() public view returns(uint256){
+        return claimableDate;
+    }
+
+   
     /**
      * @dev Returns a random available possum to be claimed uses availablePossums array initialized to 0.
      */
