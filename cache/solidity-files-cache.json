@@ -2,11 +2,11 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1644963654006,
-      "contentHash": "e226b65a5b4f9bd2edeca25dc00fa2ee",
+      "lastModificationDate": 1646588544645,
+      "contentHash": "8e6a8d216cc0ce9112723b902c489cdd",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -29,17 +29,17 @@
         }
       },
       "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
         "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         "@openzeppelin/contracts/security/Pausable.sol",
-        "@openzeppelin/contracts/access/Ownable.sol",
         "hardhat/console.sol",
-        "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol"
+        "./IRandomness.sol"
       ],
       "versionPragmas": [
-        "^0.8.2"
+        "^0.8.10"
       ],
       "artifacts": [
         "TrashPossums"
@@ -50,7 +50,7 @@
       "contentHash": "ead7082e39cf31875ff89b22f473500d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -93,7 +93,7 @@
       "contentHash": "88095889e59d16821879a8083f906503",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -131,7 +131,7 @@
       "contentHash": "580a443491d9d70eb064b0130fc3cd01",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -168,7 +168,7 @@
       "contentHash": "9c2dccab8e3a43a18c41e358763fe4d8",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -205,7 +205,7 @@
       "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -315,7 +315,7 @@
       "contentHash": "27d219ec6f69478d065fdbfa7931da68",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -352,7 +352,7 @@
       "contentHash": "592df588492d45fdcf46b3cb608c0fbf",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -387,7 +387,7 @@
       "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -424,7 +424,7 @@
       "contentHash": "4cff8b2ea0d958750786b4e3ca308445",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -459,7 +459,7 @@
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -494,7 +494,7 @@
       "contentHash": "9c54c6c065d9e590fdcdd72c451425b9",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -529,7 +529,7 @@
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -566,7 +566,7 @@
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -601,7 +601,7 @@
       "contentHash": "f69eb47f667b846a8698697d25eeff4e",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -638,7 +638,7 @@
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -673,7 +673,7 @@
       "contentHash": "a70ea296de2000548ba2211a166432fe",
       "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -711,7 +711,7 @@
       "contentHash": "da5a0c3bd86c896f6a407f909c57edf3",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -746,7 +746,7 @@
       "contentHash": "e7fc1c36cb6d9f4b7d64c59dfd2c6211",
       "sourceName": "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1364,7 +1364,7 @@
       "contentHash": "302d9755e46bc69d7058b0cbe7185e37",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.10",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1392,6 +1392,80 @@
       ],
       "artifacts": [
         "IERC20"
+      ]
+    },
+    "/home/someguy/Code/trashPossums/contracts/Randomness.sol": {
+      "lastModificationDate": 1646432783560,
+      "contentHash": "38856c8c0b2205c134a3610a078a906a",
+      "sourceName": "contracts/Randomness.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.10"
+      ],
+      "artifacts": [
+        "Randomness"
+      ]
+    },
+    "/home/someguy/Code/trashPossums/contracts/IRandomness.sol": {
+      "lastModificationDate": 1646431943326,
+      "contentHash": "cbd71a02dcd47fa19ce62a2b68c5623f",
+      "sourceName": "contracts/IRandomness.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.10"
+      ],
+      "artifacts": [
+        "IRandomness"
       ]
     }
   }
