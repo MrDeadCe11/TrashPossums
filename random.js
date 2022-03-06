@@ -76,12 +76,12 @@ function setOffset(){
 
 let finalArray = [];
 
-    function offsetArray(){    
-        for(i=0; i < premintNumber; i++){
+function offsetArray(){    
+    for(i=0; i < premintNumber; i++){
             finalArray.push(randoms[i])
         }
 
-        for(i=premintNumber; i< (arraysize); i++){
+    for(i=premintNumber; i< (arraysize); i++){
           const id = randoms[i] + offset
       
             if(id > arraysize -1 ){
@@ -91,16 +91,16 @@ let finalArray = [];
                  finalArray.push(id);
                 }
             }
-            return finalArray.sort((a,b)=> a-b);
-    }
+    return finalArray.sort((a,b)=> a-b);
+}
 
-    function checkFinal() {
+function checkFinal() {
         let checkset = new Set();
         for(i=0; i<= arraysize-1; i++){
             checkset.add(finalArray[i])
         }
-        return checkset.size
-    }
+    return checkset.size
+}
 
 function execute (_premintNumber, _arraysize){
     premintNumber = _premintNumber;

@@ -55,13 +55,6 @@ describe("Trash Possums", function () {
 
   owner = await ethers.getSigner("0xECfA90604b8A43DE10e5CC3fA78A938fE122EB36");
     
-  //   linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
-  //  VRFContract = new ethers.Contract(VRFAddressMumbai,VRFAbi, provider);
-  
-  //linkContract = await ethers.getContractFactory("ChainlinkToken")
-  //VRFContract = await ethers.getContractFactory("VRFCoordinatorMock") 
-  //console.log("VRF Address", VRFContract.address)
-
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     
     trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
@@ -206,9 +199,11 @@ describe("Trash Possums", function () {
     assert(price.toString() === ethers.utils.parseEther("26").toString())
   })
 
-  it("should return the total supply", async function () {
-    const supply = await trashPossums.totalSupply();
-    assert(supply.toNumber() === 103)
+
+  it("should return the total minted possums", async function () {
+    const supply = await trashPossums.getTotalMintedPossums();   
+    assert(supply.toNumber() === 130)
+
   })
 
   it("it should return the balance of ether in the contract", async function(){
