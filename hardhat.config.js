@@ -27,7 +27,8 @@ module.exports = {
         blockNumber: 23924300,
         gas: 15688778,
         gasPrice: 8000000000,
-        accounts: [PRIVATE_KEY]
+        accounts: [PRIVATE_KEY],
+        blockGasLimit: 20000000
       },
       // url: "http://127.0.0.1:8545/",
       chainId: 1337,    
@@ -45,15 +46,15 @@ module.exports = {
     },     
     mumbai: {
       url: MUMBAI_RPC_URL,
-      accounts: [PRIVATE_KEY]
-      
+      accounts: [PRIVATE_KEY],
+      blockGasLimit: 20000000
       },
     },
   
   solidity: {
     compilers: [
       {
-        version: "0.8.4",
+        version: "0.8.10",
         settings: {
           optimizer: {
             enabled: true,
