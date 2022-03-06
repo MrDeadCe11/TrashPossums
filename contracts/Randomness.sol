@@ -29,11 +29,12 @@ contract Randomness is Ownable, VRFConsumerBase {
         address _linkToken,
         bytes32 _keyHash,
         uint256 _fee,
-        uint256 claimableDate   
+        uint256 _claimableDate   
         )VRFConsumerBase(_VRFAddress, _linkToken){
                 keyHash = _keyHash; 
                 VRFCoordinator = _VRFAddress;
-                fee = _fee;                        
+                fee = _fee; 
+                claimableDate = _claimableDate;                       
                }
 
        
@@ -46,20 +47,20 @@ contract Randomness is Ownable, VRFConsumerBase {
     /**
     * @dev Returns the randomly selected ID offset
     */
-    function getOffset() external view returns(uint256){
+    function getOffset() public view returns(uint256){
         return randomIdOffset;
     }
 
-    function offsetExecuted() external view returns(bool){
+    function offsetExecuted() public view returns(bool){
         return randomIdOffsetExecuted;
     }
 
-    function getAvailablePossums() external view returns(uint256){
+    function getAvailablePossums() public view returns(uint256){
         return availablePossums.length;
     }
 
-    function executeOffset() external returns(bool){
-        require(randomIdOffset == 0, "offset already executed");
+    function executeOffset() public returns(bool){
+        require(!randomIdOffsetExecuted, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
         _getRandomNumber();
         ///////////////////REMOVE BEFORE PUBLISHING CONTRACT/////////////////
@@ -94,7 +95,7 @@ contract Randomness is Ownable, VRFConsumerBase {
        availablePossums.pop();
     }
 
-    function setClaimable (uint256 _claimable) external onlyOwner{
+    function setClaimableDate (uint256 _claimable) external onlyOwner{
         
         claimableDate = _claimable;
     }
@@ -107,7 +108,7 @@ contract Randomness is Ownable, VRFConsumerBase {
     /**
      * @dev Returns a random available possum to be claimed uses availablePossums array initialized to 0.
      */
-   function getPossumToBeClaimed() internal returns (uint256 tokenId) {     
+   function getPossumToBeClaimed() external onlyTrash returns (uint256 tokenId) {     
    
         uint256 random = _getPseudoRandomNumber();
             

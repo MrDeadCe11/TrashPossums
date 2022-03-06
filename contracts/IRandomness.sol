@@ -14,4 +14,8 @@ interface IRandomness {
     function getAvailablePossums() external view returns(uint256);
 
     function executePremint(uint256) external;
+
+    function getPossumToBeClaimed() external returns(uint256);
+
+    function getClaimableDate() external view returns(uint256);
 }

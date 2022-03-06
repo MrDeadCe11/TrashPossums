@@ -10,6 +10,7 @@ describe("Trash Possums", function () {
   let provider;
   let tokenId1, tokenId2, tokenId3, reserveId1, reserveId2, reserveId3;
   let trashPossums, randomness;
+  let addr3tokens = [];
  const startMintDate =  1642282339;
   //approx noon on feb 20th 2022
   const possumPrice = ethers.utils.parseEther('2');  
@@ -56,28 +57,17 @@ describe("Trash Possums", function () {
     })
 
   owner = await ethers.getSigner("0xECfA90604b8A43DE10e5CC3fA78A938fE122EB36");
-    
-  //   linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
-  //  VRFContract = new ethers.Contract(VRFAddressMumbai,VRFAbi, provider);
-  
-  //linkContract = await ethers.getContractFactory("ChainlinkToken")
-  //VRFContract = await ethers.getContractFactory("VRFCoordinatorMock") 
-  //console.log("VRF Address", VRFContract.address)
+ 
   console.log("Deploying contracts with account", owner.address)
+
     const Random =  await ethers.getContractFactory("Randomness");
-
     randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
-  //VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate
     const deployedRandomness = await randomness.deployed();
-
-    console.log("randomness deployed at", randomness.address)
+    console.log("Randomness deployed at", randomness.address)
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
-    
-    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, startMintDate,VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, randomness.address );
-    
+    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, randomness.address);
     const deployed = await trashPossums.deployed();
-    
     console.log("TrashPossums deployed at", trashPossums.address)    
     
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
@@ -87,8 +77,8 @@ describe("Trash Possums", function () {
 
   it("should fund the contract with chainlink", async function(){
     let transfer = await linkContract.connect(owner).transfer(randomness.address , ethers.utils.parseEther("10"));
-
     transfer.wait();
+
     let transferTrash = await linkContract.connect(owner).transfer(trashPossums.address , ethers.utils.parseEther("10"));
     transferTrash.wait();
 
@@ -101,7 +91,6 @@ describe("Trash Possums", function () {
   it("should transfer eth from wallet 1 to owner", async function(){
     
   const sendEth = await addr1.sendTransaction({to: owner.address, value: ethers.utils.parseEther("1")})
- 
   const ownerbal = await provider.getBalance(owner.address);
 
   assert(sendEth.value.toString() === ethers.utils.parseEther("1").toString())
@@ -110,7 +99,9 @@ describe("Trash Possums", function () {
   it("should set the trash address in randomness contract", async function(){
     const tx = await randomness.connect(owner).setTrash(trashPossums.address);
     tx.wait()
+
     const trash = await randomness.getTrash();
+
     assert(trash.toString() === trashPossums.address)
   })
 
@@ -130,7 +121,6 @@ describe("Trash Possums", function () {
   
   it("should get owner", async function() {
     const tx = await trashPossums.owner();
-    console.log("owner",tx)
     assert(tx === owner.address);
   })  
  
@@ -144,6 +134,7 @@ describe("Trash Possums", function () {
     await tx.wait();
     const idArray = await trashPossums.getReservedPossumIds(addr1.address);
     reserveId1 = idArray[0].toNumber();
+    
     assert(idArray.length === 1);
   });
 
@@ -151,7 +142,8 @@ describe("Trash Possums", function () {
     const sentEth = possumPrice.mul(2)
     const tx = await trashPossums.connect(addr2).reservePossums(2, {value: sentEth});
     await tx.wait();
-    const possnum = await trashPossums.getReservedPossumsPerWallet(addr2.address);  
+    const possnum = await trashPossums.getReservedPossumsPerWallet(addr2.address); 
+
     expect(possnum.toNumber()).to.equal(2)
   });
   
@@ -165,7 +157,12 @@ describe("Trash Possums", function () {
     const tx = await trashPossums.connect(addr3).reservePossums(27, {value: sentEth});
    await tx.wait();
    const possnum = await trashPossums.getReservedPossumsPerWallet(addr3.address);
+   const availNum = await trashPossums.getAvailablePossums();
+   const randavail = await randomness.getAvailablePossums();
+
+   addr3tokens = await trashPossums.getReservedPossumIds(addr3.address);   
     expect(possnum.toNumber()).to.equal(27);
+    expect(availNum.toString()).to.equal("9870");
   })
 
   it("should get the ids of reserved possums for addr2", async function(){
@@ -195,6 +192,10 @@ describe("Trash Possums", function () {
   expect(event.args.tokenId.toNumber()).to.equal(reserveId1 + 10);
   })
 
+  it("should NOT be able to claim the nft reserved by addr1", async function(){
+    await expect(trashPossums.connect(addr1).claimPossums()).to.be.revertedWith("ERC721: token already minted");
+  })
+
   it("should claim nfts reserved by adress 2", async function(){
     const tx = await trashPossums.connect(addr2).claimPossums();
     const promise = await tx.wait();    
@@ -202,6 +203,14 @@ describe("Trash Possums", function () {
     tokenId2 = transfers[0].args.tokenId;
     tokenId3 = transfers[1].args.tokenId;    
     assert(transfers[0].args.to === addr2.address && transfers[1].args.to === addr2.address)
+  })
+
+  it("should claim nfts reserved by adress 3", async function(){
+    const tx = await trashPossums.connect(addr3).claimPossums();
+    const promise = await tx.wait();    
+    const transfers = promise.events.filter(e=>e.event === "Transfer");
+     
+    assert(transfers[0].args.to === addr3.address && transfers[1].args.to === addr3.address && transfers.length === 27)
   })
 
   it("should return the number nfts owned by an address(addr1, owner)", async function () {
@@ -236,9 +245,10 @@ describe("Trash Possums", function () {
     assert(price.toString() === ethers.utils.parseEther("26").toString())
   })
 
-  it("should return the total supply", async function () {
-    const supply = await trashPossums.totalSupply();
-    assert(supply.toNumber() === 103)
+  it("should return the total minted possums", async function () {
+    const supply = await trashPossums.getTotalMintedPossums();
+   
+    assert(supply.toNumber() === 130)
   })
 
   it("it should return the balance of ether in the contract", async function(){
@@ -260,4 +270,9 @@ describe("Trash Possums", function () {
     const endBal = await linkContract.balanceOf(owner.address);
     assert(startBal < endBal)
   })
+
+  // it("should not be able to call mint function directly", async function(){
+  //   const tx = await trashPossums.mint(addr1.address, tokenId1);
+  //   expect(tx.to.be.revertedWith("trashPossums.mint is not a function"))
+  // })
 });

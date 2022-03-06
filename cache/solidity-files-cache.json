@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1646346962930,
-      "contentHash": "18bfae8b7016ef2a37c7e51da0b8bd2d",
+      "lastModificationDate": 1646588544645,
+      "contentHash": "8e6a8d216cc0ce9112723b902c489cdd",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -36,7 +36,6 @@
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         "@openzeppelin/contracts/security/Pausable.sol",
         "hardhat/console.sol",
-        "./Randomness.sol",
         "./IRandomness.sol"
       ],
       "versionPragmas": [
@@ -1396,8 +1395,8 @@
       ]
     },
     "/home/someguy/Code/trashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1646347055071,
-      "contentHash": "c7007b10ab53a73cd2b5ec03ea5f56f6",
+      "lastModificationDate": 1646432783560,
+      "contentHash": "38856c8c0b2205c134a3610a078a906a",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -1435,8 +1434,8 @@
       ]
     },
     "/home/someguy/Code/trashPossums/contracts/IRandomness.sol": {
-      "lastModificationDate": 1646346994017,
-      "contentHash": "f5cf27c9e21014b35d4d9f704a128f44",
+      "lastModificationDate": 1646431943326,
+      "contentHash": "cbd71a02dcd47fa19ce62a2b68c5623f",
       "sourceName": "contracts/IRandomness.sol",
       "solcConfig": {
         "version": "0.8.10",
