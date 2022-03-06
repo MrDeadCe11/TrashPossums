@@ -33,8 +33,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     //EVENTS//
 
       //  CONSTANTS //
-    uint256 public constant totalPossums = 10000 ; 
-      
+    uint256 public constant totalPossums = 10000 ;       
     uint256 public constant maxPossumsPerWallet = 52;
     uint256 private constant maxPossumsPerTransaction = 27;
     uint256 private constant premintCount = 100;  
@@ -56,11 +55,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     mapping(address => uint256) private claimedPossumsPerWallet;
     //mapping to track reserved possums before final offset occurs
     mapping(address => uint256[]) private reservedPossums;
-    
-   
-    //Global Variables
-  bool premintingComplete;
- 
+
     constructor(
         uint256 _possumPrice,
         uint256 _startMintDate,
@@ -145,18 +140,14 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
      * @dev Premint possums
      */
     function premintPossums() external onlyOwner {
-        uint256 availPoss = IRandomness(randomness).getAvailablePossums();
+        bool premintingComplete = IRandomness(randomness).getPremint();
         require(!premintingComplete, "You can only premint the Possums once");
-        require(
-            availPoss >= premintCount,
-            "No Possums left to be claimed"
-        );          
-       
+     
         for (uint256 i; i < premintCount; i++) {
            mint(msg.sender, i);
          }
+         
         IRandomness(randomness).executePremint(premintCount);
-        premintingComplete = true;
     }
      
    

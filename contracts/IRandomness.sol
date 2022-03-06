@@ -7,7 +7,7 @@ interface IRandomness {
 
     function setArray(uint256, uint256) external;
 
-      function getPremintNumber() external view returns(uint256);
+    function getPremintNumber() external view returns(uint256);
 
     function getOffset() external view returns(uint256);
 
@@ -18,4 +18,6 @@ interface IRandomness {
     function getPossumToBeClaimed() external returns(uint256);
 
     function getClaimableDate() external view returns(uint256);
+
+    function getPremint() external view returns(bool);
 }

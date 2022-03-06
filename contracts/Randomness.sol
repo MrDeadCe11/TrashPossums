@@ -63,9 +63,6 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(!randomIdOffsetExecuted, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
         _getRandomNumber();
-        ///////////////////REMOVE BEFORE PUBLISHING CONTRACT/////////////////
-        randomIdOffset = 10;
-        //////////////////////////////////////////////////////////////////////
         randomIdOffsetExecuted = true;   
         return randomIdOffsetExecuted;     
     }
@@ -76,23 +73,19 @@ contract Randomness is Ownable, VRFConsumerBase {
                 availablePossums[i] = availablePossums.length -1;
                 availablePossums.pop();
             }     
-            premintExecuted = true;   
+            premintExecuted = true;
+    }
 
+    function getPremint() public view returns(bool){
+        return premintExecuted;
     }
 
     function setTrash(address trash) external onlyOwner {
         trashAddress = trash;
-        }
+    }
 
     function getTrash() public view returns(address){
         return trashAddress;
-    }
-
-    function setArray(uint256 index, uint256 key) external onlyTrash{
-        availablePossums[index] = key -(1 + index);
-    }
-    function popArray() external onlyTrash{
-       availablePossums.pop();
     }
 
     function setClaimableDate (uint256 _claimable) external onlyOwner{
