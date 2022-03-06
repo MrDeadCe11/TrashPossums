@@ -157,7 +157,7 @@ contract Randomness is Ownable, VRFConsumerBase {
 
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override{
         require(msg.sender == VRFCoordinator  && requestId > 0, "only VRF Coordinator can fulfill");
-        randomIdOffset = (randomness % 9999);
+        randomIdOffset = (randomness % 6000);
     }
 
     //  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override virtual;
