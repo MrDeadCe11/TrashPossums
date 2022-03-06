@@ -7,9 +7,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-
-import "hardhat/console.sol";
-
 import "./IRandomness.sol";
 
 
@@ -204,7 +201,6 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
            uint256 possId = IRandomness(randomness).getPossumToBeClaimed();
            reservedPossums[msg.sender].push(possId);
            numberOfReservedPossums++;
-           console.log("reserved", msg.sender, possId);
           emit Reserved(msg.sender, possId);
         }
        
@@ -226,7 +222,6 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             } else {
                 finalId = id;
             }
-            console.log("claiming", msg.sender, finalId);
            
             mint(msg.sender, finalId);
              reservedPossums[msg.sender][i] = 0;

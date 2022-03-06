@@ -109,15 +109,15 @@ describe("Trash Possums", function () {
 
   it("should premint 100 possums", async function () {
     const test = await trashPossums.getAvailablePossums();
-    const alsotest = await randomness.getAvailablePossums();
-    console.log("test", test, alsotest)
+        
     const tx = await trashPossums.connect(owner).premintPossums();
     await tx.wait();
+
     const balance = await trashPossums.balanceOf(owner.address);
+    
     const test2 = await trashPossums.getAvailablePossums();
-    const alsotest2 = await randomness.getAvailablePossums();
-    console.log("test2", test2, alsotest2)
-    assert(balance.toNumber() === 100)
+    
+    assert(balance.toNumber() === 100 && (test.toNumber() - test2.toNumber())===100)
 
   })
   
@@ -274,8 +274,4 @@ describe("Trash Possums", function () {
     assert(startBal < endBal)
   })
 
-  // it("should not be able to call mint function directly", async function(){
-  //   const tx = await trashPossums.mint(addr1.address, tokenId1);
-  //   expect(tx.to.be.revertedWith("trashPossums.mint is not a function"))
-  // })
-});
+ });
