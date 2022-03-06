@@ -67,7 +67,7 @@ function pickRandoms(){
 
 
 
-let offset = 0;
+let offset = 8992;
 
 function setOffset(){
    offset = Math.floor(Math.random() * (randoms.length /2));
@@ -108,10 +108,10 @@ function execute (_premintNumber, _arraysize){
     fillArray();
     console.log("premint",premint(), array.length);    
     console.log("pickrandoms",pickRandoms(), "randoms length", randoms.length)
-    setOffset();
-    console.log("OFFSET",offsetArray(), "length", finalArray.length)
+    //setOffset();
+    console.log("OFFSET",offset, offsetArray(), "length", finalArray.length)
     console.log("checkset", checkFinal())
 }
 
 fillArray();
-execute(100, 10000);
+execute(100, 7000);
