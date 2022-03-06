@@ -22,7 +22,7 @@ contract Randomness is Ownable, VRFConsumerBase {
     bool public premintExecuted;
              
       // array of available possums
-    uint256[] availablePossums =  new uint256[](10000);
+    uint256[] availablePossums =  new uint256[](7000);
 
     constructor(
         address _VRFAddress,
@@ -62,7 +62,9 @@ contract Randomness is Ownable, VRFConsumerBase {
     function executeOffset() public returns(bool){
         require(!randomIdOffsetExecuted, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
+        
         _getRandomNumber();
+      
         randomIdOffsetExecuted = true;   
         return randomIdOffsetExecuted;     
     }

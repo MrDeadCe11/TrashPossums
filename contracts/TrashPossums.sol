@@ -40,11 +40,11 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     
 
     // SET BY CONSTRUCTOR //
-    uint256 private startMintDate;
-    uint256 private possumPrice;
-    uint256 private totalMintedPossums;   
-    string private baseURI;     
-        uint256 private numberOfReservedPossums;
+    uint256 public startMintDate;
+    uint256 public possumPrice;
+    uint256 public totalMintedPossums;   
+    string public baseURI;     
+    uint256 public numberOfReservedPossums;
    
     address public randomness;
     
@@ -146,7 +146,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         for (uint256 i; i < premintCount; i++) {
            mint(msg.sender, i);
          }
-         
+
         IRandomness(randomness).executePremint(premintCount);
     }
      

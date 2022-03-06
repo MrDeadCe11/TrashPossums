@@ -164,7 +164,7 @@ describe("Trash Possums", function () {
 
    addr3tokens = await trashPossums.getReservedPossumIds(addr3.address);   
     expect(possnum.toNumber()).to.equal(27);
-    expect(availNum.toString()).to.equal("9870");
+    expect(availNum.toString()).to.equal("6870");
   })
 
   it("should get the ids of reserved possums for addr2", async function(){

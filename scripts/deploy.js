@@ -23,9 +23,14 @@ async function main() {
 
  const [deployer] = await hre.ethers.getSigners();
  console.log('deployiing with account: ',deployer.address)
+
+ const Random =  await ethers.getContractFactory("Randomness");
+   const randomness = await Random.deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
+    await randomness.deployed();
+    console.log("Randomness deployed at", randomness.address)
  
  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
-  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
+  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, randomness.address);
 
   await trashPossums.deployed();
 
