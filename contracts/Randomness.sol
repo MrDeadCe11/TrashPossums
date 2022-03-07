@@ -63,6 +63,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(!randomIdOffsetExecuted, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
         
+        randomIdOffset = 10;
         _getRandomNumber();
       
         randomIdOffsetExecuted = true;   
@@ -107,7 +108,7 @@ contract Randomness is Ownable, VRFConsumerBase {
    
         uint256 random = _getPseudoRandomNumber();
             
-            // checks availiblePossums array which is initialized at a length of 10,000 all zeros
+            // checks availiblePossums array which is initialized at a length of 7,000 all zeros
             // if possum at random index is 0 and the possum at the last position is 0 mint the random 
             //   id and assign the index value to the index of the last position of the array.  
             //   then pop the last array position
@@ -130,11 +131,6 @@ contract Randomness is Ownable, VRFConsumerBase {
             // if random index is zero and last position is not zero then assign the value in the last 
             // array position to the random position and pop the array.
         
-            // else if (availablePossums[random] == 0 && availablePossums[availablePossums.length-1] != 0) {
-            //     tokenId = random;
-            //     availablePossums[random] = availablePossums[availablePossums.length-1];
-            // }
-
             else {
                 tokenId = random;
                 availablePossums[random] = availablePossums[availablePossums.length-1];
@@ -160,7 +156,6 @@ contract Randomness is Ownable, VRFConsumerBase {
         randomIdOffset = (randomness % 6000);
     }
 
-    //  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override virtual;
     /**
      * @dev Generates a pseudo-random number.
     */

@@ -33,7 +33,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     //EVENTS//
 
       //  CONSTANTS //
-    uint256 public constant totalPossums = 10000 ;       
+    uint256 public constant totalPossums = 7000 ;       
     uint256 public constant maxPossumsPerWallet = 52;
     uint256 private constant maxPossumsPerTransaction = 27;
     uint256 private constant premintCount = 100;  
@@ -53,7 +53,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
 
     // Ledger of number NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
-    //mapping to track reserved possums before final offset occurs
+    //mapping to track reserved possums
     mapping(address => uint256[]) private reservedPossums;
 
     constructor(
@@ -162,8 +162,8 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         payable
         mintingStarted
         {
-            uint256 offset = IRandomness(randomness).getOffset();  
-            uint256 available = IRandomness(randomness).getAvailablePossums();
+         uint256 available = getAvailablePossums();
+         uint reserved = getReservedPossumsPerWallet(msg.sender);
         require(
             msg.value >= possumPrice * amount,
             "Not enough Ether to reserve these possums"
@@ -172,13 +172,13 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             amount > 0, "need to reserve at least 1 NFT"
             );
         require(
-            claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
+            reserved + amount <= maxPossumsPerWallet && claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
             "You cannot reserve more possums"
         );
 
         require(
             available >= amount,
-            "No Possums left"
+            "Not enough Possums left"
         );
 
         require(
@@ -186,17 +186,20 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             "Max 27 per transaction"
         );
                  
-        require(offset == 0, "offset already enacted, cannot reserve any more possums");
-
-        for (uint256 i; i < amount; i++) {
-           uint256 possId = IRandomness(randomness).getPossumToBeClaimed();
-           reservedPossums[msg.sender].push(possId);
-           numberOfReservedPossums++;
+         for (uint256 i; i < amount; i++) {
+          uint256 possId = reservePossum();
           emit Reserved(msg.sender, possId);
         }
+        
        
     }
 
+    function reservePossum()private returns (uint256 possID){
+      possID = IRandomness(randomness).getPossumToBeClaimed();
+           reservedPossums[msg.sender].push(possID);
+           numberOfReservedPossums++;
+
+    }
         
     function claimPossums() public payable mintingStarted{
         uint256 claimable = getClaimDate();
@@ -215,7 +218,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             }
            
             mint(msg.sender, finalId);
-             reservedPossums[msg.sender][i] = 0;
+            reservedPossums[msg.sender][i] = 0;
         }
     }
 
@@ -238,7 +241,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     /**
      * @dev Returns how many possums are still available to be claimed
      */
-    function getNumberOfReservedPossums() external view returns (uint256) {
+    function getNumberOfReservedPossums() public view returns (uint256) {
         return numberOfReservedPossums;
     }
 
@@ -267,20 +270,20 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     /**
      * @dev Returns the claim price
      */
-    function getPossumPrice() external view returns (uint256) {
+    function getPossumPrice() public view returns (uint256) {
         return possumPrice;
     }
 
     /**
     * @dev Returns the balance of the contract
     */
-    function getBalance()external view returns (uint256){
+    function getBalance()public view returns (uint256){
         return address(this).balance;
     }
     /**
      * @dev Returns the minting start date
      */
-    function getMintingStartDate() external view returns (uint256) {
+    function getMintingStartDate() public view returns (uint256) {
         return startMintDate;
     }
      /**
@@ -312,7 +315,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     * @dev returns available possums from randomness contract
      */
 
-    function getAvailablePossums() external view returns(uint256){
+    function getAvailablePossums() public view returns(uint256){
         return IRandomness(randomness).getAvailablePossums();
     }
     receive() external payable {}

@@ -14,7 +14,7 @@ const randomness = await hre.ethers.getContractAt("Randomness", randomnessAddres
 //const tx = await randomness.executeOffset()
 //await tx.wait();
 //console.log(tx)
-const trash = await randomness.getOffset();
+//const trash = await randomness.getOffset();
 
 console.log("offset is set to: ",trash);
 
