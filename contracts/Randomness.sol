@@ -64,7 +64,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
        
         _getRandomNumber();
-      
+     
         randomIdOffsetExecuted = true;   
         return randomIdOffsetExecuted;     
     }

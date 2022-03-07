@@ -127,7 +127,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     /**
     * @dev change address of randomness contract.
      */
-    function setRandomness(string _randomness) external onlyOwner {
+    function setRandomness(address _randomness) external onlyOwner {
         randomness = _randomness;
     }
 
@@ -157,7 +157,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
 
     
         /**
-     * @dev Allows to withdraw any ether in the contract to the address of the owner.
+     * @dev Allows withdrawal of any ether in the contract to the address of the owner.
      */
     function withdraw() external payable onlyOwner {
         uint256 totalBalance = address(this).balance;
@@ -169,11 +169,11 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     }
 
     /**
-    * @dev allows withdrawal of any erc20 from the contract
+    * @dev allows withdrawal of any erc20 from the contract to owner
      */
     function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
         require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
-            token.transfer(payable(msg.sender), _amount);                       
+            token.transfer(payable(owner()), _amount);                       
         }
 
     // END ONLY OWNER FUNCTIONS
