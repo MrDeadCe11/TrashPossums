@@ -62,9 +62,10 @@ contract Randomness is Ownable, VRFConsumerBase {
     function executeOffset() public returns(bool){
         require(!randomIdOffsetExecuted, "offset already executed");
         require(availablePossums.length == 0 || block.timestamp > claimableDate, "Cannot execute offset yet");
-       
+        require(claimableDate !=0, "not ready to offset yet");
+        
         _getRandomNumber();
-     
+      
         randomIdOffsetExecuted = true;   
         return randomIdOffsetExecuted;     
     }
@@ -144,8 +145,8 @@ contract Randomness is Ownable, VRFConsumerBase {
     @dev Chainlink VRF consumer
     //  */
 
-     function _getRandomNumber() internal returns (bytes32 requestId){
-         require(claimableDate < block.timestamp);
+     function _getRandomNumber() private returns (bytes32 requestId){
+         require(claimableDate < block.timestamp && claimableDate != 0, "not ready to get random number");
          require(LINK.balanceOf(address(this)) >= fee, "Not enough Link  in contract to get random number");
          return requestRandomness(keyHash, fee);
      }
@@ -174,5 +175,29 @@ contract Randomness is Ownable, VRFConsumerBase {
         uint256 randomResult = (random % availablePossums.length -1);
         return randomResult ;
     }
+    /**
+    fallback function
+     */
+     receive() external payable {}
 
+
+    /**
+     * @dev Allows withdrawal of any ether in the contract to the address of the owner.
+     */
+    function withdraw() external payable onlyOwner {
+        uint256 totalBalance = address(this).balance;
+
+        // send all Ether to owner
+        // Owner can receive Ether since the address of owner is payable
+        (bool success, ) = payable(owner()).call{value: totalBalance}("");
+        require(success, "Failed to send Ether");
+    }
+
+    /**
+    * @dev allows withdrawal of any erc20 from the contract to owner
+     */
+    function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
+        require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
+            token.transfer(payable(owner()), _amount);                       
+    }
 }

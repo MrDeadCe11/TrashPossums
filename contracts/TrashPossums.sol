@@ -130,7 +130,6 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     function setRandomness(address _randomness) external onlyOwner {
         randomness = _randomness;
     }
-
    
 
     /**
