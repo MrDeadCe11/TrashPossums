@@ -44,14 +44,13 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     uint256 public possumPrice;
     uint256 public totalMintedPossums;   
     string public baseURI;     
-    uint256 public numberOfReservedPossums;
-   
+    uint256 public numberOfReservedPossums;   
     address public randomness;
     
    
     //MAPPINGS//
 
-    // Ledger of number NFTs minted and owned by each unique wallet address.
+    // counter of number NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
     //mapping to track reserved possums
     mapping(address => uint256[]) private reservedPossums;
@@ -68,16 +67,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             baseURI = _baseUri;              
             randomness = _randomness;
            }   
-
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
-     
-    
+   
    
     
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
@@ -112,7 +102,14 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         return super.supportsInterface(interfaceId);
     }
 
-  
+  //////ONLY OWNER FUNCTIONS/////
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
 
     /**
      * @dev Sets the mint price for each possum
@@ -121,20 +118,20 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         possumPrice = _possumPrice;
     }
 
-     /**
-     * @dev Mints the possum
+    /**
+    * @dev sets startMintDate in case it needs to be changed after contract launch
      */
-    function mint(address _to, uint256 _tokenId) private{
-        require(
-            totalMintedPossums <= totalPossums, "all Possums have been minted"
-             );
-         _safeMint(_to, _tokenId);         
-         _setTokenURI(_tokenId, baseURI);               
-         
-         totalMintedPossums++;
-         
-         claimedPossumsPerWallet[_to]++;        
+    function setStartMintDate(uint256 _startMintDate) external onlyOwner {
+        startMintDate = _startMintDate;
     }
+    /**
+    * @dev change address of randomness contract.
+     */
+    function setRandomness(string _randomness) external onlyOwner {
+        randomness = _randomness;
+    }
+
+   
 
     /**
      * @dev Premint possums
@@ -150,8 +147,35 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         IRandomness(randomness).executePremint(premintCount);
     }
      
-   
+       /**
+     * @dev Sets the base URI for the API that provides the NFT data.
+     */
+
+    function setBaseTokenURI(string calldata _tokenURI) external onlyOwner{
+        baseURI = _tokenURI;
+    }
+
     
+        /**
+     * @dev Allows to withdraw any ether in the contract to the address of the owner.
+     */
+    function withdraw() external payable onlyOwner {
+        uint256 totalBalance = address(this).balance;
+
+        // send all Ether to owner
+        // Owner can receive Ether since the address of owner is payable
+        (bool success, ) = payable(owner()).call{value: totalBalance}("");
+        require(success, "Failed to send Ether");
+    }
+
+    /**
+    * @dev allows withdrawal of any erc20 from the contract
+     */
+    function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
+        require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
+            token.transfer(payable(msg.sender), _amount);                       
+        }
+
     // END ONLY OWNER FUNCTIONS
 
     /**
@@ -193,14 +217,18 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         
        
     }
-
+    /**
+    @dev get random possum ID from randomness contract and map it to the wallet address
+     */
     function reservePossum()private returns (uint256 possID){
       possID = IRandomness(randomness).getPossumToBeClaimed();
            reservedPossums[msg.sender].push(possID);
            numberOfReservedPossums++;
 
     }
-        
+        /**
+        @dev after the offset has been set claim your reserved possums with this function
+         */  
     function claimPossums() public payable mintingStarted{
         uint256 claimable = getClaimDate();
         require(reservedPossums[msg.sender].length > 0, "you have no reserved possums");
@@ -222,6 +250,20 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         }
     }
 
+    /**
+     * @dev Mints the possum
+     */
+    function mint(address _to, uint256 _tokenId) private{
+        require(
+            totalMintedPossums <= totalPossums, "all Possums have been minted"
+             );
+         _safeMint(_to, _tokenId);         
+         _setTokenURI(_tokenId, baseURI);               
+         
+         totalMintedPossums++;
+         
+         claimedPossumsPerWallet[_to]++;        
+    }
   
     /**
      * @dev Returns the base URI for the tokens API.
@@ -230,14 +272,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         return baseURI;
     }
 
-      /**
-     * @dev Sets the base URI for the API that provides the NFT data.
-     */
-
-    function setBaseTokenURI(string calldata _tokenURI) external onlyOwner{
-        baseURI = _tokenURI;
-    }
-
+  
     /**
      * @dev Returns how many possums are still available to be claimed
      */
@@ -320,25 +355,6 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     }
     receive() external payable {}
 
-        /**
-     * @dev Allows to withdraw any ether in the contract to the address of the owner.
-     */
-    function withdraw() external payable onlyOwner {
-        uint256 totalBalance = address(this).balance;
-
-        // send all Ether to owner
-        // Owner can receive Ether since the address of owner is payable
-        (bool success, ) = payable(owner()).call{value: totalBalance}("");
-        require(success, "Failed to send Ether");
-    }
-
-    /**
-    * @dev allows withdrawal of any erc20 from the contract
-     */
-    function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
-        require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
-            token.transfer(payable(msg.sender), _amount);                       
-        }
 
   
  
