@@ -62,7 +62,7 @@ describe("Trash Possums", function () {
   console.log("Deploying contracts with account", owner.address)
 
     const Random =  await ethers.getContractFactory("Randomness");
-    randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
+    randomness = await Random.connect(owner).deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
     const deployedRandomness = await randomness.deployed();
     console.log("Randomness deployed at", randomness.address)
 
@@ -100,13 +100,18 @@ describe("Trash Possums", function () {
 
   it("should set the trash address in randomness contract", async function(){
     const tx = await randomness.connect(owner).setTrash(trashPossums.address);
-    tx.wait()
+    await tx.wait()
 
     const trash = await randomness.getTrash();
 
     assert(trash.toString() === trashPossums.address)
   })
-
+  it("should set claimable date on randomness contract", async function(){
+    const tx = await randomness.connect(owner).setClaimableDate(startMintDate);
+    await tx.wait()
+    const date = await randomness.getClaimableDate()
+    expect(date).to.equal(startMintDate);
+  })
   it("should premint 100 possums", async function () {
     const test = await trashPossums.getAvailablePossums();
         

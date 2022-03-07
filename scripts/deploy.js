@@ -25,7 +25,7 @@ async function main() {
  console.log('deployiing with account: ',deployer.address)
 
  const Random =  await ethers.getContractFactory("Randomness");
-   const randomness = await Random.deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee, startMintDate);
+   const randomness = await Random.deploy(VRFAddressMumbai, LinkTokenMumbai, keyHashMumbai, fee);
     await randomness.deployed();
     console.log("Randomness deployed at", randomness.address)
  
@@ -35,6 +35,9 @@ async function main() {
   await trashPossums.deployed();
 
   console.log("Trash Possums deployed to:", trashPossums.address);
+
+  const setDate = await randomness.setClaimableDate(startMintDate);
+  const setTrash = await randomness.setTrash(trashPossums.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

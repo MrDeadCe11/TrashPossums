@@ -35,8 +35,8 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
       //  CONSTANTS //
     uint256 public constant totalPossums = 7000 ;       
     uint256 public constant maxPossumsPerWallet = 52;
-    uint256 private constant maxPossumsPerTransaction = 27;
-    uint256 private constant premintCount = 100;  
+    uint256 public constant maxPossumsPerTransaction = 27;
+    uint256 public constant premintCount = 100;  
     
 
     // SET BY CONSTRUCTOR //

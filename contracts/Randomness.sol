@@ -3,20 +3,20 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
-
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Randomness is Ownable, VRFConsumerBase {
     
     //Global Variables for Chainlinki VRF
     uint256 public fee;
-    address VRFCoordinator;
+    address public VRFCoordinator;
     bytes32 public keyHash; 
     
     //Variables
     uint256 public randomIdOffset;    
     uint256 public  claimableDate;
     bool public randomIdOffsetExecuted;
-    address trashAddress;
+    address public trashAddress;
     bool public premintExecuted;
              
       // array of available possums
@@ -26,14 +26,12 @@ contract Randomness is Ownable, VRFConsumerBase {
         address _VRFAddress,
         address _linkToken,
         bytes32 _keyHash,
-        uint256 _fee,
-        uint256 _claimableDate   
+        uint256 _fee  
         )VRFConsumerBase(_VRFAddress, _linkToken){
                 keyHash = _keyHash; 
                 VRFCoordinator = _VRFAddress;
                 fee = _fee; 
-                claimableDate = _claimableDate;                       
-               }
+    }
 
        
    
@@ -63,7 +61,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(claimableDate !=0, "not ready to offset yet");
         
         _getRandomNumber();
-      
+       
         randomIdOffsetExecuted = true;   
         return randomIdOffsetExecuted;     
     }
@@ -80,7 +78,9 @@ contract Randomness is Ownable, VRFConsumerBase {
     function getPremint() public view returns(bool){
         return premintExecuted;
     }
-
+    /**
+    Must set trash address before you can execute onlyTrash functions
+     */
     function setTrash(address trash) external onlyOwner {
         trashAddress = trash;
     }
