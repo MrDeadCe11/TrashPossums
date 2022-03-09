@@ -63,6 +63,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         _getRandomNumber();
        
         randomIdOffsetExecuted = true;   
+        
         return randomIdOffsetExecuted;     
     }
 
@@ -89,10 +90,10 @@ contract Randomness is Ownable, VRFConsumerBase {
         return trashAddress;
     }
 
-    function setClaimableDate (uint256 _claimable) external onlyOwner{
+    function setClaimableDate (uint256 _claimable) external onlyOwner {
         
         claimableDate = _claimable;
-    }
+        }
 
     function getClaimableDate() public view returns(uint256){
         return claimableDate;

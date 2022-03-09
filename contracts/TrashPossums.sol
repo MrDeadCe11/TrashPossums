@@ -30,26 +30,19 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         );
         _;
     }
-    //EVENTS//
-
-      //  CONSTANTS //
+    
     uint256 public constant totalPossums = 7000 ;       
-    uint256 public constant maxPossumsPerWallet = 52;
+    uint256 public constant maxPossumsPerWallet = 54;
     uint256 public constant maxPossumsPerTransaction = 27;
     uint256 public constant premintCount = 100;  
     
-
-    // SET BY CONSTRUCTOR //
     uint256 public startMintDate;
     uint256 public possumPrice;
-    uint256 public totalMintedPossums;   
-    string public baseURI;     
+    uint256 public totalMintedPossums;     
     uint256 public numberOfReservedPossums;   
     address public randomness;
-    
+    string public baseURI;   
    
-    //MAPPINGS//
-
     // counter of number NFTs minted and owned by each unique wallet address.
     mapping(address => uint256) private claimedPossumsPerWallet;
     //mapping to track reserved possums
@@ -146,18 +139,18 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         IRandomness(randomness).executePremint(premintCount);
     }
      
-       /**
-     * @dev Sets the base URI for the API that provides the NFT data.
-     */
+    /**
+    * @dev Sets the base URI for the API that provides the NFT data.
+    */
 
     function setBaseTokenURI(string calldata _tokenURI) external onlyOwner{
         baseURI = _tokenURI;
     }
 
     
-        /**
-     * @dev Allows withdrawal of any ether in the contract to the address of the owner.
-     */
+    /**
+    * @dev Allows withdrawal of any ether in the contract to the address of the owner.
+    */
     function withdraw() external payable onlyOwner {
         uint256 totalBalance = address(this).balance;
 
@@ -169,7 +162,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
 
     /**
     * @dev allows withdrawal of any erc20 from the contract to owner
-     */
+    */
     function withdrawErc20(IERC20 token, uint256 _amount) external onlyOwner {
         require(token.balanceOf(address(this)) > 0, "this contract does not contain this token");
             token.transfer(payable(owner()), _amount);                       
@@ -178,24 +171,27 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     // END ONLY OWNER FUNCTIONS
 
     /**
-     * @dev RESERVE up to 27 Possums at once
-     */
+    * @dev RESERVE up to 27 Possums at once.
+    */
     function reservePossums(uint256 amount)
         public
         payable
         mintingStarted
         {
-         uint256 available = getAvailablePossums();
-         uint reserved = getReservedPossumsPerWallet(msg.sender);
+
+        uint256 available = getAvailablePossums();
+      
         require(
             msg.value >= possumPrice * amount,
             "Not enough Ether to reserve these possums"
         );
+
         require(
             amount > 0, "need to reserve at least 1 NFT"
             );
+        
         require(
-            reserved + amount <= maxPossumsPerWallet && claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
+            reservedPossums[msg.sender].length + amount <= maxPossumsPerWallet && claimedPossumsPerWallet[msg.sender] + amount <= maxPossumsPerWallet,
             "You cannot reserve more possums"
         );
 
@@ -209,9 +205,10 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
             "Max 27 per transaction"
         );
                  
-         for (uint256 i; i < amount; i++) {
-          uint256 possId = reservePossum();
-          emit Reserved(msg.sender, possId);
+        for (uint256 i; i < amount; i++) {
+        uint256 possId = reservePossum();
+        emit Reserved(msg.sender, possId);
+        
         }
         
        
@@ -231,11 +228,13 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     function claimPossums() public payable mintingStarted{
         uint256 claimable = getClaimDate();
         require(reservedPossums[msg.sender].length > 0, "you have no reserved possums");
-        require( claimable < block.timestamp || numberOfReservedPossums == totalPossums);
+        require( claimable < block.timestamp || numberOfReservedPossums >= totalPossums);
 
         uint256 finalId;
         uint256 offset = IRandomness(randomness).getOffset();
+
         require(offset != 0, "Possums not ready to be claimed" );
+
         for(uint256 i; i < reservedPossums[msg.sender].length; i++){
             uint256 id = reservedPossums[msg.sender][i] + offset;
             if( id > totalPossums - 1){

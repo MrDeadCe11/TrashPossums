@@ -36,8 +36,9 @@ async function main() {
 
   console.log("Trash Possums deployed to:", trashPossums.address);
 
-  const setDate = await randomness.setClaimableDate(startMintDate);
-  const setTrash = await randomness.setTrash(trashPossums.address);
+  const setmint = await randomness.setClaimableDate(startMintDate);
+  console.log("mint date is set to:", setmint)
+  await randomness.setTrash(trashPossums.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
