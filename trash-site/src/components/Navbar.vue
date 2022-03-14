@@ -76,10 +76,13 @@ import { ref } from 'vue';
 export default {
   setup() {
     let showMenu = ref(false);
+
     const toggleNav = () => {
       showMenu.value = !showMenu.value
       console.log("toggleNav")};
     return { showMenu, toggleNav };
+
+    
   },
 };
 </script>

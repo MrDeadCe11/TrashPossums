@@ -6,12 +6,11 @@ Roadmap:
    </h1>
     <br>
  <ul class="ml-8">    
-      <li><p> <span class="font-bold text-xl"> 10% </span> We pay back our wives’ boyfriends</p></li>
-      <li><p> <span class="font-bold text-xl"> 20% </span> Special edition pog run.</p></li>
-      <li><p> <span class="font-bold text-xl"> 40% </span> Trash Possum Series 2 Launch </p></li>
-      <li><p> <span class="font-bold text-xl"> 60% </span> Roach Buddies</p></li>
-      <li><p> <span class="font-bold text-xl"> 80% </span> Buy Metaverse property and construct “Possum Town”</p></li>
-      <li><p> <span class="font-bold text-xl"> 100%</span>  Roach pet battle game?</p></li>
+      <li><p> <span class="font-bold text-xl"> 20% </span> We pay back our wives’ boyfriends</p></li>
+      <li><p> <span class="font-bold text-xl"> 40% </span> Launch Trash Dao</p></li>
+      <li><p> <span class="font-bold text-xl"> 60% </span> Roach Buddies.</p></li>
+      <li><p> <span class="font-bold text-xl"> 80% </span> Special edition pog run.</p></li>
+      <li><p> <span class="font-bold text-xl"> 100%</span> Trash Possums series two.</p></li>
   <br>
   </ul>
    </div>

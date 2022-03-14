@@ -54,7 +54,6 @@ import Footer from '../components/Footer.vue'
 import { computed, ref } from 'vue'
 import pfpImagesArr from '../store/modules/pfpImagesArr'
 
-
 export default {
   name:  'Home',
   components: {Gallery, Footer},

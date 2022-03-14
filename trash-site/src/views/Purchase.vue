@@ -1,21 +1,39 @@
 <template>
 <div class="purchase mt-24">
-   <h1 class="font-bold text-white-light text-2xl"> 
+   <h1 class="font-bold content-evenly text-white-light text-2xl"> 
      Purchase A Possum
+      <div
+        @click="connect"
+        
+        class="flex flex-row w-1/6 justify-center cursor-pointer items-center m-16 p-2 border-2 text-white-light border-blue-dark bg-blue-dark font-bold hover:text-white hover:bg-blue-light">
+        <img
+            src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MM"
+            class="h-5 mr-2">
+        Connect to Metamask
+    </div>
    </h1>
 </div>
 </template>
 
-<script setup>
+<script>
 
-import { computed }from 'vue';
+import BlockchainConnect from '../utils/getWeb3';
 
-import { useStore } from 'vuex'
 
-const store = useStore();
-const name = computed(() => {
-    return store.state.user.name
-});
+
+export default {
+  name:  'Purchase',
+  components: {},
+  setup() {
+    const connect = () => {
+  const blockChain = new BlockchainConnect();
+  console.log("connect", blockChain)
+  blockChain.connect();
+    }
+
+  return {connect}
+  }
+}
 </script>
 
 <style>

@@ -17,7 +17,7 @@ export default {
     name: 'Modal',
     props: [],
     components: {},
-methods:{
+    methods:{
   
 }
 }

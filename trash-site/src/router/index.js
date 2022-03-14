@@ -16,7 +16,6 @@ const routes = [
     {
         path:"/roadmap",
         name: 'Roadmap',
-        //lazy loaded component
         component: Roadmap,
     },
     {

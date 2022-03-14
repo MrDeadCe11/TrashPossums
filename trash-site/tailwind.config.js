@@ -31,7 +31,12 @@ module.exports = {
       },
       black: {
         dark: '#000000'
+      },
+      blue: {
+        dark: '#418bca',
+        light: '#6ca6d4'
       }
     },
+   
   },
 }
