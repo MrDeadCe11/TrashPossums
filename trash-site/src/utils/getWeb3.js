@@ -31,8 +31,8 @@ class BlockchainConnect {
   async connect(){
           this.provider = await detectEthereumProvider();
 
-      if(this.provider){
-    await window.ethereum.enable();
+          if(this.provider){
+    
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
     await this.provider.send("eth_requestAccounts", []);
             
@@ -49,10 +49,12 @@ class BlockchainConnect {
         this.account = await this.signer.getAddress();
         console.log("BlockchainConnect::connect() - Complete: ", this.provider, this.signer, this.account);
     
+        window.ethereum.on('accountsChanged', (accounts) => {
+                      this.accountsChanged(accounts);
+                  });
+        }
+}  
 
-   }
-  
-}
 
 export default BlockchainConnect;
 
