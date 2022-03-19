@@ -1,3 +1,23 @@
+
+// import { ethers } from "ethers";
+// import Web3Modal from "web3modal";
+
+// const providerOptions = {
+//   /* See Provider Options Section */
+// };
+
+// const web3Modal = new Web3Modal({
+//   network: "mainnet", // optional
+//   cacheProvider: true, // optional
+//   providerOptions // required
+// });
+
+// const instance = await web3Modal.connect();
+
+// const provider = new ethers.providers.Web3Provider(instance);
+// const signer = provider.getSigner();
+
+
 import { ethers, Signer } from 'ethers';
 import {Provider} from '@ethersproject/abstract-provider';
 import {BigNumber} from '@ethersproject/bignumber'
@@ -30,13 +50,11 @@ class BlockchainConnect {
 
   async connect(){
           this.provider = await detectEthereumProvider();
-
-          if(this.provider){
+         if(this.provider){
     
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    await this.provider.send("eth_requestAccounts", []);
-            
-      this.signer = this.provider.getSigner();
+        this.provider = new ethers.providers.Web3Provider(window.ethereum);
+        await this.provider.send("eth_requestAccounts", []);
+        this.signer = this.provider.getSigner();
 
             if(this.signer === null || this.signer === undefined)
                 console.error("BlockchainConnect::connect() Signer returned null")
