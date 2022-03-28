@@ -10,6 +10,8 @@ const store = createStore({
     chainId: null,
     reservedPossums: null,
     claimedPossums: null,
+    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf",
+    trashABI: "../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
     
  },
  mutations: {
