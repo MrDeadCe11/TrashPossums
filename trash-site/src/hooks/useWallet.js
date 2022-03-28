@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   chainId: 1,
   networkId: 1, 
   ethersProvider: null,
+  signer: null,
 };
 export default function UseWallet() {
   const { ctx: _this } = getCurrentInstance();
@@ -95,15 +96,17 @@ export default function UseWallet() {
     const chainId = await web3.eth.getChainId(); // 坑逼 注意版本 chainId
 
     const ethersProvider = new ethers.providers.Web3Provider(provider);
-    console.log("ethersWeb", ethersProvider)
+
+    const ethersSigner = ethersProvider.getSigner()
+  
     walletObj.web3 = web3;
-    walletObj.provider = provider;
-    
+    walletObj.provider = provider;    
     walletObj.connected = true;
     walletObj.userAddress = address;
     walletObj.chainId = chainId;
     walletObj.networkId = networkId;
     walletObj.ethersProvider = ethersProvider;
+    walletObj.signer = ethersSigner;
     await getAccountAssets();
   
 

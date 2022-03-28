@@ -28,8 +28,10 @@ import { computed } from 'vue';
 import { utils } from 'web3';
 import {ethers} from 'ethers';
 import useWallet from '../hooks/useWallet';
+import { useStore } from 'vuex';
 // import { USDT_API } from '../web3/abis';
 // import { USDT_ADDRESS } from '../web3/config';
+const store = useStore();
 
 const {
   onConnect,
@@ -51,13 +53,15 @@ const handleWalletConnect = async () => {
 };
 
 const contract = computed(
-  () => new web3.value.eth.Contract(USDT_API, USDT_ADDRESS),
+  () => new ethers.Contract(store.contractAddress, store.trashABI),
 );
 
-function approve() {
-  return contract.value.methods
-    .approve(USDT_ADDRESS, utils.toHex(utils.toWei('1000000000000000000000000000', 'gwei')))
-    .send({ from: userAddress.value });
-}
+// function approve() {
+//   return contract.value.methods
+//     .approve(USDT_ADDRESS, utils.toHex(utils.toWei('1000000000000000000000000000', 'gwei')))
+//     .send({ from: userAddress.value });
+// }
+
+
 // .....
 </script>
