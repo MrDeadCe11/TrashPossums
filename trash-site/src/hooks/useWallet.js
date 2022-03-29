@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   ethersProvider: null,
   signer: null,
 };
+
 export default function UseWallet() {
   const { ctx: _this } = getCurrentInstance();
 
@@ -24,6 +25,7 @@ export default function UseWallet() {
   const fetching = ref(false);
   const assets = ref(0);
   //https://github.com/Web3Modal/web3modal#web3modal
+  
   const web3Modal = new Web3Modal({
     theme: 'dark',
     network: getChainData(walletObj.chainId).network,
@@ -81,6 +83,7 @@ export default function UseWallet() {
   };
 
   const onConnect = async () => {
+
     const provider = await web3Modal.connect();
 
     await subscribeProvider(provider);

@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar.vue"
 import Footer from './components/Footer.vue'
 import Modal from "./components/Modal.vue"
 import {ref} from 'vue'
+
 export default {
     components: {
         Navbar, Footer

@@ -46,9 +46,10 @@ const {
 } = useWallet();
 
 const handleWalletConnect = async () => {
+  console.log("META CLICK")
   await onConnect();
   if (connected) {
-    console.log('afterConnectdWallet', connected);
+    console.log('afterConnectedWallet', connected);
   }
 };
 
