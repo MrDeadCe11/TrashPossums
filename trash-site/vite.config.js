@@ -41,13 +41,10 @@ export default defineConfig({
     util: 'util',
     buffer: 'buffer',
        // ↓ see https://github.com/vitejs/vite/issues/6085
-       '@ensdomains/address-encoder': '@ensdomains/address-encoder/lib/index.umd.js'
+    '@ensdomains/address-encoder': '@ensdomains/address-encoder/lib/index.umd.js'
   }
  }
 })
-
-//import nodePolyfills from 'rollup-plugin-polyfill-node';
-const production = process.env.NODE_ENV === 'production';
 
 // export default {
 
