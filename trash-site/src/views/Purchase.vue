@@ -6,15 +6,7 @@
            Get you Some Possums
      </h1>
      </div>
-       <div
-        @click="connect"
-        
-        class="flex flex-row w-3/6 h-16 m-auto mb-3 justify-center cursor-pointer items-center p-2 border-2 text-white-light border-blue-dark bg-blue-dark font-bold hover:text-white hover:bg-blue-light sm:">
-        <img
-            src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MM"
-            class="h-5 mr-2">
-       <h1 class="text-xl"> Connect to Wallet </h1>
-    </div>
+      <connect-wallet/>
     <div class="flex w-full h-auto">
      
       <span class="mb-3 h-24 w-full align-middle">
@@ -29,6 +21,7 @@
     
     </div>
     </div>
+    
    
 </div>
 </template>
@@ -37,10 +30,11 @@
 
 import BlockchainConnect from '../utils/getWeb3';
 import store from '../store';
+import ConnectWallet from '../components/ConnectWallet.vue';
 
 export default {
   name:  'Purchase',
-  components: {},
+  components: {ConnectWallet},
   mounted() {
   },
   setup() {

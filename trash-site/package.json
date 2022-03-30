@@ -2,9 +2,9 @@
   "name": "trash-site",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "serve": "vite preview",
     "build": "vite build",
-    "serve": "vite preview"
+    "dev": "vite"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -13,10 +13,26 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@metamask/detect-provider": "^1.2.0",
-    "ethers": "^5.6.0",
+    "@toruslabs/torus-embed": "^1.10.15",
+    "@walletconnect/web3-provider": "^1.4.1",
+    "authereum": "^0.1.14",
+    "bitski": "^0.11.0-beta.4",
+    "browserify": "^17.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "dotenv": "^16.0.0",
+    "eth-provider": "^0.10.0",
+    "ethers": "^5.6.1",
+    "events": "^3.3.0",
+    "process": "^0.11.10",
+    "rollup-plugin-polyfill-node": "^0.8.0",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "web3": "^1.3.6",
+    "web3modal": "^1.9.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
@@ -25,6 +41,7 @@
     "tailwindcss": "^2.2.19",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2",
-    "vite": "^2.6.4"
+    "vite": "^2.6.4",
+    "vue-cli-plugin-web3modal": "~1.1.0"
   }
 }
