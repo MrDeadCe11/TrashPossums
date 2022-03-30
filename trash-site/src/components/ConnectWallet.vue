@@ -9,60 +9,72 @@
        <h1 class="text-xl"> Connect to Wallet </h1>
     </div>
   <div>  
-    <button @click="resetApp">resetApp</button>
-    <button @click="getAccountAssets">getBalance</button>
-    <button @click="approve">approveUSDTContract</button>
-    <p>
-      Address:
-      {{ userAddress }}
-    </p>
-    <p>balance:{{ assets }}</p>
-    <p>networkId: {{ networkId }}</p>
-    <p>chainId: {{ chainId }}</p>
+    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>reset App</h1></button><br>
+    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>
+    <p class="text-white-light">Address: {{ userAddress }}</p>
+    <p class="text-white-light">CONNECTED: {{connected}}</p>
+    <p class="text-white-light">balance:{{ assets }}</p>
+    <p class="text-white-light">chainId: {{ chainId }}</p>
+    
   </div>
 </template>
 
-<script setup>
+<script>
 
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { utils } from 'web3';
 import {ethers} from 'ethers';
 import useWallet from '../hooks/useWallet';
 import { useStore } from 'vuex';
 // import { USDT_API } from '../web3/abis';
 // import { USDT_ADDRESS } from '../web3/config';
+
+export default {
+  setup() {
 const store = useStore();
 
 const {
   onConnect,
   connected,
-  web3,
-  userAddress,
-  chainId,
-  networkId,
   resetApp,
   assets,
   getAccountAssets,
+  walletObj
 } = useWallet();
 
 const handleWalletConnect = async () => {
-  console.log("META CLICK")
   await onConnect();
   if (connected) {
     console.log('afterConnectedWallet', connected);
-  }
+   
+     }
 };
 
-const contract = computed(
-  () => new ethers.Contract(store.contractAddress, store.trashABI),
-);
+const reset = () => {
+resetApp();
 
+}
+
+
+return {
+  connected : computed(()=>store.getters.getConnected),
+  web3: computed(()=> store.getters.getWeb3),
+  userAddress: computed(()=> store.getters.getAddress),
+  chainId: computed(()=> store.getters.getChainId),
+  networkId: computed(()=> store.getters.getNetworkId),
+  resetApp: resetApp,
+  assets: assets,
+  getAccountAssets,
+  handleWalletConnect,
+  reset
+  }
+ }
+}
 // function approve() {
 //   return contract.value.methods
 //     .approve(USDT_ADDRESS, utils.toHex(utils.toWei('1000000000000000000000000000', 'gwei')))
 //     .send({ from: userAddress.value });
 // }
-
 
 // .....
 </script>

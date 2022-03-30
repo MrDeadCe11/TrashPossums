@@ -6,6 +6,7 @@ import {ethers} from 'ethers'
 import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
+import {useStore} from 'vuex'
 
 const INITIAL_STATE = {
   web3: null, 
@@ -18,25 +19,30 @@ const INITIAL_STATE = {
   signer: null,
 };
 
+
 export default function UseWallet() {
   const { ctx: _this } = getCurrentInstance();
-
+  const store = useStore();
   const walletObj = reactive({ ...INITIAL_STATE });
+ 
   const fetching = ref(false);
   const assets = ref(0);
   //https://github.com/Web3Modal/web3modal#web3modal
-  
+
   const web3Modal = new Web3Modal({
     theme: 'dark',
     network: getChainData(walletObj.chainId).network,
     cacheProvider: true,
     providerOptions,
+    show:true
   });
+
+  
   // methods wallte.js
   const resetApp = async () => {
-    const { web3, provider } = walletObj;
-    
-    if (provider && provider.getDefaultProvider() && provider.disconnect) {
+    const { web3, provider, ethersProvider} = walletObj;
+   
+    if (provider && ethersProvider && provider.disconnect) {
       await web3.currentProvider.disconnect();
     }
 
@@ -46,6 +52,7 @@ export default function UseWallet() {
       walletObj[e] = INITIAL_STATE[e];
     });
     _this.$forceUpdate();
+    store.commit("clearCache");
   };
 
   async function getUserBalance () {    
@@ -59,7 +66,7 @@ export default function UseWallet() {
   const getAccountAssets = async () => {
     fetching.value = true;
     // get account balances
-    const balance = await getUserBalance()
+    const balance = await getUserBalance();
     assets.value = balance;
   };
 
@@ -111,7 +118,8 @@ export default function UseWallet() {
     walletObj.ethersProvider = ethersProvider;
     walletObj.signer = ethersSigner;
     await getAccountAssets();
-  
+    
+    store.commit("updateWallet", walletObj);
 
   };
 
@@ -125,5 +133,6 @@ export default function UseWallet() {
     web3Modal,
     // methods
     onConnect,
+    walletObj,
   };
 }
