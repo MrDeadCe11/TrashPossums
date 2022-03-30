@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
 
   build: {
-    chunkSizeWarningLimit:1500,
+    chunkSizeWarningLimit:1800,
     rollupOptions: {
       output:{
           manualChunks(id) {
