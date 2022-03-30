@@ -14,6 +14,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 library.add(far);
 import { dom } from "@fortawesome/fontawesome-svg-core";
 
+
 dom.watch();
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(router,vuex).use(store).mount('#app')

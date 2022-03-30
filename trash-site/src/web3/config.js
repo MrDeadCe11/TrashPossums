@@ -1,5 +1,5 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import Torus from '@toruslabs/torus-embed';
+//import Torus from '@toruslabs/torus-embed';
 import Authereum from 'authereum';
 import ethProvider from "eth-provider";
 
@@ -20,9 +20,9 @@ const providerOptions = {
     },
   },
     // https://github.com/torusresearch/torus-embed#readme
-  torus: {
-    package: Torus,
-  },
+  // torus: {
+  //   package: Torus,
+  // },
     // https://docs.authereum.com/integration
   authereum: {
     package: Authereum,
