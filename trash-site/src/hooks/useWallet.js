@@ -22,7 +22,9 @@ const INITIAL_STATE = {
 
 export default function UseWallet() {
   const { ctx: _this } = getCurrentInstance();
+
   const store = useStore();
+  
   const walletObj = reactive({ ...INITIAL_STATE });
  
   const fetching = ref(false);

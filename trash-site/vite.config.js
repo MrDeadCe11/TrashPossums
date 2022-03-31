@@ -26,11 +26,11 @@ export default defineConfig({
       },      
       commonjsOptions: {
         transformMixedEsModules: true
-      }
+      } 
     
   },
   optimizeDeps: {
-    exclude: ['js-sha3'] // <- modules that needs shimming have to be excluded from dep optimization
+    exclude: [] // <- modules that needs shimming have to be excluded from dep optimization
     },
 
   resolve: {
@@ -41,7 +41,8 @@ export default defineConfig({
     util: 'util',
     buffer: 'buffer',
        // ↓ see https://github.com/vitejs/vite/issues/6085
-    '@ensdomains/address-encoder': '@ensdomains/address-encoder/lib/index.umd.js'
+    '@ensdomains/address-encoder': '@ensdomains/address-encoder/lib/index.umd.js',
+    web3: 'web3/dist/web3.min.js',
   }
  }
 })

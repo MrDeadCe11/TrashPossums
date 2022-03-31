@@ -191,6 +191,22 @@ const supportedChains = [
       balance: '',
     },
   },
+  {
+    name: 'Matic Testnet mumbai',
+    short_name: 'bsc',
+    chain: 'smartchain',
+    network: 'Mumbai',
+    chain_id: 8001,
+    network_id: 8001,
+    rpc_url: 'https://bsc-dataseed1.defibit.io/',
+    native_currency: {
+      symbol: 'MATIC',
+      name: 'MATIC',
+      decimals: '18',
+      contractAddress: '',
+      balance: '',
+    },
+  },
 ];
 
 export default supportedChains;
