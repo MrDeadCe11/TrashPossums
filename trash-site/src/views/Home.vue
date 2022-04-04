@@ -53,15 +53,21 @@ import Gallery from '../components/Gallery.vue'
 import Footer from '../components/Footer.vue'
 import { computed, ref } from 'vue'
 import pfpImagesArr from '../store/modules/pfpImagesArr'
+import { useStore } from 'vuex'
+
 
 export default {
   name:  'Home',
   components: {Gallery, Footer},
+  mounted(){
+  
+  },
   setup() {
+  
   const pfpImages = ref([...pfpImagesArr]) 
   const sliceStart = computed(()=> Math.floor(Math.random()*19))
   const sliceEnd = computed(()=> sliceStart.value + 4)
- 
+  
   return { pfpImages, sliceStart, sliceEnd}
 }
 

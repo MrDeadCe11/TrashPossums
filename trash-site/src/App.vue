@@ -1,14 +1,22 @@
 <script>
 import Navbar from "./components/Navbar.vue"
 import Footer from './components/Footer.vue'
-import Modal from "./components/Modal.vue"
+import { useStore } from "vuex"
 import {ref} from 'vue'
 
 export default {
     components: {
         Navbar, Footer
     },
+    mounted () {
+          const store = useStore();
+    // store.commit("clearCache");
+    const connected = store.getters.getConnected
+    console.log("connected app side", connected)
+    },
     setup () {
+        const store = useStore();
+      
         function clicked () {
             console.log("app clicked")
         }

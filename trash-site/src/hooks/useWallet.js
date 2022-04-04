@@ -70,6 +70,7 @@ export default function UseWallet() {
     // get account balances
     const balance = await getUserBalance();
     assets.value = balance;
+    
   };
 
   const subscribeProvider = async (provider) => {
@@ -88,6 +89,7 @@ export default function UseWallet() {
       walletObj.chainId = chainId;
       walletObj.networkId = networkId;
       await getAccountAssets();
+      store.commit("updateWallet", walletObj);
     });
   };
 

@@ -21,6 +21,7 @@
         border-brown-light     
       "
     >
+    
      
       <div class="min-w-min p-2 ml-5 mt-2 max-w-sm col-span-3">
         <router-link
@@ -29,6 +30,8 @@
           <img src='https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961'/>
         </router-link>
         </div>
+
+        <div v-show="connected" class="text-white-light mt-10"><h1>CONNECTED</h1></div>
         <!-- Mobile menu button -->
         <div @click.prevent="toggleNav" class="flex ml-10 col-start-6 md:hidden">
           <button
@@ -72,15 +75,17 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import {useStore} from 'vuex'
 export default {
   setup() {
     let showMenu = ref(false);
-
+    const store = useStore();   
     const toggleNav = () => {
       showMenu.value = !showMenu.value
       console.log("toggleNav")};
-    return { showMenu, toggleNav };
+    return { showMenu, toggleNav,
+    connected: computed(()=>store.getters.getConnected),};
 
     
   },

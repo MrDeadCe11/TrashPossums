@@ -6,15 +6,12 @@
         <img
             src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MM"
             class="h-5 mr-2">
-       <h1 class="text-xl"> Connect to Wallet </h1>
+       <h1 class="text-xl"> Connect your Wallet </h1>
     </div>
   <div>  
     <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>reset App</h1></button><br>
     <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>
-    <p class="text-white-light">Address: {{ userAddress }}</p>
-    <p class="text-white-light">CONNECTED: {{connected}}</p>
-    <p class="text-white-light">balance:{{ assets }}</p>
-    <p class="text-white-light">chainId: {{ chainId }}</p>
+
     
   </div>
 </template>
@@ -57,7 +54,7 @@ resetApp();
 
 
 return {
-  connected : computed(()=>store.getters.getConnected),
+  connect : computed(()=>store.getters.getConnected),
   web3: computed(()=> store.getters.getWeb3),
   userAddress: computed(()=> store.getters.getAddress),
   chainId: computed(()=> store.getters.getChainId),

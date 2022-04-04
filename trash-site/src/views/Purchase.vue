@@ -1,24 +1,30 @@
 <template>
-<div class="purchase mt-24">      
-  <div class="w-4/6 m-auto bg-gray-light rounded p-2">
-    <div class="title sm:w-3/6 w-4/6 mb-3  m-auto text-clip">
-    <h1 class="font-bold content-evenly ml-10 text-white-light sm:text-6xl text-xl"> 
-           Get you Some Possums
-     </h1>
+<div class="purchase mt-40 container items-center flex mx-auto">      
+  <div class="w-4/5 mb-10 p-5 mx-auto bg-gray-light rounded-xl">
+    <div class="title mb-3">      
+    <h1 class="font-bold w-auto text-white-light text-center sm:text-5xl text-xl"> 
+           Get you some possums
+     </h1>  
      </div>
+     <div v-if="!connected">
       <connect-wallet/>
-    <div class="flex w-full h-auto">
-     
-      <span class="mb-3 h-24 w-full align-middle">
-        <form class="m-auto h-auto w-1/2">
-          <button class="bg-blue-light ml-20 w-1/6"><h1 class="text-4xl text-white-light">-</h1></button>
-          <span>{{numberField}}</span>
-          <input type="text" v-model.number="numberField" class="text-right w-1/4 text-4xl"/>
-          <button class="bg-blue-light w-1/6"><h1 class="text-align-middle text-4xl text-white-light">+</h1></button>
-          <button class="bg-blue-dark w-1/6 h-10 ml-5 text-white-light text-"><h1 class="text-bold text-xl">SUBMIT</h1></button>
-        </form>
-      </span>
+    </div>
     
+    <div v-else class="flex h-auto w-auto justify-center">     
+       <form @submit.prevent="submit">
+         <div class="mx-auto inline-flex justify-center">
+          <button class="bg-blue-light w-1/6 h-14 rounded-l-xl" @click="decrement"><h1 class="text-4xl text-white-light">-</h1></button>                    
+          <input type="number"  v-model="numberField" min="1" max="27" id="numberField" class="text-center w-1/4 h-14 text-4xl"/>          
+          <button class="bg-blue-light w-1/6 h-14 rounded-r-xl" @click="increment"><h1 class="text-align-middle text-4xl text-white-light">+</h1></button>  
+          </div>
+          <div class="flex mx-auto justify-center">
+           <button type="submit" class="bg-blue-dark mt-3 w-auto mx-auto text-white-light rounded-xl p-5"><h1 class="text-bold text-xl">SUBMIT</h1></button>
+           </div>
+           <div class="">
+           <p class="text-white-light text-center font-extrabold text-xl mt-3">Max of 27 possums per wallet</p>
+          </div>
+    
+    </form>
     </div>
     </div>
     
@@ -28,31 +34,56 @@
 
 <script>
 
-import BlockchainConnect from '../utils/getWeb3';
-import store from '../store';
+
+import {useStore} from 'vuex'
+import {computed, watchEffect, ref} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue';
+
 
 export default {
   name:  'Purchase',
   components: {ConnectWallet},
-  mounted() {
+  watch: {
   },
   setup() {
-  let numberField = ""
-  const connect = () => {
-      const blockChain = new BlockchainConnect(); 
-      blockChain.connect();
-      if(blockChain.provider){
-        store.commit("setProvider", blockChain.provider);
-        console.log("PROVIDER",store.provider)
-        
-      }
-    }
-  const submit = () =>{
 
-    }
+  const store = useStore();
+ 
+  let numberField = ref(0)
 
-  return {connect, numberField}
+   const modifyable =  watchEffect(()=>{
+    if (numberField.value >=0 && numberField.value <= 27){
+      console.log("true")
+      return true
+    } else {
+      console.log("false")
+      return false
+    }
+  })
+  
+  const increment = () => {
+    if(modifyable){
+    console.log("++", numberField.value)
+    numberField.value++}
+    else{
+    numberField.value = 27
+    }}
+
+  const decrement = () => {
+    if(modifyable){
+    console.log("--", numberField.value)
+    numberField.value--}
+    
+    else {
+      numberField.value= 0
+    }
+  }
+
+  return {
+      connected: computed(()=>store.getters.getConnected),
+      numberField,
+      increment,
+      decrement}
   }
 }
 </script>
