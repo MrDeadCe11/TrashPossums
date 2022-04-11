@@ -8,12 +8,12 @@
             class="h-5 mr-2">
        <h1 class="text-xl"> Connect your Wallet </h1>
     </div>
-  <div>  
-    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>reset App</h1></button><br>
+  <!-- <div>  
+    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br>
     <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>
 
     
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -23,6 +23,7 @@ import { utils } from 'web3';
 import {ethers} from 'ethers';
 import useWallet from '../hooks/useWallet';
 import { useStore } from 'vuex';
+import { reservedPossums } from '../utils/web3Helpers';
 // import { USDT_API } from '../web3/abis';
 // import { USDT_ADDRESS } from '../web3/config';
 
@@ -40,16 +41,17 @@ const {
 } = useWallet();
 
 const handleWalletConnect = async () => {
+console.log("clicked handlewallet")
   await onConnect();
+  
   if (connected) {
     console.log('afterConnectedWallet', connected);
-   
+      reservedPossums();
      }
 };
 
 const reset = () => {
 resetApp();
-
 }
 
 

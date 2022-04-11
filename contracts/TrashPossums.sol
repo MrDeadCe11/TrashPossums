@@ -34,7 +34,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     uint256 public constant totalPossums = 7000 ;       
     uint256 public constant maxPossumsPerWallet = 54;
     uint256 public constant maxPossumsPerTransaction = 27;
-    uint256 public constant premintCount = 100;  
+    uint256 public constant premintCount = 80;  
     
     uint256 public startMintDate;
     uint256 public possumPrice;
@@ -136,7 +136,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
            mint(msg.sender, i);
          }
 
-        IRandomness(randomness).executePremint(premintCount);
+       //IRandomness(randomness).executePremint(premintCount);
     }
      
     /**
@@ -313,6 +313,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
     function getBalance()public view returns (uint256){
         return address(this).balance;
     }
+
     /**
      * @dev Returns the minting start date
      */
@@ -341,6 +342,11 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
      * @dev See {ERC721}.
      */
     function _baseURI() internal view virtual override returns (string memory) {
+        return baseURI;
+    }
+
+    //for opensea
+       function contractURI() public view returns (string memory) {
         return baseURI;
     }
 

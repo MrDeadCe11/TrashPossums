@@ -7,6 +7,7 @@ import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
+import {reservedPossums, claimedPossums} from "../utils/web3Helpers.js"
 
 const INITIAL_STATE = {
   web3: null, 
@@ -58,7 +59,6 @@ export default function UseWallet() {
   };
 
   async function getUserBalance () {    
-    
     const ethersProvider = new ethers.providers.Web3Provider(walletObj.provider);
     const res = await ethersProvider.getBalance(walletObj.userAddress)
     const balance = (res ? ethers.utils.formatUnits(res) : 0);
@@ -70,7 +70,8 @@ export default function UseWallet() {
     // get account balances
     const balance = await getUserBalance();
     assets.value = balance;
-    
+    reservedPossums();
+    claimedPossums();    
   };
 
   const subscribeProvider = async (provider) => {
@@ -94,13 +95,13 @@ export default function UseWallet() {
   };
 
   const onConnect = async () => {
-
+  
     const provider = await web3Modal.connect();
-
+    
     await subscribeProvider(provider);
-
+    
     const web3 = new Web3(provider);
-
+    
     const accounts = await web3.eth.getAccounts();
 
     const address = accounts[0];

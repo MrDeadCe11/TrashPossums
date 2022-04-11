@@ -16,7 +16,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: process.env.INFURA_ID, // TODO infuraId
+      infuraId: import.meta.env.VITE_INFURAID, // TODO infuraId
     },
   },
     // https://github.com/torusresearch/torus-embed#readme
@@ -31,7 +31,7 @@ const providerOptions = {
   bitski: {
     package: Bitski,
     options: {
-      clientId: 'xxxxxxxxxx', // TODO
+      clientId: '', // TODO
       callbackUrl: `${window.location.href}bitski-callback.html`,
     },
   },

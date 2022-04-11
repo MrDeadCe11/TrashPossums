@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 
 
 const state = {
@@ -10,10 +11,9 @@ const state = {
     networkId: 1, 
     ethersProvider: null,
     signer: null,
-    reservedPossums: null,
+    reservedPossums: 0,
     claimedPossums: 0,
-    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf",
-    trashABI: "../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
+    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf"
 }
 
 const mutations = {
@@ -28,7 +28,6 @@ const mutations = {
         state.signer = null,
         state.reservedPossums = null,
         state.claimedPossums = 0
-
     },
     updateWallet(state, payload){
         state.web3 = payload.web3;
@@ -112,9 +111,6 @@ const getters = {
     },
     getContractAddress(state){
         return state.contractAddress;
-    },
-    getTrashAbi(state){
-        return state.trashABI;
     }
 }
 

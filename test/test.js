@@ -15,7 +15,7 @@ describe("Trash Possums", function () {
   //approx noon on feb 20th 2022
   const possumPrice = ethers.utils.parseEther('2');  
   const possumCount = ethers.BigNumber.from("10000")
-  const premintCount = ethers.BigNumber.from("100")
+  const premintCount = ethers.BigNumber.from("80")
   
   const VRFAddressMumbai = "0x8C7382F9D8f56b33781fE506E897a4F1e2d17255";
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
@@ -112,17 +112,18 @@ describe("Trash Possums", function () {
     const date = await randomness.getClaimableDate()
     expect(date).to.equal(startMintDate);
   })
-  it("should premint 100 possums", async function () {
+  it("should premint 80 possums", async function () {
     const test = await trashPossums.getAvailablePossums();
         
     const tx = await trashPossums.connect(owner).premintPossums();
     await tx.wait();
-
+    const rand = await randomness.connect(owner).executePremint(premintCount);
+    await rand.wait();
     const balance = await trashPossums.balanceOf(owner.address);
     
     const test2 = await trashPossums.getAvailablePossums();
     
-    assert(balance.toNumber() === 100 && (test.toNumber() - test2.toNumber())===100)
+    assert(balance.toNumber() === 80 && (test.toNumber() - test2.toNumber())===80)
 
   })
   
@@ -169,7 +170,7 @@ describe("Trash Possums", function () {
 
    addr3tokens = await trashPossums.getReservedPossumIds(addr3.address);   
     expect(possnum.toNumber()).to.equal(27);
-    expect(availNum.toString()).to.equal("6870");
+    expect(availNum.toString()).to.equal("6890");
   })
 
   it("should get the ids of reserved possums for addr2", async function(){
@@ -224,7 +225,7 @@ describe("Trash Possums", function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);
     const tx = await trashPossums.balanceOf(addr1.address);
    
-    assert(tx.toNumber() === 1  && ownerbal.toNumber() === 100);
+    assert(tx.toNumber() === 1  && ownerbal.toNumber() === 80);
   });
 
   it("should transfer first minted nft from addr2 to addr1", async function () {
@@ -255,7 +256,7 @@ describe("Trash Possums", function () {
   it("should return the total minted possums", async function () {
     const supply = await trashPossums.getTotalMintedPossums();
    
-    assert(supply.toNumber() === 130)
+    assert(supply.toNumber() === 110)
 
   })
 

@@ -18,6 +18,7 @@ await randomness.setTrash(trashPossumsAddress);
 const trash = await randomness.getTrash();
 const avail = await randomness.getClaimableDate();
 
+
 console.log("trash is set to ",trash);
 console.log("climable date",avail)
 
