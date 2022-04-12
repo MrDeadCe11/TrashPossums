@@ -23,14 +23,18 @@
            <div class="">
           
           </div>
-           <div class="flex text-white-light text-2xl justify-center">
+           <div class="flex text-white-light text-2xl mt-6 mb-6 p-5 bg-gray-dark justify-center rounded-lg">
       <p><h1>You have <span class="text-yellow-light text-4xl">{{reservedPossums}} </span> possums reserved</h1></p>
-
+      </div>
+      <div class="flex justify-center">
+      <p class="text-white-light text-2xl font-extrabold text-bold">Possums are claimable on {{claimDate}}</p>
+      
     </div>
     </form>   
     
     </div>
      <p class="text-white-light text-center font-extrabold text-xl mt-3">Max of 27 possums per wallet</p>
+     
     </div>
     
     
@@ -42,7 +46,7 @@
 
 
 import {useStore} from 'vuex'
-import {computed, watchEffect, ref} from 'vue'
+import {computed, watchEffect, ref, onMounted} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue';
 // import {ethers} from 'ethers';
 // import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
@@ -62,8 +66,22 @@ export default {
  
   let numberField = ref(0);
   let res = ref(false);
+  let claimDate = computed(()=>{
+    const date = store.getters.getClaimDate
+    if(date > 0){
+    const month = date.getMonth() +1;
+    const day = date.getDay();
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const fullDate = month+'/'+day+'/'+year+ ' at '+ hour + ':' + minute
+    return fullDate
+    } else {
+      return "NEVER!";
+    }
+  })
 
-   const modifyable =  computed(()=>{
+  const modifyable =  computed(()=>{
     if (numberField.value >= 0 && numberField.value <= 27){    
       return true
     } else {      
@@ -71,32 +89,32 @@ export default {
     }
   })
 
-  
-
   const toggleRes = () => {   
     res.value ? res.value = false: res.value = true;
     return res.value
   }
   
   async function submitPurchase(e){
-    if(numberField.value>0){
-    console.log("submit clicked");    
-    e.preventDefault();
-    toggleRes();
+    if(numberField.value>0){  
+        e.preventDefault();
+        toggleRes();
     try{
-    await reservePossums(numberField.value);
-    await reservedPossums(); 
+        await reservePossums(numberField.value);
+        
     } catch(error){
-      console.error(error)
+        console.error(error)
     }
-    toggleRes();
-       
+    
+    await reservedPossums(); 
+        toggleRes();     
   }
-   else {
-     console.log("need to reserve more than zero possums")
+    else {
+      console.log("need to reserve more than zero possums")
    }
   }
   
+
+
   const increment = () => {
     if(modifyable.value){    
     numberField.value++
@@ -120,11 +138,13 @@ export default {
   return {
       connected: computed(()=>store.getters.getConnected),     
       reservedPossums: computed(()=>store.getters.getReservedPossums),
+      claimDate,
       numberField,
       increment,
       decrement,
       res,
-      submitPurchase}
+      submitPurchase
+      }
   }
 }
 </script>

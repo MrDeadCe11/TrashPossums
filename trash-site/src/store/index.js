@@ -13,7 +13,9 @@ const state = {
     signer: null,
     reservedPossums: 0,
     claimedPossums: 0,
-    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf"
+    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf",
+    claimDate: 0,
+    currentStamp: 0,
 }
 
 const mutations = {
@@ -27,7 +29,10 @@ const mutations = {
         state.ethersProvider = null,
         state.signer = null,
         state.reservedPossums = null,
-        state.claimedPossums = 0
+        state.claimedPossums = 0,
+        state.claimDate = 0,
+        state.currentStamp = 0
+
     },
     updateWallet(state, payload){
         state.web3 = payload.web3;
@@ -72,6 +77,12 @@ const mutations = {
     },
     setClaimedPossums(state, claimedPossums){
         state.claimedPossums = claimedPossums
+    },
+    setClaimDate(state, claimDate){
+        state.claimDate = claimDate
+    },
+    setCurrentStamp(state, currentStamp){
+        state.currentStamp = currentStamp
     }
 }
 
@@ -111,6 +122,12 @@ const getters = {
     },
     getContractAddress(state){
         return state.contractAddress;
+    },
+    getClaimDate(state){
+        return state.claimDate;
+    },
+    getCurrentStamp(state){
+        return state.currentStamp;
     }
 }
 

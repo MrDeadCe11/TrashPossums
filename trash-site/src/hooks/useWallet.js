@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
-import {reservedPossums, claimedPossums} from "../utils/web3Helpers.js"
+import {reservedPossums, claimedPossums, getClaimDate} from "../utils/web3Helpers.js"
 
 const INITIAL_STATE = {
   web3: null, 
@@ -72,6 +72,7 @@ export default function UseWallet() {
     assets.value = balance;
     reservedPossums();
     claimedPossums();    
+    getClaimDate();
   };
 
   const subscribeProvider = async (provider) => {

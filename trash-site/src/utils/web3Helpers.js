@@ -3,11 +3,12 @@ import {ethers} from 'ethers'
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 
 const contractAddress = store.state.contractAddress;
-let trashPossumsContract, provider, signer
+let trashPossumsContract, provider, signer, signerAddress
 
 const getContract = () => {
     provider = new ethers.providers.Web3Provider(window.ethereum)
     signer = provider.getSigner();    
+    signerAddress = signer.getAddress();
     trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
 }
 
@@ -27,20 +28,20 @@ async function reservedPossums(){
 
 async function claimedPossums(){
     getContract();
-    const signerAddress = signer.getAddress();
     const claimedPossums = await trashPossumsContract.balanceOf(signerAddress) 
     store.commit("setClaimedPossums", claimedPossums);
     return claimedPossums
 }
 
-async function claimable(){
+async function getClaimDate(){
     getContract();
     const claimable = await trashPossumsContract.getClaimDate();
-    const date = new Date(claimable);
-    return date;
+    const claimDate = new Date(claimable * 1000)
+    store.commit("setClaimDate", claimDate);
+    return claimDate;
 }
 
-export {reservePossums, reservedPossums, claimedPossums}
+export {reservePossums, reservedPossums, claimedPossums, getClaimDate}
 
     /**const provider = new ethers.providers.JsonRpcProvider(API_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
