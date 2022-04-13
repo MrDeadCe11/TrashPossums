@@ -3,7 +3,8 @@ import {ethers} from 'ethers'
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 
 const contractAddress = store.state.contractAddress;
-let trashPossumsContract, provider, signer, signerAddress
+let trashPossumsContract, provider, signer, signerAddress, alchemyProvider, alchemySigner, rpcContract
+
 
 const getContract = () => {
     provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -12,18 +13,39 @@ const getContract = () => {
     trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
 }
 
+const getAlchemyProvider=()=>{
+    alchemyProvider = new ethers.providers.JsonRpcProvider(import.meta.env.VITE_MUMBAI_RPC_URL)
+    alchemySigner = alchemyProvider.getSigner();
+    rpcContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
+}
+
 async function reservePossums(number){      
     getContract();
     const possumPrice = await trashPossumsContract.connect(signer).getPossumPrice();
-
     const tx = await trashPossumsContract.reservePossums(number, {value: possumPrice, gasLimit: 3000000});
     tx.wait()
 }
+async function claimPossums(){
+    getContract();
+     const tx = await trashPossumsContract.claimPossums();
+     const promise = tx.wait()
+     await claimedPossums();
+     return promise;
 
+}
+
+async function getCurrentStamp(){
+    getAlchemyProvider();
+    const block = await alchemyProvider.getBlock("latest");
+    const timeStamp = block.timestamp ;
+    store.commit("setCurrentStamp", timeStamp * 1000)
+    return timeStamp;
+}
 async function reservedPossums(){
     getContract();
     const reserved = await trashPossumsContract.getReservedPossumsPerWallet(signerAddress);
     store.commit("setReservedPossums", reserved);
+    return reserved
 }
 
 async function claimedPossums(){
@@ -34,14 +56,16 @@ async function claimedPossums(){
 }
 
 async function getClaimDate(){
-    getContract();
-    const claimable = await trashPossumsContract.getClaimDate();
-    const claimDate = new Date(claimable * 1000)
+    getAlchemyProvider()
+    const claimable = await rpcContract.getClaimDate();
+    const claimDate = claimable * 1000
     store.commit("setClaimDate", claimDate);
     return claimDate;
 }
 
-export {reservePossums, reservedPossums, claimedPossums, getClaimDate}
+
+
+export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp}
 
     /**const provider = new ethers.providers.JsonRpcProvider(API_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);

@@ -1,6 +1,6 @@
-import { createStore } from 'vuex';
+import { createStore, storeKey } from 'vuex';
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
-
+import {reservedPossums} from "../utils/web3Helpers.js"
 
 const state = {
     web3: null, 
@@ -132,6 +132,10 @@ const getters = {
 }
 
 const actions = {
+    async fetchReservedPossums({commit}){
+        commit('setReservedPossums', await reservedPossums())
+        
+    }
 
 }
 

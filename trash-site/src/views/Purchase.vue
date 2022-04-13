@@ -23,13 +23,14 @@
            <div class="">
           
           </div>
-           <div class="flex text-white-light text-2xl mt-6 mb-6 p-5 bg-gray-dark justify-center rounded-lg">
+           <div class="flex text-white-light text-2xl mt-6 mb-6 p-5 bg-gray-dark justify-center shadow-2xl rounded-lg">
       <p><h1>You have <span class="text-yellow-light text-4xl">{{reservedPossums}} </span> possums reserved</h1></p>
       </div>
       <div class="flex justify-center">
       <p class="text-white-light text-2xl font-extrabold text-bold">Possums are claimable on {{claimDate}}</p>
-      
+     
     </div>
+    <div class="justify-center"> <p class="text-white-light">the current timestamp is :{{currentStamp}}</p></div>
     </form>   
     
     </div>
@@ -50,7 +51,7 @@ import {computed, watchEffect, ref, onMounted} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue';
 // import {ethers} from 'ethers';
 // import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
-import {reservePossums, reservedPossums} from "../utils/web3Helpers.js"
+import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp} from "../utils/web3Helpers.js"
 
 
 
@@ -58,30 +59,46 @@ export default {
   name:  'Purchase',
   components: {ConnectWallet},
   watch: {
-  },
-  
+  },  
   setup() {
 
   const store = useStore();
  
   let numberField = ref(0);
   let res = ref(false);
-  let claimDate = computed(()=>{
-    const date = store.getters.getClaimDate
-    if(date > 0){
+
+  const getDate = (date) => {
     const month = date.getMonth() +1;
-    const day = date.getDay();
+    const day = date.getDate();
     const year = date.getFullYear();
-    const hour = date.getHours();
+    const twentyFourHour = date.getHours();
     const minute = date.getMinutes();
-    const fullDate = month+'/'+day+'/'+year+ ' at '+ hour + ':' + minute
+    const hour = Number(twentyFourHour) > 12 ? Number(twentyFourHour) -12 : twentyFourHour 
+    const fullDate = `${month}/${+day}/${year} at ${hour}:${minute} ${Number(twentyFourHour) >12 ? "pm" : "am"} (UTC)` 
     return fullDate
+  }
+  let currentStamp = computed(()=>{
+    const date = store.getters.getCurrentStamp    
+    if(date > 0){
+      const fulldate = getDate(new Date(date));
+      return fulldate
     } else {
       return "NEVER!";
     }
+    
   })
-
-  const modifyable =  computed(()=>{
+  let claimDate = computed(()=>{
+    const date = store.getters.getClaimDate
+    if(date > 0){
+      const fulldate = getDate(new Date(date));
+      return fulldate
+    } else {
+      return "NEVER!";
+    }
+  }
+  )
+  
+  const modifyable = computed(()=>{
     if (numberField.value >= 0 && numberField.value <= 27){    
       return true
     } else {      
@@ -104,8 +121,7 @@ export default {
     } catch(error){
         console.error(error)
     }
-    
-    await reservedPossums(); 
+        await reservedPossums(); 
         toggleRes();     
   }
     else {
@@ -113,7 +129,6 @@ export default {
    }
   }
   
-
 
   const increment = () => {
     if(modifyable.value){    
@@ -139,6 +154,7 @@ export default {
       connected: computed(()=>store.getters.getConnected),     
       reservedPossums: computed(()=>store.getters.getReservedPossums),
       claimDate,
+      currentStamp,
       numberField,
       increment,
       decrement,
