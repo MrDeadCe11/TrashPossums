@@ -1,3 +1,4 @@
+import { off } from 'process';
 import { createStore, storeKey } from 'vuex';
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 import {reservedPossums} from "../utils/web3Helpers.js"
@@ -14,8 +15,11 @@ const state = {
     reservedPossums: 0,
     claimedPossums: 0,
     contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf",
+    randomnessAddress:"0x9e10cD823C6836b1123B05953d4BA216e619fb04",
     claimDate: 0,
     currentStamp: 0,
+    claimable: false,
+    offset: 0
 }
 
 const mutations = {
@@ -83,6 +87,12 @@ const mutations = {
     },
     setCurrentStamp(state, currentStamp){
         state.currentStamp = currentStamp
+    },
+    setClaimable(state, claimable){
+        state.claimable = claimable
+    },
+    setOffset(state, offset){
+        state.offset = offset
     }
 }
 
@@ -128,6 +138,15 @@ const getters = {
     },
     getCurrentStamp(state){
         return state.currentStamp;
+    },
+    getRandomnessAddress(state){
+        return state.randomnessAddress
+    },
+    getClaimable(state){
+        return state.claimable
+    },
+    getOffset(state){
+        return state.offset
     }
 }
 

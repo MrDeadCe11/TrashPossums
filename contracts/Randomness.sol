@@ -61,7 +61,9 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(claimableDate !=0, "not ready to offset yet");
         
         _getRandomNumber();
-       
+        /////////////////////////////////////
+       randomIdOffset = 10;
+       /////////////////////////////////////
         randomIdOffsetExecuted = true;   
         
         return randomIdOffsetExecuted;     
@@ -90,7 +92,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         return trashAddress;
     }
 
-    function setClaimableDate (uint256 _claimable) external onlyOwner {
+    function setClaimableDate(uint256 _claimable) external onlyOwner {
         
         claimableDate = _claimable;
         }

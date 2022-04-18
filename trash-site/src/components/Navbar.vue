@@ -31,7 +31,7 @@
         </router-link>
         </div>
 
-        <div v-show="connected" class="text-white-light mt-10"><h1>CONNECTED</h1></div>
+        <div v-show="connected" class="text-white-light mt-10"><h1 class="text-xl">CONNECTED</h1></div>
         <!-- Mobile menu button -->
         <div @click.prevent="toggleNav" class="flex ml-10 col-start-6 md:hidden">
           <button

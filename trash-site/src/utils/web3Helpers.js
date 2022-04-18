@@ -1,9 +1,11 @@
 import store from '../store/index'
 import {ethers} from 'ethers'
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
+import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
 
 const contractAddress = store.state.contractAddress;
-let trashPossumsContract, provider, signer, signerAddress, alchemyProvider, alchemySigner, rpcContract
+const randomnessAddress = store.state.randomnessAddress;
+let trashPossumsContract, provider, signer, signerAddress, alchemyProvider, alchemySigner, rpcContract, randomnessContract
 
 
 const getContract = () => {
@@ -17,6 +19,7 @@ const getAlchemyProvider=()=>{
     alchemyProvider = new ethers.providers.JsonRpcProvider(import.meta.env.VITE_MUMBAI_RPC_URL)
     alchemySigner = alchemyProvider.getSigner();
     rpcContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
+    randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, signer)
 }
 
 async function reservePossums(number){      
@@ -26,11 +29,15 @@ async function reservePossums(number){
     tx.wait()
 }
 async function claimPossums(){
-    getContract();
-     const tx = await trashPossumsContract.claimPossums();
-     const promise = tx.wait()
-     await claimedPossums();
-     return promise;
+    try{
+     await trashPossumsContract.claimPossums();
+
+    } catch(error){
+        console.log(error.data.message)   
+    }
+    await claimedPossums();
+    await reservePossums()
+    return tx;
 
 }
 
@@ -46,6 +53,15 @@ async function reservedPossums(){
     const reserved = await trashPossumsContract.getReservedPossumsPerWallet(signerAddress);
     store.commit("setReservedPossums", reserved);
     return reserved
+}
+
+async function getOffset(){
+getAlchemyProvider();
+const offset = await randomnessContract.getOffset();
+const claimable = offset > 0? true: false;
+store.commit("setClaimable", claimable);
+store.commit("setOffset", offset);
+return offset
 }
 
 async function claimedPossums(){
@@ -65,41 +81,4 @@ async function getClaimDate(){
 
 
 
-export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp}
-
-    /**const provider = new ethers.providers.JsonRpcProvider(API_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-const etherInterface = new ethers.utils.Interface(contract.abi);
-// Get latest nonce
-const nonce = await provider.getTransactionCount(PUBLIC_KEY, "latest");
-// Get gas price
-const gasPrice = await provider.getGasPrice();
-// Get network
-const network = await provider.getNetwork();
-const { chainId } = network;
-//Transaction object
-const transaction = {
-   from: PUBLIC_KEY,
-   to: CONTRACT_ADDRESS,
-   nonce,
-   chainId,
-   gasPrice,
-   data: etherInterface.encodeFunctionData("mintNFT", 
-         [ PUBLIC_KEY, tokenURI ])
-};
-//Estimate gas limit
-const estimatedGas = await provider.estimateGas(transaction);
-transaction["gasLimit"] = estimatedGas;
-//Sign & Send transaction
-const signedTx = await wallet.signTransaction(transaction);
-const transactionReceipt = await provider.sendTransaction(signedTx);
-await transactionReceipt.wait();
-const hash = transactionReceipt.hash;
-console.log("Your Transaction Hash is:", hash);
-// Get transaction receipt
-const receipt = await provider.getTransactionReceipt(hash);
-const { logs } = receipt;
-// Get token ID
-const tokenInBigNumber = ethers.BigNumber.from(logs[0].topics[3]);
-const tokenId = tokenInBigNumber.toNumber();
-console.log("Token ID minted:", tokenId);*/
+export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp, getOffset}

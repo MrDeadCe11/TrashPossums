@@ -10,19 +10,19 @@
     The Trash Possums are Coming!
     </h1>  
     <div class="mb-5 flex col-span-4 flex-row">               
-    <p class="text-xl text-white-light ml-5"> In the year 2421, centuries after irradiated hurricanes caused the evolution of rabies into an incurable pestilence across the globe. With humanity long extinct, the Trash 'Possums have risen. Shaping their entire society around humans' pop culture icons, which they regard as deities. The Trash Possums have improved on tech left by humanity and traverse the near infinite expanse of the universe along with improving the earth left by humans. </p>
+    <p class="sm:text-2xl text-xl text-white-light ml-5"> In the year 2421, centuries after irradiated hurricanes caused the evolution of rabies into an incurable pestilence across the globe. With humanity long extinct, the Trash 'Possums have risen. Shaping their entire society around humans' pop culture icons, which they regard as deities. The Trash Possums have improved on tech left by humanity and traverse the near infinite expanse of the universe along with improving the earth left by humans. </p>
   </div>
      <div class="col-span-2 row-span-4">
     <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>       
     </div>
-    <h1 class="d-flex col-span-4 mb-3 ml-10 text-4xl text-white-light">
+    <h1 class="col-span-4 mb-3 ml-5 text-4xl text-white-light">
       Fair launch and minting
     </h1>
    <div class="mb-5 flex col-span-4">
-      <p class="text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
+      <p class="sm:text-2xl text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
          After all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
          VRF to offset the IDs to their final value.  
-        All metadata and properties will be released on the start mint date and the final ids will be revealed after minting is complete or after. </p>
+        All metadata and properties will be revealed on the release date and the final ids will be revealed after minting is complete. </p>
     </div>
     
   <div class="roadmap h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8">
@@ -31,13 +31,12 @@
 Roadmap:
    </h1>
     <br>
-   <ul class="ml-8">    
-      <li><p> <span class="font-bold text-xl"> 10% </span> We pay back our wives’ boyfriends</p></li>
-      <li><p> <span class="font-bold text-xl"> 20% </span> Special edition pog run.</p></li>
-      <li><p> <span class="font-bold text-xl"> 40% </span> Trash Possum Series 2 Launch </p></li>
-      <li><p> <span class="font-bold text-xl"> 60% </span> Roach Buddies</p></li>
-      <li><p> <span class="font-bold text-xl"> 80% </span> Buy Metaverse property and construct “Possum Town”</p></li>
-      <li><p> <span class="font-bold text-xl"> 100%</span>  Roach pet battle game?</p></li>
+   <ul class="text-2xl ml-8">    
+      <li><p> <span class="font-bold text-xl"> 20% </span>  We pay back our wives’ boyfriends</p></li>
+      <li><p> <span class="font-bold text-xl"> 40% </span>  Launch Trash Dao</p></li>
+      <li><p> <span class="font-bold text-xl"> 60% </span>  Roach Buddies.</p></li>
+      <li><p> <span class="font-bold text-xl"> 80% </span>  Special edition pog run.</p></li>
+      <li><p> <span class="font-bold text-xl"> 100%</span>  Trash Possums series two.</p></li>
   <br>
   </ul>
    </div>

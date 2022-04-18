@@ -3,16 +3,14 @@
         @click="handleWalletConnect"
         
         class="flex flex-row w-3/6 h-16 m-auto mb-3 justify-center cursor-pointer items-center p-2 border-2 text-white-light border-blue-dark bg-blue-dark font-bold hover:text-white hover:bg-blue-light sm:">
-        <img
+        <!-- <img
             src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MM"
-            class="h-5 mr-2">
+            class="h-5 mr-2"> -->
        <h1 class="text-xl"> Connect your Wallet </h1>
     </div>
   <!-- <div>  
     <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br>
-    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>
-
-    
+    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>    
   </div> -->
 </template>
 
@@ -24,8 +22,6 @@ import {ethers} from 'ethers';
 import useWallet from '../hooks/useWallet';
 import { useStore } from 'vuex';
 import { reservedPossums } from '../utils/web3Helpers';
-// import { USDT_API } from '../web3/abis';
-// import { USDT_ADDRESS } from '../web3/config';
 
 export default {
   setup() {

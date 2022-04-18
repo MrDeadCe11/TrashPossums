@@ -40,7 +40,7 @@ module.exports = {
     },
     matic: {      
       url: POLYGON_MAINNET_RPC_URL,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [PRIVATE_KEY],
       gas: 15688778,
       gasPrice: 8000000000,
     },     

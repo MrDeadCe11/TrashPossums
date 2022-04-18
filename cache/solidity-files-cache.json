@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/trashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1649696604329,
-      "contentHash": "7eeead924a996e2f1abb03da26acad09",
+      "lastModificationDate": 1650297111795,
+      "contentHash": "50c8706c019f1c54f9be29cbde8b84ff",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -1324,8 +1324,8 @@
       ]
     },
     "/home/someguy/Code/trashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1649697066756,
-      "contentHash": "04a9082a0745a8cb552c700f23428dd0",
+      "lastModificationDate": 1650294212190,
+      "contentHash": "21138397abca1b03dec78e4050e73fa9",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",

@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
-import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp} from "../utils/web3Helpers.js"
+import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getOffset} from "../utils/web3Helpers.js"
 
 const INITIAL_STATE = {
   web3: null, 
@@ -74,6 +74,7 @@ export default function UseWallet() {
     await claimedPossums();    
     await getClaimDate();
     await getCurrentStamp();
+    await getOffset();
   };
 
   const subscribeProvider = async (provider) => {

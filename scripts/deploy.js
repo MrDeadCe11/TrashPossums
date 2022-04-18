@@ -19,6 +19,7 @@ async function main() {
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
   const keyHashMumbai = "0x6e75b569a01ef56d18cab6a8e71e6600d6ce853834d4a5748b720d06f878b3a4";
   const fee = hre.ethers.utils.parseEther(".001");
+  const premintCount = 80;
 
 
  const [deployer] = await hre.ethers.getSigners();
@@ -30,7 +31,7 @@ async function main() {
     console.log("Randomness deployed at", randomness.address)
  
  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
-  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, randomness.address);
+  const trashPossums = await TrashPossums.deploy(possumPrice, startMintDate, testUri, randomness.address, premintCount);
 
   await trashPossums.deployed();
 

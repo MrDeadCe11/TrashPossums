@@ -8,7 +8,7 @@ const {
 describe("Trash Possums", function () {
   let owner, addr1, addr2, addr3, addresses;
   let provider;
-  let tokenId1, tokenId2, tokenId3, reserveId1, reserveId2, reserveId3;
+  let tokenId1, tokenId2, tokenId3, reserveId1, reserveId2, reserveId3, idOffset;
   let trashPossums, randomness;
   let addr3tokens = [];
  const startMintDate =  1642282339;
@@ -68,7 +68,7 @@ describe("Trash Possums", function () {
 
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
-    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, randomness.address);
+    trashPossums = await TrashPossums.connect(owner).deploy(possumPrice, startMintDate, testUri, randomness.address, premintCount);
     const deployed = await trashPossums.deployed();
     console.log("TrashPossums deployed at", trashPossums.address)    
     
@@ -173,6 +173,18 @@ describe("Trash Possums", function () {
     expect(availNum.toString()).to.equal("6890");
   })
 
+  it("should reserve another 27 nfts for addr 3", async function(){
+    const sentEth = possumPrice.mul(27);
+    const tx = await trashPossums.connect(addr3).reservePossums(27, {value: sentEth});
+   await tx.wait();
+   const possnum = await trashPossums.getReservedPossumsPerWallet(addr3.address);
+   const availNum = await trashPossums.getAvailablePossums();
+
+   addr3tokens = await trashPossums.getReservedPossumIds(addr3.address);   
+    expect(possnum.toNumber()).to.equal(54);
+    expect(availNum.toString()).to.equal("6863");
+  })
+
   it("should get the ids of reserved possums for addr2", async function(){
     const idArray = await trashPossums.getReservedPossumIds(addr2.address);
      //store token ids for later use
@@ -188,6 +200,8 @@ describe("Trash Possums", function () {
   it("should execute offset",async function(){
     const tx = await randomness.executeOffset();
     tx.wait();
+    const offset = await randomness.getOffset();
+    idOffset = offset.toNumber()
     expect(await randomness.offsetExecuted()).to.be.equal(true);
   } )
 
@@ -197,11 +211,11 @@ describe("Trash Possums", function () {
     const event = promise.events.find(e=> e.event === "Transfer")
     tokenId1 = event.args.tokenId.toNumber();
   expect(event.args.to).to.equal(addr1.address);
-  expect(event.args.tokenId.toNumber()).to.equal(reserveId1 + 10);
+  expect(event.args.tokenId.toNumber()).to.equal(reserveId1 + idOffset);
   })
 
   it("should NOT be able to claim the nft reserved by addr1", async function(){
-    await expect(trashPossums.connect(addr1).claimPossums()).to.be.revertedWith("ERC721: token already minted");
+    await expect(trashPossums.connect(addr1).claimPossums()).to.be.revertedWith("you have no reserved possums");
   })
 
   it("should claim nfts reserved by adress 2", async function(){
@@ -216,15 +230,23 @@ describe("Trash Possums", function () {
   it("should claim nfts reserved by adress 3", async function(){
     const tx = await trashPossums.connect(addr3).claimPossums();
     const promise = await tx.wait();    
-    const transfers = promise.events.filter(e=>e.event === "Transfer");
-     
-    assert(transfers[0].args.to === addr3.address && transfers[1].args.to === addr3.address && transfers.length === 27)
+    const transfers = promise.events.filter(e=>e.event === "Transfer");     
+    assert(transfers[0].args.to === addr3.address && transfers[1].args.to === addr3.address && transfers.length === 54)
+  })
+
+  it("reserved Possums array for addr3 should have length of zero",  async function(){
+    const reserved = await trashPossums.getReservedPossumsPerWallet(addr3.address)
+    expect(reserved.toNumber()).to.equal(0);
+  })
+
+  it("should not be able to reserve more possumstto addr3 ", async function(){
+    const value = possumPrice.mul(2);
+   await expect(trashPossums.connect(addr3).reservePossums(2,{value: value})).to.be.revertedWith("You cannot reserve more possums")
   })
 
   it("should return the number nfts owned by an address(addr1, owner)", async function () {
     const ownerbal = await trashPossums.balanceOf(owner.address);
-    const tx = await trashPossums.balanceOf(addr1.address);
-   
+    const tx = await trashPossums.balanceOf(addr1.address);   
     assert(tx.toNumber() === 1  && ownerbal.toNumber() === 80);
   });
 
@@ -255,22 +277,21 @@ describe("Trash Possums", function () {
 
   it("should return the total minted possums", async function () {
     const supply = await trashPossums.getTotalMintedPossums();
-   
-    assert(supply.toNumber() === 110)
+       assert(supply.toNumber() === 137)
 
   })
 
   it("it should return the balance of ether in the contract", async function(){
-    const balance = await trashPossums.getBalance();
-    assert(ethers.utils.formatEther(balance.toString()) == ethers.utils.formatEther("60000000000000000000"));
+    const balance = await trashPossums.getBalance();    
+    assert(ethers.utils.formatEther(balance.toString()) == ethers.utils.formatEther("114000000000000000000"));
   })
 
   it("should withdraw the balance of eth in the contract", async function(){
    const startBal = await provider.getBalance(owner.address)
     const tx = await trashPossums.connect(owner).withdraw();
-    await tx.wait();
-    const ownerBal = await provider.getBalance(owner.address);    
-    assert(startBal < ownerBal);
+     await tx.wait();   
+    const ownerBal = await provider.getBalance(owner.address);        
+    assert(ownerBal.toString() === "118960476672678540799");
   })
 
   it("should withdraw ERC20 from contract", async function(){
