@@ -29,6 +29,7 @@ async function reservePossums(number){
     tx.wait()
 }
 async function claimPossums(){
+  
     try{
      await trashPossumsContract.claimPossums();
 
@@ -70,7 +71,18 @@ async function claimedPossums(){
     store.commit("setClaimedPossums", claimedPossums);
     return claimedPossums
 }
-
+async function getClaimedPossumsIds(){
+    getContract();
+    const balanceOf = await trashPossumsContract.balanceOf(signerAddress);
+    let possIds = [];
+    for(let i=0; i<balanceOf; i++){
+        const id = await trashPossumsContract.tokenOfOwnerByIndex(signerAddress, i);
+        //const formatId = id.toString();
+        possIds.push(id);
+    }
+    store.commit("setClaimedIds", possIds);
+    return possIds
+}
 async function getClaimDate(){
     getAlchemyProvider()
     const claimable = await rpcContract.getClaimDate();
@@ -81,4 +93,4 @@ async function getClaimDate(){
 
 
 
-export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp, getOffset}
+export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp, getOffset, getClaimedPossumsIds}

@@ -1,3 +1,4 @@
+import { id } from 'ethers/lib/utils';
 import { off } from 'process';
 import { createStore, storeKey } from 'vuex';
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
@@ -19,7 +20,8 @@ const state = {
     claimDate: 0,
     currentStamp: 0,
     claimable: false,
-    offset: 0
+    offset: 0,
+    claimedIds: null
 }
 
 const mutations = {
@@ -93,6 +95,9 @@ const mutations = {
     },
     setOffset(state, offset){
         state.offset = offset
+    },
+    setClaimedIds(state, Ids){
+        state.claimedIds = Ids
     }
 }
 
@@ -147,6 +152,9 @@ const getters = {
     },
     getOffset(state){
         return state.offset
+    },
+    getClaimedIds(state){
+        return state.claimedIds
     }
 }
 

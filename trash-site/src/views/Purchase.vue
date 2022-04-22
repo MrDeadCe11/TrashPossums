@@ -36,6 +36,7 @@
       </div>
     </div>   
   </div>
+  <div class="text-extrabold text-white-light">{{claimedPossumIds}}</div>
 </template>
 
 
@@ -43,7 +44,7 @@
 import {useStore} from 'vuex'
 import {computed, watchEffect, ref, onMounted} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue'
-import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp} from "../utils/web3Helpers.js"
+import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp, getClaimedPossumsIds} from "../utils/web3Helpers.js"
 
 export default {
   name:  'Purchase',
@@ -79,9 +80,7 @@ export default {
       })
 
 async function claimSomePossums(){
-  console.log("claimed")
-  await claimPossums();
-  
+   await claimPossums();  
 }
 
 let claimDate = computed(()=>{
@@ -153,6 +152,8 @@ let claimDate = computed(()=>{
       claimable: computed(()=> store.getters.getClaimable),
       offset: computed(()=> store.getters.getOffset),
       claimedPossums: computed(()=> store.getters.getClaimedPossums),
+      claimedPossumIds: computed(()=>{let ids = store.getters.getClaimedIds
+      return ids?ids.toString():null}),
       claimDate,
       currentStamp,
       numberField,
