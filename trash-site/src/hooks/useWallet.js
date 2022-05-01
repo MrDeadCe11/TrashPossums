@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
-import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset} from "../utils/web3Helpers.js"
+import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset, getPossumPrice} from "../utils/web3Helpers.js"
 
 const INITIAL_STATE = {
   web3: null, 
@@ -67,7 +67,6 @@ export default function UseWallet() {
 
   const getAccountAssets = async () => {
     fetching.value = true;
-    // get account balances
     const balance = await getUserBalance();
     assets.value = balance;
     await reservedPossums();
@@ -76,6 +75,7 @@ export default function UseWallet() {
     await getCurrentStamp();
     await getOffset();
     await getClaimedPossumsIds();
+    await getPossumPrice();
   };
 
   const subscribeProvider = async (provider) => {
@@ -112,8 +112,7 @@ export default function UseWallet() {
 
     const networkId = await web3.eth.net.getId();
 
-    const chainId = await web3.eth.getChainId(); // 坑逼 注意版本 chainId
-
+    const chainId = await web3.eth.getChainId();
     const ethersProvider = new ethers.providers.Web3Provider(provider);
 
     const ethersSigner = ethersProvider.getSigner()
@@ -126,8 +125,7 @@ export default function UseWallet() {
     walletObj.networkId = networkId;
     walletObj.ethersProvider = ethersProvider;
     walletObj.signer = ethersSigner;
-    await getAccountAssets();
-    
+    await getAccountAssets();    
     store.commit("updateWallet", walletObj);
 
   };

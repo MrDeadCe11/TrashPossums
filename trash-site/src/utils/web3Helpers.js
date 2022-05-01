@@ -22,14 +22,22 @@ const getAlchemyProvider=()=>{
     randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, signer)
 }
 
+async function getPossumPrice(){
+    const possumPrice = await trashPossumsContract.connect(signer).getPossumPrice();
+    store.commit("setPossumPrice", ethers.utils.formatEther(possumPrice));
+    return possumPrice;    
+}
+
 async function reservePossums(number){      
     getContract();
-    const possumPrice = await trashPossumsContract.connect(signer).getPossumPrice();
-    const tx = await trashPossumsContract.reservePossums(number, {value: possumPrice, gasLimit: 3000000});
+    const possumPrice = await getPossumPrice();
+    const sendEth = possumPrice.mul(number);
+
+    const tx = await trashPossumsContract.reservePossums(number, {value: sendEth, gasLimit: 3000000});
     tx.wait()
 }
-async function claimPossums(){
-  
+
+async function claimPossums(){  
     try{
      await trashPossumsContract.claimPossums();
 
@@ -37,8 +45,7 @@ async function claimPossums(){
         console.log(error.data.message)   
     }
     await claimedPossums();
-    await reservePossums()
-    return tx;
+    await reservedPossums();  
 
 }
 
@@ -93,4 +100,4 @@ async function getClaimDate(){
 
 
 
-export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp, getOffset, getClaimedPossumsIds}
+export {reservePossums, reservedPossums, claimedPossums, claimPossums, getClaimDate, getCurrentStamp, getOffset, getClaimedPossumsIds, getPossumPrice}

@@ -5,8 +5,8 @@ async function main() {
 
     const [deployer] = await hre.ethers.getSigners();
     console.log('owner accounts', deployer.address)
-const randomnessAddress = "0x9e10cD823C6836b1123B05953d4BA216e619fb04";
-const trashPossumsAddress= "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf";
+const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
+const trashPossumsAddress= process.env.TRASHPOSSUMS_ADDRESS;
 
 const trashPossums = await hre.ethers.getContractAt("TrashPossums", trashPossumsAddress);
 const randomness = await hre.ethers.getContractAt("Randomness", randomnessAddress)

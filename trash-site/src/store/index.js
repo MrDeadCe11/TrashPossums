@@ -15,13 +15,14 @@ const state = {
     signer: null,
     reservedPossums: 0,
     claimedPossums: 0,
-    contractAddress: "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf",
-    randomnessAddress:"0x9e10cD823C6836b1123B05953d4BA216e619fb04",
+    contractAddress: "0x022eE2d13E38F1adbc51baf8b7e1Ca01A312BE5A",
+    randomnessAddress:"0x9952e4bA9C18db9917910d019E15BAc260BC73F4",
     claimDate: 0,
     currentStamp: 0,
     claimable: false,
     offset: 0,
-    claimedIds: null
+    claimedIds: null,
+    possumPrice: 0
 }
 
 const mutations = {
@@ -98,6 +99,9 @@ const mutations = {
     },
     setClaimedIds(state, Ids){
         state.claimedIds = Ids
+    },
+    setPossumPrice(state, price){
+        state.possumPrice = price
     }
 }
 
@@ -155,13 +159,15 @@ const getters = {
     },
     getClaimedIds(state){
         return state.claimedIds
+    },
+    getPossumPrice(state){
+        return state.possumPrice
     }
 }
 
 const actions = {
     async fetchReservedPossums({commit}){
-        commit('setReservedPossums', await reservedPossums())
-        
+        commit('setReservedPossums', await reservedPossums())        
     }
 
 }

@@ -19,6 +19,9 @@
         <div class="flex mx-auto justify-center">
           <button v-if="!res" type="submit" :disabled="res" @click="submitPurchase" class=" bg-blue-dark mt-3 w-1/3 mx-auto text-white-light rounded-xl p-5"><h1 class="text-bold text-xl">RESERVE</h1></button>
         </div>
+          <div class="flex justify-center">
+        <p class="text-white-light text-2xl font-extrabold">Possums are {{possumPrice}} Matic</p>  
+        </div>  
         <div class="flex-col text-white-light mx-auto text-2xl mt-6 mb-6 sm:w-1/2 w-auto p-5 bg-gray-dark justify-center shadow-2xl rounded-lg">
             <div class="flex justify-center"><p><h1>You have <span class="text-yellow-light text-4xl">{{ reservedPossums }} </span> possums reserved</h1></p></div>
             <div v-if="claimedPossums > 0" class="flex justify-center"><p><h1>You have claimed <span class="text-yellow-light text-4xl">{{claimedPossums}}</span> Possums</h1></p> </div>
@@ -27,7 +30,8 @@
         <div class="flex justify-center">
           <p v-if="!claimable" class="text-white-light text-2xl font-extrabold">Possums are claimable on {{ claimDate }}</p>
           <p v-else class="text-white-light text-2xl font-extrabold">offset is: {{offset}} </p>
-        </div>        
+        </div> 
+           
       </form>
       <div class="mx-auto flex justify-center"> 
         <button v-if="claimable" @click="claimSomePossums" class="shadowed-xl bg-blue-dark mt-3 w-1/3 text-white-light rounded-xl p-5"><h1 class="text-bold text-xl">CLAIM</h1></button>
@@ -44,7 +48,7 @@
 import {useStore} from 'vuex'
 import {computed, watchEffect, ref, onMounted} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue'
-import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp, getClaimedPossumsIds} from "../utils/web3Helpers.js"
+import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp, getClaimedPossumsIds,getPossumPrice} from "../utils/web3Helpers.js"
 
 export default {
   name:  'Purchase',
@@ -154,6 +158,7 @@ let claimDate = computed(()=>{
       claimedPossums: computed(()=> store.getters.getClaimedPossums),
       claimedPossumIds: computed(()=>{let ids = store.getters.getClaimedIds
       return ids?ids.toString():null}),
+      possumPrice: computed(()=> store.getters.getPossumPrice),
       claimDate,
       currentStamp,
       numberField,

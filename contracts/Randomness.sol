@@ -61,9 +61,7 @@ contract Randomness is Ownable, VRFConsumerBase {
         require(claimableDate !=0, "not ready to offset yet");
         
         _getRandomNumber();
-        /////////////////////////////////////
-       randomIdOffset = 10;
-       /////////////////////////////////////
+    
         randomIdOffsetExecuted = true;   
         
         return randomIdOffsetExecuted;     

@@ -5,11 +5,11 @@ const randomAbi = require("../artifacts/contracts/Randomness.sol/Randomness.json
 const trashAbi = require("../artifacts/contracts/TrashPossums.sol/TrashPossums.json")
 
 async function main() {
-
+  const testUri = "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK"
     const deployer = await hre.ethers.getSigner();
     console.log('owner accounts', deployer.address)
-const randomnessAddress = "0x9e10cD823C6836b1123B05953d4BA216e619fb04";
-const trashPossumsAddress= "0x24c9B9B9348BB80ec2427D198e47D6fd787a3bEf";
+const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
+const trashPossumsAddress= process.env.TRASHPOSSUMS_ADDRESS;
 
 const randomness = new ethers.Contract(
   randomnessAddress,
@@ -28,20 +28,20 @@ const trashPossums = new ethers.Contract(trashPossumsAddress, trashAbi.abi, depl
 //await randomness.setTrash(trashPossumsAddress);
 //const trash = await randomness.getTrash();
 //const avail = await randomness.getClaimableDate();
-
-//const claim = await trashPossums.claimPossums();
 //const avail = await randomness.getAvailablePossums();
+const offset = await randomness.getOffset();
+
 const balance = await trashPossums.balanceOf(deployer.address);
+const date = await randomness.getClaimableDate();
+const uri = await trashPossums.contractURI();
 
-const ownedIds = await trashPossums.tokenOfOwnerByIndex(deployer.address, balance -2);
-
-const reserved = await trashPossums.getReservedPossumsPerWallet(deployer.address)
+//await trashPossums.setBaseTokenURI(testUri)
 
 
-// console.log("trash is set to ",trash);
-// console.log("climable date",avail)
-//console.log("offset executed", execute, executed)
-console.log("availible possums", balance, ownedIds, reserved)
+// const reserved = await trashPossums.getReservedPossumsPerWallet(deployer.address)
+// const reservedIds = await trashPossums.getReservedPossumIds(deployer.address)
+
+console.log("claimed Possums", balance, "claimable date", date,  "offset",offset, "uri", uri)
 }
 
 main()
