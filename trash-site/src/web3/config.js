@@ -20,21 +20,13 @@ const providerOptions = {
     },
   },
     // https://github.com/torusresearch/torus-embed#readme
-  // torus: {
-  //   package: Torus,
-  // },
+  torus: {
+    package: Torus,
+  },
     // https://docs.authereum.com/integration
-  // authereum: {
-  //   package: Authereum,
-  // },
-  //   //https://docs.bitski.com/
-  // bitski: {
-  //   package: Bitski,
-  //   options: {
-  //     clientId: '', // TODO
-  //     callbackUrl: `${window.location.href}bitski-callback.html`,
-  //   },
-  // },
+  authereum: {
+    package: Authereum,
+  },
   frame: {
     package: ethProvider // required
   },

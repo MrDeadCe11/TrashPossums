@@ -113,6 +113,7 @@ export default function UseWallet() {
     const networkId = await web3.eth.net.getId();
 
     const chainId = await web3.eth.getChainId();
+      
     const ethersProvider = new ethers.providers.Web3Provider(provider);
 
     const ethersSigner = ethersProvider.getSigner()

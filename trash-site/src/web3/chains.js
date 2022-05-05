@@ -193,12 +193,12 @@ const supportedChains = [
   },
   {
     name: 'Matic Testnet mumbai',
-    short_name: 'bsc',
+    short_name: 'mumbai',
     chain: 'smartchain',
     network: 'Mumbai',
     chain_id: 8001,
     network_id: 8001,
-    rpc_url: 'https://bsc-dataseed1.defibit.io/',
+    rpc_url: import.meta.env.VITE_ALCHEMY_MUMBAI_RPC_URL,
     native_currency: {
       symbol: 'MATIC',
       name: 'MATIC',
