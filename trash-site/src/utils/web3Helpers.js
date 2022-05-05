@@ -1,15 +1,15 @@
-import store from '../store/index'
+import store from '../store/index.js'
 import {ethers} from 'ethers'
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
 
 const contractAddress = store.state.contractAddress;
 const randomnessAddress = store.state.randomnessAddress;
-let trashPossumsContract, provider, signer, signerAddress, alchemyProvider, alchemySigner, rpcContract, randomnessContract
-
+let trashPossumsContract, signer, provider, signerAddress, alchemyProvider, alchemySigner, rpcContract, randomnessContract
 
 const getContract = () => {
-    provider = new ethers.providers.Web3Provider(window.ethereum)
+   provider = new ethers.providers.Web3Provider(window.ethereum)
+  
     signer = provider.getSigner();    
     signerAddress = signer.getAddress();
     trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);

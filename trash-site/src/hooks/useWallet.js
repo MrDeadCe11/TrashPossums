@@ -114,7 +114,7 @@ export default function UseWallet() {
 
     const chainId = await web3.eth.getChainId();
       
-    const ethersProvider = new ethers.providers.Web3Provider(provider);
+    const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
     const ethersSigner = ethersProvider.getSigner()
   
@@ -126,8 +126,9 @@ export default function UseWallet() {
     walletObj.networkId = networkId;
     walletObj.ethersProvider = ethersProvider;
     walletObj.signer = ethersSigner;
-    await getAccountAssets();    
+   store.commit("setSigner", ethersProvider);
     store.commit("updateWallet", walletObj);
+    await getAccountAssets();  
 
   };
 

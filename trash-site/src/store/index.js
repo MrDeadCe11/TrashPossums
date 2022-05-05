@@ -51,7 +51,7 @@ const mutations = {
         state.ethersProvider = payload.ethersProvider;
         state.signer = payload.signer;
         state.provider = payload.provider;
-    },
+        },
     setWeb3(state, web3){
         state.web3 = web3;
      },
