@@ -33,6 +33,7 @@ const offset = await randomness.getOffset();
 
 const balance = await trashPossums.balanceOf(deployer.address);
 const date = await randomness.getClaimableDate();
+const offsetExectued =  await randomness.offsetExecuted();
 const uri = await trashPossums.contractURI();
 
 //await trashPossums.setBaseTokenURI(testUri)
@@ -42,6 +43,7 @@ const uri = await trashPossums.contractURI();
 // const reservedIds = await trashPossums.getReservedPossumIds(deployer.address)
 
 console.log("claimed Possums", balance, "claimable date", date,  "offset",offset, "uri", uri)
+console.log("Offset executed", offsetExectued) 
 }
 
 main()

@@ -126,7 +126,6 @@ export default function UseWallet() {
     walletObj.networkId = networkId;
     walletObj.ethersProvider = ethersProvider;
     walletObj.signer = ethersSigner;
-   store.commit("setSigner", ethersProvider);
     store.commit("updateWallet", walletObj);
     await getAccountAssets();  
 
