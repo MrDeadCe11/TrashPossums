@@ -336,6 +336,9 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         function getTotalPossums() public pure returns(uint256){
          return totalPossums;
     }
+        function getRandomnessAddress() public view returns(address){
+            return randomness;
+    }
    
     /**
      * @dev See {ERC721}.

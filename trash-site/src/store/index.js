@@ -1,7 +1,4 @@
-import { id } from 'ethers/lib/utils';
-import { off } from 'process';
-import { createStore, storeKey } from 'vuex';
-import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
+import { createStore} from 'vuex';
 import {reservedPossums} from "../utils/web3Helpers.js"
 
 const state = {
@@ -15,14 +12,16 @@ const state = {
     signer: null,
     reservedPossums: 0,
     claimedPossums: 0,
-    contractAddress: "0x022eE2d13E38F1adbc51baf8b7e1Ca01A312BE5A",
-    randomnessAddress:"0x9952e4bA9C18db9917910d019E15BAc260BC73F4",
+    contractAddress: import.meta.env.VITE_TRASHPOSSUMS_ADDRESS,
+    randomnessAddress: import.meta.env.VITE_RANDOMNESS_ADDRESS,
     claimDate: 0,
     currentStamp: 0,
     claimable: false,
     offset: 0,
     claimedIds: null,
-    possumPrice: 0
+    possumPrice: 0,
+    trashpossums: null,
+    randomness: null,
 }
 
 const mutations = {
@@ -51,6 +50,8 @@ const mutations = {
         state.ethersProvider = payload.ethersProvider;
         state.signer = payload.signer;
         state.provider = payload.provider;
+        state.trashpossums = payload.trashpossums;
+        state.randomness = payload.randomness
         },
     setWeb3(state, web3){
         state.web3 = web3;
@@ -102,6 +103,12 @@ const mutations = {
     },
     setPossumPrice(state, price){
         state.possumPrice = price
+    },
+    setTrashpossums(state, trashContract){
+        state.trashpossums = trashContract
+    },
+    setRandomness(state, randomness){
+        state.randomness = randomness
     }
 }
 
@@ -162,12 +169,18 @@ const getters = {
     },
     getPossumPrice(state){
         return state.possumPrice
+    },
+    getTrashpossums(state){
+        return state.trashpossums
+    },
+    getRandomness(state){
+        return state.randomness
     }
 }
 
 const actions = {
     async fetchReservedPossums({commit}){
-        commit('setReservedPossums', await reservedPossums())        
+        commit('setReservedPossums', await reservedPossums(state.trashpossums, state.signer))        
     }
 
 }

@@ -48,7 +48,7 @@
 import {useStore} from 'vuex'
 import {computed, watchEffect, ref, onMounted} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue'
-import {reservePossums, reservedPossums, claimPossums, claimedPossums, getCurrentStamp, getClaimedPossumsIds,getPossumPrice} from "../utils/web3Helpers.js"
+import {reservePossums, reservedPossums, claimPossums} from "../utils/web3Helpers.js"
 
 export default {
   name:  'Purchase',
@@ -61,13 +61,15 @@ export default {
       let numberField = ref(0);
       let res = ref(false);
 
+
+
       const getDate = (date) => {
         const month = date.getMonth() +1;
         const day = date.getDate();
         const year = date.getFullYear();
         const twentyFourHour = date.getHours();
         const minute = date.getMinutes();
-        const hour = Number(twentyFourHour) > 12 ? Number(twentyFourHour) -12 : twentyFourHour 
+        const hour = Number(twentyFourHour) > 12 ? Number(twentyFourHour) - 12 : twentyFourHour 
         const fullDate = `${month}/${+day}/${year} at ${hour}:${minute} ${Number(twentyFourHour) >12 ? "pm" : "am"} (UTC)` 
         return fullDate
       }
@@ -83,18 +85,25 @@ export default {
         
       })
 
-async function claimSomePossums(){
-   await claimPossums();  
-}
 
-let claimDate = computed(()=>{
+
+      async function claimSomePossums(){
+        const contract = store.getters.getTrashpossums
+        const sign = store.getters.getAddress
+        console.log("contract", contract,"signer", sign)
+        //const trashPossumsContract = store.getters.getTrashpossums;
+        //const signer = store.getters.getSigner;
+        await claimPossums(contract, sign);  
+      }
+
+      let claimDate = computed(()=>{
         const date = store.getters.getClaimDate
-        if(date > 0){
-          const fulldate = getDate(new Date(date));
-          return fulldate
-        } else {
-          return "NEVER!";
-        }
+          if(date > 0){
+            const fulldate = getDate(new Date(date));
+            return fulldate
+          } else {
+            return "NEVER!";
+          }
       }
       )
       
@@ -112,16 +121,20 @@ let claimDate = computed(()=>{
       }
       
       async function submitPurchase(e){
+         const trashPossumsContract = store.getters.getTrashpossums
+        const signer = store.getters.getAddress
         if(numberField.value>0){  
             e.preventDefault();
             toggleRes();
         try{
-            await reservePossums(numberField.value);
+          
+          console.log("number", numberField.value, "contract",trashPossumsContract,"signer", signer)
+            await reservePossums(numberField.value, trashPossumsContract, signer);
             
         } catch(error){
             console.error(error)
         }
-            await reservedPossums(); 
+            await reservedPossums(trashPossumsContract, signer); 
             toggleRes();     
       }
         else {

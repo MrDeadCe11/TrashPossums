@@ -42,7 +42,6 @@ console.log("clicked handlewallet")
   
   if (connected) {
     console.log('afterConnectedWallet', connected);
-      reservedPossums();
      }
 };
 

@@ -1,50 +1,43 @@
-import store from '../store/index.js'
 import {ethers} from 'ethers'
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
+import store from "../store/index.js"
 
-const contractAddress = store.state.contractAddress;
-const randomnessAddress = store.state.randomnessAddress;
-let trashPossumsContract, signer, provider, signerAddress, alchemyProvider, alchemySigner, rpcContract, randomnessContract
 
-const getContract = () => {
-   provider = new ethers.providers.Web3Provider(window.ethereum)
-  
-    signer = provider.getSigner();    
-    signerAddress = signer.getAddress();
-    trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-}
-
+// const getContract = () => {
+//   const provider = new ethers.providers.Web3Provider(window.ethereum)  
+//     signer = provider.getSigner();    
+//     signerAddress = signer.getAddress();
+//     trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
+// }
+let alchemyProvider
 const getAlchemyProvider=()=>{
-    alchemyProvider = new ethers.providers.JsonRpcProvider(import.meta.env.VITE_MUMBAI_RPC_URL)
-    alchemySigner = alchemyProvider.getSigner();
-    rpcContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-    randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, signer)
+ alchemyProvider = new ethers.providers.JsonRpcProvider(import.meta.env.VITE_MUMBAI_RPC_URL)
 }
 
-async function getPossumPrice(){
-    const possumPrice = await trashPossumsContract.connect(signer).getPossumPrice();
+async function getPossumPrice(trashPossumsContract, signerAddress){    
+    const possumPrice = await trashPossumsContract.connect(signerAddress).getPossumPrice();
     store.commit("setPossumPrice", ethers.utils.formatEther(possumPrice));
     return possumPrice;    
 }
 
-async function reservePossums(number){      
-    getContract();
-    const possumPrice = await getPossumPrice();
+async function reservePossums(number, contract, signerAddress){      
+    const possumPrice = await getPossumPrice(contract, signerAddress);
     const sendEth = possumPrice.mul(number);
 
-    const tx = await trashPossumsContract.reservePossums(number, {value: sendEth, gasLimit: 3000000});
+    const tx = await contract.reservePossums(number, {value: sendEth, gasLimit: 3000000});
     tx.wait()
 }
 
-async function claimPossums(){  
+async function claimPossums(trashPossumsContract, signerAddress){  
+    console.log("web3 trash claim contract", trashPossumsContract)
     try{
      await trashPossumsContract.claimPossums();
 
     } catch(error){
-        console.log(error.data.message)   
+        console.log(error.message)   
     }
-    await claimedPossums();
+    await claimedPossums(trashPossumsContract, signerAddress);
     await reservedPossums();  
 
 }
@@ -56,15 +49,14 @@ async function getCurrentStamp(){
     store.commit("setCurrentStamp", timeStamp * 1000)
     return timeStamp;
 }
-async function reservedPossums(){
-    getContract();
+
+async function reservedPossums(trashPossumsContract, signerAddress){
     const reserved = await trashPossumsContract.getReservedPossumsPerWallet(signerAddress);
     store.commit("setReservedPossums", reserved);
     return reserved
 }
 
-async function getOffset(){
-getAlchemyProvider();
+async function getOffset(randomnessContract){
 const offset = await randomnessContract.getOffset();
 const claimable = offset > 0? true: false;
 store.commit("setClaimable", claimable);
@@ -72,14 +64,12 @@ store.commit("setOffset", offset);
 return offset
 }
 
-async function claimedPossums(){
-    getContract();
+async function claimedPossums(trashPossumsContract, signerAddress){
     const claimedPossums = await trashPossumsContract.balanceOf(signerAddress) 
     store.commit("setClaimedPossums", claimedPossums);
     return claimedPossums
 }
-async function getClaimedPossumsIds(){
-    getContract();
+async function getClaimedPossumsIds(trashPossumsContract, signerAddress){
     const balanceOf = await trashPossumsContract.balanceOf(signerAddress);
     let possIds = [];
     for(let i=0; i<balanceOf; i++){
@@ -90,9 +80,8 @@ async function getClaimedPossumsIds(){
     store.commit("setClaimedIds", possIds);
     return possIds
 }
-async function getClaimDate(){
-    getAlchemyProvider()
-    const claimable = await rpcContract.getClaimDate();
+async function getClaimDate(randomnessContract){
+    const claimable = await randomnessContract.getClaimDate();
     const claimDate = claimable * 1000
     store.commit("setClaimDate", claimDate);
     return claimDate;

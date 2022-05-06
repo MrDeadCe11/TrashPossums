@@ -1,5 +1,5 @@
 import {
-  ref, reactive, getCurrentInstance, toRefs,
+  ref, reactive, getCurrentInstance, toRefs, markRaw
 } from 'vue';
 import Web3, {utils} from 'web3';
 import {ethers} from 'ethers'
@@ -8,6 +8,8 @@ import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
 import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset, getPossumPrice} from "../utils/web3Helpers.js"
+import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
+import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
 
 const INITIAL_STATE = {
   web3: null, 
@@ -18,6 +20,8 @@ const INITIAL_STATE = {
   networkId: 1, 
   ethersProvider: null,
   signer: null,
+  trashpossums: null,
+  randomness: null
 };
 
 
@@ -69,13 +73,14 @@ export default function UseWallet() {
     fetching.value = true;
     const balance = await getUserBalance();
     assets.value = balance;
-    await reservedPossums();
-    await claimedPossums();    
-    await getClaimDate();
+   
+    await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
+    await claimedPossums(walletObj.trashpossums, walletObj.userAddress);    
+    await getClaimDate(walletObj.trashpossums);
     await getCurrentStamp();
-    await getOffset();
-    await getClaimedPossumsIds();
-    await getPossumPrice();
+    await getOffset(walletObj.randomness);
+    await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
+    await getPossumPrice(walletObj.trashpossums, walletObj.userAddress);
   };
 
   const subscribeProvider = async (provider) => {
@@ -98,7 +103,7 @@ export default function UseWallet() {
     });
   };
 
-  const onConnect = async () => {
+   const onConnect = async () => {
   
     const provider = await web3Modal.connect();
     
@@ -117,17 +122,25 @@ export default function UseWallet() {
     const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
     const ethersSigner = ethersProvider.getSigner()
+
+    const trashPossumsContract = new ethers.Contract(import.meta.env.VITE_TRASHPOSSUMS_ADDRESS, contractAbi.abi, ethersSigner);
+      const randomnessAddress = "0x9952e4bA9C18db9917910d019E15BAc260BC73F4" //import.meta.env.VITE_RANDOMNESS_ADDRESS
   
+    const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
+    
     walletObj.web3 = web3;
     walletObj.provider = provider;    
     walletObj.connected = true;
     walletObj.userAddress = address;
     walletObj.chainId = chainId;
     walletObj.networkId = networkId;
-    walletObj.ethersProvider = ethersProvider;
-    walletObj.signer = ethersSigner;
+    walletObj.ethersProvider = markRaw(ethersProvider);
+    walletObj.signer = markRaw(ethersSigner);
+    walletObj.trashpossums = markRaw(trashPossumsContract);
+    walletObj.randomness = markRaw(randomnessContract);
     store.commit("updateWallet", walletObj);
     await getAccountAssets();  
+    console.log("usewallet trash", walletObj.trashpossums, "useWallet signer", walletObj.signer)
 
   };
 
@@ -141,6 +154,6 @@ export default function UseWallet() {
     web3Modal,
     // methods
     onConnect,
-    walletObj,
+    walletObj
   };
 }
