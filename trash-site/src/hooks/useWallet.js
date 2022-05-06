@@ -103,6 +103,20 @@ export default function UseWallet() {
     });
   };
 
+  const subscribeContract = async (contract) => {
+    if(!contract.on){
+      return;
+    }
+    contract.on('Reserved', ()=>{
+      console.log("POSSUM RESERVED")
+      reservedPossums(contract, walletObj.userAddress);    
+    })
+    contract.on('Transfer', ()=> {
+      console.log("possum claimed")
+      claimedPossums(contract, walletObj.userAddress)
+    })
+  }
+
    const onConnect = async () => {
   
     const provider = await web3Modal.connect();
@@ -127,6 +141,8 @@ export default function UseWallet() {
       const randomnessAddress = "0x9952e4bA9C18db9917910d019E15BAc260BC73F4" //import.meta.env.VITE_RANDOMNESS_ADDRESS
   
     const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
+
+    await subscribeContract(trashPossumsContract);
     
     walletObj.web3 = web3;
     walletObj.provider = provider;    
