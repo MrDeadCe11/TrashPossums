@@ -142,7 +142,7 @@ export default function UseWallet() {
     const trashPossumsContract = new ethers.Contract(trashAddress, contractAbi.abi, ethersSigner);
     
     const randomnessAddress = "0xCa4A27C700B94ACd41f58BF0fA6B910f1b3b3868"//import.meta.env.VITE_RANDOMNESS_ADDRESS
-    console.log("test env", trashAddress, randomnessAddress)
+   
     const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
 
     await subscribeContract(trashPossumsContract);
@@ -159,8 +159,6 @@ export default function UseWallet() {
     walletObj.randomness = markRaw(randomnessContract);
     store.commit("updateWallet", walletObj);
     await getAccountAssets();  
-    console.log("usewallet trash", walletObj.trashpossums, "useWallet signer", walletObj.signer)
-
   };
 
   return {
