@@ -10,6 +10,7 @@ import {useStore} from 'vuex'
 import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset, getPossumPrice} from "../utils/web3Helpers.js"
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
+import { createImportSpecifier } from 'typescript';
 
 const INITIAL_STATE = {
   web3: null, 
@@ -124,7 +125,7 @@ export default function UseWallet() {
     await subscribeProvider(provider);
     
     const web3 = new Web3(provider);
-    
+   
     const accounts = await web3.eth.getAccounts();
 
     const address = accounts[0];
@@ -132,9 +133,11 @@ export default function UseWallet() {
     const networkId = await web3.eth.net.getId();
 
     const chainId = await web3.eth.getChainId();
-      
+      console.log("pre-ethers provider call")
     const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-
+    console.log("post call")
+    const result = await ethersProvider.send('eth_chainId', []);
+    console.log("result", result)
     const ethersSigner = ethersProvider.getSigner()
     
     const trashAddress = "0x034C747f5D91357eA0a378C7BD7160fEd148A27f" //import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
