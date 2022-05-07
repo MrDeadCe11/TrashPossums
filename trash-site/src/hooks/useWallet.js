@@ -133,11 +133,9 @@ export default function UseWallet() {
     const networkId = await web3.eth.net.getId();
 
     const chainId = await web3.eth.getChainId();
-      console.log("pre-ethers provider call")
+  
     const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-    console.log("post call")
-    const result = await ethersProvider.send('eth_chainId', []);
-    console.log("result", result)
+    
     const ethersSigner = ethersProvider.getSigner()
     
     const trashAddress = "0x034C747f5D91357eA0a378C7BD7160fEd148A27f" //import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
