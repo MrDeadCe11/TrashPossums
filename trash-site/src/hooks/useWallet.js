@@ -136,10 +136,13 @@ export default function UseWallet() {
     const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
     const ethersSigner = ethersProvider.getSigner()
-    const trashAddress = '0x034C747f5D91357eA0a378C7BD7160fEd148A27f'
+    
+    const trashAddress = import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
+    
     const trashPossumsContract = new ethers.Contract(trashAddress, contractAbi.abi, ethersSigner);
-      const randomnessAddress = "0xCa4A27C700B94ACd41f58BF0fA6B910f1b3b3868" //import.meta.env.VITE_RANDOMNESS_ADDRESS
-  
+    
+    const randomnessAddress = import.meta.env.VITE_RANDOMNESS_ADDRESS
+    console.log("test env", trashAddress, randomnessAddress)
     const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
 
     await subscribeContract(trashPossumsContract);

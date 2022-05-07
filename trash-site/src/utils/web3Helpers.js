@@ -58,7 +58,7 @@ async function reservedPossums(trashPossumsContract, signerAddress){
 
 async function getOffset(randomnessContract){
 const offset = await randomnessContract.getOffset();
-const claimable = offset > 0? true: false;
+const claimable = offset > 0 ? true: false;
 store.commit("setClaimable", claimable);
 store.commit("setOffset", offset);
 return offset
@@ -81,7 +81,7 @@ async function getClaimedPossumsIds(trashPossumsContract, signerAddress){
     return possIds
 }
 async function getClaimDate(randomnessContract){
-    const claimable = await randomnessContract.getClaimDate();
+    const claimable = await randomnessContract.getClaimableDate();
     const claimDate = claimable * 1000
     store.commit("setClaimDate", claimDate);
     return claimDate;
