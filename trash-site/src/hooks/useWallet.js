@@ -76,7 +76,7 @@ export default function UseWallet() {
    
     await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
     await claimedPossums(walletObj.trashpossums, walletObj.userAddress);    
-    await getClaimDate(walletObj.trashpossums);
+    await getClaimDate(walletObj.randomness);
     await getCurrentStamp();
     await getOffset(walletObj.randomness);
     await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
