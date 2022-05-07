@@ -59,6 +59,7 @@ async function reservedPossums(trashPossumsContract, signerAddress){
 async function getOffset(randomnessContract){
 const offset = await randomnessContract.getOffset();
 const claimable = offset > 0 ? true: false;
+console.log("OFFSET", offset)
 store.commit("setClaimable", claimable);
 store.commit("setOffset", offset);
 return offset
