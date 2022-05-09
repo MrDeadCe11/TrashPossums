@@ -18,7 +18,7 @@ async function reservePossums(number, contract, signerAddress){
 }
 
 async function claimPossums(trashPossumsContract, signerAddress){  
-    console.log("web3 trash claim contract", trashPossumsContract)
+  
     try{
      await trashPossumsContract.claimPossums();
 
@@ -44,7 +44,9 @@ async function reservedPossums(trashPossumsContract, signerAddress){
 }
 
 async function getOffset(randomnessContract){
+
     try{
+
 const offset = await randomnessContract.getOffset();
 const claimable = offset > 0 ? true: false;
 store.commit("setClaimable", claimable);

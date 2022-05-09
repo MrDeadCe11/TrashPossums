@@ -262,7 +262,7 @@ contract TrashPossums is  ERC721, ERC721URIStorage, Ownable, ERC721Enumerable, P
         require(
             totalMintedPossums <= totalPossums, "all Possums have been minted"
              );
-         _mint(_to, _tokenId);         
+         _safeMint(_to, _tokenId);         
          _setTokenURI(_tokenId, baseURI);               
          
          totalMintedPossums++;
