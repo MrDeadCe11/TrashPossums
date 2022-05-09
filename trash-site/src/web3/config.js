@@ -17,7 +17,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: import.meta.env.VITE_INFURAID, // TODO infuraId
+      infuraId: import.meta.env.VITE_WALLET_CONNECT_ID, // TODO infuraId
     },
   },
     // https://github.com/torusresearch/torus-embed#readme

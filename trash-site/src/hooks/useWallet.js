@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal';
 import { getChainData } from '../web3/tools';
 import { providerOptions } from '../web3/config';
 import {useStore} from 'vuex'
-import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset, getPossumPrice} from "../utils/web3Helpers.js"
+import {reservedPossums, claimedPossums, getClaimDate, getCurrentStamp, getClaimedPossumsIds, getOffset, getPossumPrice, getBaseUri} from "../utils/web3Helpers.js"
 import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPossums.json"
 import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
 
@@ -82,6 +82,7 @@ export default function UseWallet() {
     await getOffset(walletObj.randomness);
     await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
     await getPossumPrice(walletObj.trashpossums, walletObj.userAddress);
+    await getBaseUri(walletObj.trashpossums);
   };
 
   const subscribeProvider = async (provider) => {

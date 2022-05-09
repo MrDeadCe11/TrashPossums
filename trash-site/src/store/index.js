@@ -22,6 +22,7 @@ const state = {
     possumPrice: 0,
     trashpossums: null,
     randomness: null,
+    baseURI: ''
 }
 
 const mutations = {
@@ -51,7 +52,8 @@ const mutations = {
         state.signer = payload.signer;
         state.provider = payload.provider;
         state.trashpossums = payload.trashpossums;
-        state.randomness = payload.randomness
+        state.randomness = payload.randomness;
+        state.baseURI = payload.baseURI;
         },
     setWeb3(state, web3){
         state.web3 = web3;
@@ -109,6 +111,9 @@ const mutations = {
     },
     setRandomness(state, randomness){
         state.randomness = randomness
+    },
+    setBaseURI(state, uri){
+        state.baseURI = uri;
     }
 }
 
@@ -175,6 +180,9 @@ const getters = {
     },
     getRandomness(state){
         return state.randomness
+    },
+    getBaseURI(state){
+        return state.baseURI
     }
 }
 

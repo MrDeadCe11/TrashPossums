@@ -40,7 +40,7 @@
       </div>
     </div>   
   </div>
-  <div class="text-extrabold text-white-light">{{claimedPossumIds}}</div>
+  <div class="text-extrabold text-white-light">{{claimedPossumIds}}{{baseURI}}</div>
 </template>
 
 
@@ -157,6 +157,10 @@ export default {
         }
       }
 
+      const baseURI = computed(()=> store.getters.getBaseURI)
+
+      
+
   return {
       connected: computed(()=>store.getters.getConnected),     
       reservedPossums: computed(()=>store.getters.getReservedPossums),
@@ -166,6 +170,7 @@ export default {
       claimedPossumIds: computed(()=>{let ids = store.getters.getClaimedIds
       return ids?ids.toString():null}),
       possumPrice: computed(()=> store.getters.getPossumPrice),
+      baseURI,
       claimDate,
       currentStamp,
       numberField,
