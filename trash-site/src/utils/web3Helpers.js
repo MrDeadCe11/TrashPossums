@@ -3,18 +3,6 @@ import contractAbi from "../../../artifacts/contracts/TrashPossums.sol/TrashPoss
 import randomAbi from "../../../artifacts/contracts/Randomness.sol/Randomness.json"
 import store from "../store/index.js"
 
-
-// const getContract = () => {
-//   const provider = new ethers.providers.Web3Provider(window.ethereum)  
-//     signer = provider.getSigner();    
-//     signerAddress = signer.getAddress();
-//     trashPossumsContract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-// }
-let alchemyProvider
-const getAlchemyProvider=()=>{
- alchemyProvider = new ethers.providers.JsonRpcProvider(import.meta.env.VITE_MUMBAI_RPC_URL)
-}
-
 async function getPossumPrice(trashPossumsContract, signerAddress){    
     const possumPrice = await trashPossumsContract.connect(signerAddress).getPossumPrice();
     store.commit("setPossumPrice", ethers.utils.formatEther(possumPrice));
@@ -42,9 +30,8 @@ async function claimPossums(trashPossumsContract, signerAddress){
 
 }
 
-async function getCurrentStamp(){
-    getAlchemyProvider();
-    const block = await alchemyProvider.getBlock("latest");
+async function getCurrentStamp(provider){
+    const block = await provider.getBlock("latest");
     const timeStamp = block.timestamp ;
     store.commit("setCurrentStamp", timeStamp * 1000)
     return timeStamp;
@@ -57,13 +44,18 @@ async function reservedPossums(trashPossumsContract, signerAddress){
 }
 
 async function getOffset(randomnessContract){
-    console.log("offset pinged")
+
+    try{
+
 const offset = await randomnessContract.getOffset();
 const claimable = offset > 0 ? true: false;
-console.log("OFFSET", offset)
 store.commit("setClaimable", claimable);
 store.commit("setOffset", offset);
 return offset
+    } catch(err){
+        console.error(err)
+    }
+
 }
 
 async function claimedPossums(trashPossumsContract, signerAddress){
@@ -83,8 +75,8 @@ async function getClaimedPossumsIds(trashPossumsContract, signerAddress){
     return possIds
 }
 async function getClaimDate(randomnessContract){
-    const claimable = await randomnessContract.getClaimableDate();
-    const claimDate = claimable * 1000
+    const claim = await randomnessContract.getClaimableDate();
+    const claimDate = claim * 1000
     store.commit("setClaimDate", claimDate);
     return claimDate;
 }

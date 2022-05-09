@@ -10,7 +10,7 @@ export function getChainData(chainId) {
   const API_KEY = import.meta.env.VITE_INFURAID;
 
   if (
-    chainData.rpc_url.includes('infura.io')
+    chainData.rpc_url.includes('alchemy.com')
       && chainData.rpc_url.includes('%API_KEY%')
       && API_KEY
   ) {

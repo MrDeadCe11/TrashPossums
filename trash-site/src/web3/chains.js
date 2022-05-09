@@ -132,9 +132,9 @@ const supportedChains = [
     short_name: 'Mumbai',
     chain: 'Goerli',
     network: 'Mumbai',
-    chain_id: 8001,
-    network_id: 8001,
-    rpc_url: 'https://rpc-mumbai.maticvigil.com',
+    chain_id: 80001,
+    network_id: 80001,
+    rpc_url: 'https://polygon-mumbai.g.alchemy.com/v2',
     native_currency: {
       symbol: 'MATIC',
       name: 'MATIC',
