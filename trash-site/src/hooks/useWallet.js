@@ -63,7 +63,7 @@ export default function UseWallet() {
   };
 
   async function getUserBalance () {    
-    const ethersProvider = new ethers.providers.Web3Provider(walletObj.provider);
+    const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
     const res = await ethersProvider.getBalance(walletObj.userAddress)
     const balance = (res ? ethers.utils.formatUnits(res) : 0);
     return balance
@@ -77,7 +77,7 @@ export default function UseWallet() {
     await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
     await claimedPossums(walletObj.trashpossums, walletObj.userAddress);    
     await getClaimDate(walletObj.randomness);
-    await getCurrentStamp();
+    await getCurrentStamp(walletObj.ethersProvider);
     await getOffset(walletObj.randomness);
     await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
     await getPossumPrice(walletObj.trashpossums, walletObj.userAddress);
@@ -132,16 +132,17 @@ export default function UseWallet() {
     const networkId = await web3.eth.net.getId();
 
     const chainId = await web3.eth.getChainId();
-      
+   
     const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-
+    await ethersProvider.ready
+    
     const ethersSigner = ethersProvider.getSigner()
     
-    const trashAddress = "0x034C747f5D91357eA0a378C7BD7160fEd148A27f" //import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
+    const trashAddress = import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
     
     const trashPossumsContract = new ethers.Contract(trashAddress, contractAbi.abi, ethersSigner);
     
-    const randomnessAddress = "0xCa4A27C700B94ACd41f58BF0fA6B910f1b3b3868"//import.meta.env.VITE_RANDOMNESS_ADDRESS
+    const randomnessAddress = import.meta.env.VITE_RANDOMNESS_ADDRESS
     console.log("test env", trashAddress, randomnessAddress)
     const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
 
