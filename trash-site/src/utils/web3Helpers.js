@@ -26,7 +26,7 @@ async function claimPossums(trashPossumsContract, signerAddress){
         console.log(error.message)   
     }
     await claimedPossums(trashPossumsContract, signerAddress);
-    await reservedPossums();  
+    await reservedPossums(trashPossumsContract, signerAddress);  
 
 }
 

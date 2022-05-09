@@ -81,18 +81,12 @@ export default {
           return fulldate
         } else {
           return "NEVER!";
-        }
-        
+        }        
       })
-
-
 
       async function claimSomePossums(){
         const contract = store.getters.getTrashpossums
         const sign = store.getters.getAddress
-        console.log("contract", contract,"signer", sign)
-        //const trashPossumsContract = store.getters.getTrashpossums;
-        //const signer = store.getters.getSigner;
         await claimPossums(contract, sign);  
       }
 

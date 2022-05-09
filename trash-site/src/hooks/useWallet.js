@@ -110,11 +110,12 @@ export default function UseWallet() {
     }
     contract.on('Reserved', ()=>{
       console.log("POSSUM RESERVED")
-      reservedPossums(contract, walletObj.userAddress);    
+      reservedPossums(walletObj.trashpossums, walletObj.userAddress);    
     })
-    contract.on('Transfer', ()=> {
+    contract.on('Transfer',()=> {
       console.log("possum claimed")
-      claimedPossums(contract, walletObj.userAddress)
+      claimedPossums(walletObj.trashpossums, walletObj.userAddress)
+      reservedPossums(walletObj.trashpossums, walletObj.userAddress)
     })
   }
 
@@ -148,7 +149,7 @@ export default function UseWallet() {
     
 
     const randomnessAddress = "0xCa4A27C700B94ACd41f58BF0fA6B910f1b3b3868"//import.meta.env.VITE_RANDOMNESS_ADDRESS
-    console.log("test env", trashAddress, randomnessAddress)
+  
 
     const randomnessContract = new ethers.Contract(randomnessAddress, randomAbi.abi, ethersSigner);
 
