@@ -40,22 +40,27 @@
       </div>
     </div>   
   </div>
-  <div class="text-extrabold text-white-light">{{claimedPossumIds}}{{baseURI}}</div>
+  <div v-if="claimedPossumIds" class="grid grid-cols-4">
+  <Gallery :images="claimedPossumIds" :sliceStart="0" :sliceEnd="claimedPossumIds.length -1"/>  
+</div>
 </template>
 
 
 <script>
 import {useStore} from 'vuex'
-import {computed, watchEffect, ref, onMounted} from 'vue'
+import {computed, watchEffect, ref, onMounted, defineAsyncComponent} from 'vue'
 import ConnectWallet from '../components/ConnectWallet.vue'
 import {reservePossums, reservedPossums, claimPossums} from "../utils/web3Helpers.js"
+import axios from 'axios'
+import Gallery from '../components/Gallery.vue'
 
 export default {
   name:  'Purchase',
-  components: {ConnectWallet},
+  components: {ConnectWallet, Gallery},
   watch: {
   },  
   setup() {
+    
       const store = useStore();
     
       let numberField = ref(0);
@@ -120,8 +125,7 @@ export default {
         if(numberField.value>0){  
             e.preventDefault();
             toggleRes();
-        try{
-          
+        try{          
           console.log("number", numberField.value, "contract",trashPossumsContract,"signer", signer)
             await reservePossums(numberField.value, trashPossumsContract, signer);
             
@@ -157,9 +161,34 @@ export default {
         }
       }
 
-      const baseURI = computed(()=> store.getters.getBaseURI)
+      const claimedPossumIds = computed(()=>{
+      let ids = store.getters.getClaimedIds
+      ids?ids.toString():null      
+      let uri = store.getters.getBaseURI
+      let uriArray = [];
+        if(ids && uri.length>0){
+          ids.forEach((entry, index)=> {
+            uriArray.push(uri +'/'+entry.toString()+'.json')
+          })
 
-      
+        let imageURIArray = []
+
+        uriArray.forEach((entry, index)=> {
+          axios.get(uriArray[index]).then(res => imageURIArray.push(res.data)).catch((error)=>console.log(error))})
+        console.log(imageURIArray)
+        return imageURIArray
+        } else {
+          return
+        }
+       })
+
+      async function fetchImage(url){
+        console.log('URL', url)
+        const image = axios.get(url).then(res=> console.log("RESPONSE",res)) 
+        console.log("IMAGE",image)
+        return image
+      }
+    
 
   return {
       connected: computed(()=>store.getters.getConnected),     
@@ -167,10 +196,8 @@ export default {
       claimable: computed(()=> store.getters.getClaimable),
       offset: computed(()=> store.getters.getOffset),
       claimedPossums: computed(()=> store.getters.getClaimedPossums),
-      claimedPossumIds: computed(()=>{let ids = store.getters.getClaimedIds
-      return ids?ids.toString():null}),
+      claimedPossumIds,
       possumPrice: computed(()=> store.getters.getPossumPrice),
-      baseURI,
       claimDate,
       currentStamp,
       numberField,

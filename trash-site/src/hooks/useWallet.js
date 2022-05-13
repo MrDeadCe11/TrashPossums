@@ -74,15 +74,31 @@ export default function UseWallet() {
     fetching.value = true;
     const balance = await getUserBalance();
     assets.value = balance;
-   
-    await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
-    await claimedPossums(walletObj.trashpossums, walletObj.userAddress);    
+    
+    await getBaseUri(walletObj.trashpossums);
     await getClaimDate(walletObj.randomness);
     await getCurrentStamp(walletObj.ethersProvider);
-    await getOffset(walletObj.randomness);
-    await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
     await getPossumPrice(walletObj.trashpossums, walletObj.userAddress);
-    await getBaseUri(walletObj.trashpossums);
+    await getOffset(walletObj.randomness);
+
+    try{
+      await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
+    } catch(error){
+      console.log(error);
+    }
+
+    try{
+      await claimedPossums(walletObj.trashpossums, walletObj.userAddress);   
+    } catch(error){
+      console.log(error)
+    } 
+
+    try{
+      await getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
+    } catch(error){
+      console.log(error)
+    }
+    
   };
 
   const subscribeProvider = async (provider) => {

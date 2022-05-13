@@ -12,19 +12,22 @@
     <div class="mb-5 flex col-span-4 flex-row">               
     <p class="sm:text-2xl text-xl text-white-light ml-5"> In the year 2421, centuries after irradiated hurricanes caused the evolution of rabies into an incurable pestilence across the globe. With humanity long extinct, the Trash 'Possums have risen. Shaping their entire society around humans' pop culture icons, which they regard as deities. The Trash Possums have improved on tech left by humanity and traverse the near infinite expanse of the universe along with improving the earth left by humans. </p>
   </div>
-     <div class="col-span-2 row-span-4">
-    <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>       
+     <div class="col-span-2 row-span-2">
+      <div class="grid sm:grid-cols-2 w-5/6 ml-5 grid-cols-1">
+    <Gallery :images="pfpImages" :sliceStart="sliceStart" :sliceEnd="sliceEnd"/>   
+    </div>       
     </div>
-    <h1 class="col-span-4 mb-3 ml-5 text-4xl text-white-light">
+    <div class="col-span-4">
+    <h1 class="col-span-2 mb-3 ml-5 text-4xl text-white-light">
       Fair launch and minting
     </h1>
-   <div class="mb-5 flex col-span-4">
-      <p class="sm:text-2xl text-xl text-white-light ml-5">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
+   <div class="flex col-span-3">
+      <p class="sm:text-2xl text-xl text-white-light ml-10">Trash Possums is attempting to have a totally fair launch.  Each token ID is generated randomly at the time of minting using a pseudo random number generator in the contract. 
          After all the possums have been minted or a certain period of time has passed (chosen by the community) we will use an integer chosen by Chainlink 
          VRF to offset the IDs to their final value.  
         All metadata and properties will be revealed on the release date and the final ids will be revealed after minting is complete. </p>
     </div>
-    
+    </div>
   <div class="roadmap h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8">
    <div class="text-base m-auto max-w-4xl p-5 rounded-md border-white-light border-4 shadow-xl">
    <h1 class="font-bold text-3xl"> 
