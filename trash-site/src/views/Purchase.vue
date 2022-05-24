@@ -40,7 +40,7 @@
       </div>
     </div>   
   </div>
-  <div v-if="claimedPossumIds" class="grid grid-cols-4">
+  <div v-if="claimedPossumIds.length > 0" class="grid grid-cols-4">
   <Gallery :images="claimedPossumIds" :sliceStart="0" :sliceEnd="claimedPossumIds.length -1"/>  
 </div>
 </template>
@@ -91,8 +91,8 @@ export default {
 
       async function claimSomePossums(){
         const contract = store.getters.getTrashpossums
-        const sign = store.getters.getAddress
-        await claimPossums(contract, sign);  
+        const signerAddress = store.getters.getAddress
+        await claimPossums(contract, signerAddress);  
       }
 
       let claimDate = computed(()=>{
@@ -163,10 +163,11 @@ export default {
 
       const claimedPossumIds = computed(()=>{
       let ids = store.getters.getClaimedIds
-      ids?ids.toString():null      
+      ids?ids.toString():null
       let uri = store.getters.getBaseURI
       let uriArray = [];
         if(ids && uri.length>0){
+      //const ipfsHash = uri.slice()
           ids.forEach((entry, index)=> {
             uriArray.push(uri +'/'+entry.toString()+'.json')
           })
@@ -178,7 +179,7 @@ export default {
         console.log(imageURIArray)
         return imageURIArray
         } else {
-          return
+          return uriArray
         }
        })
 

@@ -79,8 +79,11 @@ export default function UseWallet() {
     await getClaimDate(walletObj.randomness);
     await getCurrentStamp(walletObj.ethersProvider);
     await getPossumPrice(walletObj.trashpossums, walletObj.userAddress);
+    try{
     await getOffset(walletObj.randomness);
-
+    } catch(err){
+      console.log(err)
+    }
     try{
       await reservedPossums(walletObj.trashpossums, walletObj.userAddress);
     } catch(error){
@@ -121,6 +124,35 @@ export default function UseWallet() {
     });
   };
 
+  // targets Rinkeby chain, id 4
+const targetNetworkId = "0x13881";
+
+// checks if current chain matches with the one we need
+// and returns true/false
+const checkNetwork = async () => {
+  if (window.ethereum) {
+    const currentChainId = await window.ethereum.request({
+      method: 'eth_chainId',
+    });
+    console.log("network check", currentChainId, targetNetworkId)
+    // return true if network id is the same
+    if (currentChainId == targetNetworkId) return true;
+    // return false is network id is different  
+    switchNetwork();
+    return false;
+  }
+};
+
+// switches network to the one provided
+const switchNetwork = async () => {
+  await window.ethereum.request({
+    method: 'wallet_switchEthereumChain',
+    params: [{ chainId: targetNetworkId }],
+  });
+  // refresh
+  window.location.reload();
+};
+
   const subscribeContract = async (contract) => {
     if(!contract.on){
       return;
@@ -131,8 +163,21 @@ export default function UseWallet() {
     })
     contract.on('Transfer',()=> {
       console.log("possum claimed")
-      claimedPossums(walletObj.trashpossums, walletObj.userAddress)
-      reservedPossums(walletObj.trashpossums, walletObj.userAddress)
+      try{
+      claimedPossums(walletObj.trashpossums, walletObj.userAddress);
+      } catch(err){
+        console.error(err)
+      }
+      try{
+      reservedPossums(walletObj.trashpossums, walletObj.userAddress);
+      } catch(err){
+        console.error(err)
+      }
+      try{
+        getClaimedPossumsIds(walletObj.trashpossums, walletObj.userAddress);
+      } catch(error){
+        console.log(error)
+      }
     })
   }
 
@@ -183,6 +228,7 @@ export default function UseWallet() {
     walletObj.trashpossums = markRaw(trashPossumsContract);
     walletObj.randomness = markRaw(randomnessContract);
     store.commit("updateWallet", walletObj);
+    await checkNetwork()
     await getAccountAssets();  
   };
 
