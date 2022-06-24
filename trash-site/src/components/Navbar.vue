@@ -6,7 +6,7 @@
   <div class="w-full z-10">
    <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig" style="width: 100%"  >
    <div class="p-2 ml-5 mt-2 max-w-sm">
-      <img class="img p-2 ml-5 mt-2 max-w-sm" src="https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961" alt="" width="400" srcset="" /> <!-- A slot For your project Logo -->
+      <img class="img p-2 ml-5 mt-2 max-w-sm" src="https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961" alt="" width="350" srcset="" /> <!-- A slot For your project Logo -->
     </div>
    
     </Nav>
