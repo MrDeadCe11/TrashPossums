@@ -8,10 +8,10 @@
             class="h-5 mr-2"> -->
     <h1 class="text-xl">Connect your Wallet</h1>
   </div>
-  <!-- <div>  
-    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br>
-    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>    
-  </div> -->
+  <div>  
+    <!-- <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br> -->
+    <!-- <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>     -->
+  </div>
 </template>
 
 <script>
@@ -32,7 +32,6 @@ export default {
       resetApp,
       assets,
       getAccountAssets,
-      walletObj,
     } = useWallet();
 
     const handleWalletConnect = async () => {
@@ -62,11 +61,5 @@ export default {
     };
   },
 };
-// function approve() {
-//   return contract.value.methods
-//     .approve(USDT_ADDRESS, utils.toHex(utils.toWei('1000000000000000000000000000', 'gwei')))
-//     .send({ from: userAddress.value });
-// }
 
-// .....
 </script>

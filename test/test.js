@@ -50,8 +50,6 @@ describe("Trash Possums", function () {
     "function requestRandomness(bytes32, uint256)returns (bytes32)",
 
     "function rawFulfillRandomness(bytes32, uint256)",
-
-    "",
   ];
 
   const testUri =
@@ -80,6 +78,7 @@ describe("Trash Possums", function () {
       fee
     );
     const deployedRandomness = await randomness.deployed();
+
     console.log("Randomness deployed at", randomness.address);
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
@@ -90,15 +89,24 @@ describe("Trash Possums", function () {
       randomness.address,
       premintCount
     );
+
     const deployed = await trashPossums.deployed();
+
     console.log("TrashPossums deployed at", trashPossums.address);
 
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
 
+    console.log("link deployed at:", linkContract.address);
+
+    // VRFContract = new ethers.Contract(VRFAddressMumbai, VRFAbi, provider);
+
+    // console.log("vrfContract deployed at: ", VRFContract.address);
+
     assert(deployed, deployedRandomness);
   });
 
-  it("should fund the contract with chainlink", async function () {
+  it("should fund the contract with ChainLink", async function () {
+
     let transfer = await linkContract
       .connect(owner)
       .transfer(randomness.address, ethers.utils.parseEther("10"));
