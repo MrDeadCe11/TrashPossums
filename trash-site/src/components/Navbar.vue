@@ -1,68 +1,28 @@
 <template>
-  <div class="mainnav">
-    <nav
-      class="px-10 py-0 mx-0 md:flex fixed bg-brown-dark w-screen top-0 z-50 gap-4 grid grid-cols-6 grid-rows-1 md:justify-between sm:justify-center border-b-4 border-brown-light"
-    >
-      <div class="min-w-min p-2 ml-5 mt-2 max-w-sm col-span-3">
-        <router-link to="/">
-          <img
-            src="https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961"
-          />
-        </router-link>
-      </div>
-
-      <div v-show="connected" class="text-white-light mt-10">
-        <h1 class="text-xl">CONNECTED</h1>
-      </div>
-      <!-- Mobile menu button -->
-      <div @click.prevent="toggleNav" class="flex ml-10 col-start-6 md:hidden">
-        <button
-          type="button"
-          class="text-brown-light hover:text-yellow-light focus:outline-none focus:text-gray-400"
-        >
-          <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-            <path
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-      <ul
-        :class="showMenu ? 'flex' : 'hidden'"
-        class="grid grid-cols-6 grid-rows-4 grid-flow-col-dense gap-0 w-96 mb-5 md:space-y-0 md:items-center md:w-1/3 md:mb-0 md:space-x-10 md:mt-0 md:flex"
-      >
-        <li
-          class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light text-2xl"
-        >
-          <router-link to="/">HOME</router-link>
-        </li>
-        <li
-          class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light text-2xl"
-        >
-          <router-link to="/roadmap">ROADMAP</router-link>
-        </li>
-        <li
-          class="col-span-5 text-brown-light hover:text-yellow-light active:text-yellow-light text-2xl"
-        >
-          <router-link to="/team">THE TEAM</router-link>
-        </li>
-        <li
-          class="col-span-5 text-center text-brown-light hover:text-yellow-light active:text-yellow-light border-solid border-grey-100 border-2 p-1.5 text-2xl"
-        >
-          <router-link to="/purchase">GET A POSSUM</router-link>
-        </li>
-      </ul>
-    </nav>
+ <div class="flex justify-start ml-10">
+     <a class="mr-2" href="https://discord.gg/8WhbqH8JzQ"> <font-awesome-icon :icon="['fab', 'discord']" style="filter: invert(100%); width:fit-content"/></a>
+      <a href="https://twitter.com/trash_possums"> <font-awesome-icon :icon="['fab', 'twitter']" style="filter: invert(100%); width:fit-content"/></a>
+    </div>
+  <div class="w-full z-10">
+   <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig" style="width: 100%"  >
+   <div class="p-2 ml-5 mt-2 max-w-sm">
+      <img class="img p-2 ml-5 mt-2 max-w-sm" src="https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961" alt="" width="400" srcset="" /> <!-- A slot For your project Logo -->
+    </div>
+   
+    </Nav>
+    
   </div>
 </template>
 
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import Nav from "vue-nav-ui";
+
 export default {
+  components: {
+    Nav
+  },
   setup() {
     let showMenu = ref(false);
     const store = useStore();
@@ -70,14 +30,59 @@ export default {
     const toggleNav = () => {
       showMenu.value = !showMenu.value;
     };
+        /* FOR YOUR NAVIGATION LINKING NAMES AND PATHS */ 
+    const navLinks = ref([
+      {
+        name: "Home",
+        path: "/",
+      },
+      {
+        name: "Roadmap",
+        path: "/roadmap",
+      },
+      {
+        name: "Team",
+        path: "/team",
+      },
+      {
+        name: "Purchase",
+        path: "/purchase"
+      }
+    ]);
+
+    /* FOR CONFIGURING THE STYLING OF YOUR NAVIGATION */
+    const navConfig = ref({
+      whitespace: false, /* GIVES PADDING TO YOUR NAV, IF SET TO FALSE, REMOVES PADDING */
+      navBg: "#1d262d", /* BACKGROUND COLOR OF YOUR NAV  */
+      navBorderRadius: "0px", /* BORDER RADIUS OF YOUR NAV */
+      linkFont: "banco", /* FONT FAMILY OF YOUR NAV */
+      linkColor: "#dad186", /* FONT COLOR OF YOUR NAV */
+      //margin: "10px",
+      width: "100%",
+      responsivePosition: "top", /* FOR CHANGING THE POSITION OF YOUR NAV WHEN RESPONSIVE. BOTTOM or TOP | The only two options */
+    });
+
+     /* FOR NAV BUTTON CONFIGURATION */
+    const btnConfig = ref({
+      btnLink: false, /* FOR INITIALIZING NAV BUTTON USAGE, IF SET TO FALSE, REMOVES THE NAV BUTTON  */
+      btnUrl: "/purchase", /* LINK URL OF YOUR NAV BUTTON */
+      btnText: "Connect Wallet", /* NAV BUTTON TEXT */
+      btnBg: "#6d5934", /* BACKGROUND COLOR OF YOUR NAV BUTTON  */
+      btnTextColor: "white", /* FONT COLOR OF YOUR NAV BUTTON*/
+      btnBorderWidth: "0", /* BORDER WIDTH OF YOUR NAV BUTTON */
+      btnBorderColor: "black", /* BORDER COLOR OF YOUR NAV BUTTON */
+      btnBorderRadius: "20px", /* BORDER RADIUS OF YOUR NAV BUTTON */
+    });
 
     return {
       showMenu,
       toggleNav,
       connected: computed(() => store.getters.getConnected),
+       navLinks, btnConfig, navConfig 
     };
   },
 };
+// class="px-10 py-0 mx-0 md:flex fixed bg-brown-dark w-screen top-0 z-50 gap-4 grid grid-cols-6 grid-rows-1 md:justify-between sm:justify-center border-b-4 border-brown-light"
 </script>
 
 <style scoped>
@@ -86,11 +91,9 @@ export default {
   font-weight: bold;
 }
 a {
-  font-family: "Banco";
+  /* font-family: "Banco"; */
   letter-spacing: 0.4px;
   font-weight: lighter;
 }
-.mainnav {
-  min-height: 10px;
-}
+
 </style>

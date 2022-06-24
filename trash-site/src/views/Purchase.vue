@@ -1,5 +1,5 @@
 <template>
-<div class="purchase container items-center flex sm:h-screen mt-20 mx-auto">      
+<div class="purchase container items-center flex sm:h-screen mx-auto">      
   <div class="w-4/5 mb-10 p-5 mx-auto bg-gray-light rounded-xl">
     <div class="title mb-3">      
     <h1 class="font-bold w-auto text-white-light text-center sm:text-5xl text-xl"> 

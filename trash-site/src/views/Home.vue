@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mt-16"
+    class="static-z-10"
     @click.self="$emit('appclicked', $event.target.value)"
     style="
       transition: opacity 400ms ease 0s, transform 400ms ease 0s;
@@ -8,11 +8,11 @@
       opacity: 1;
     "
   >
-    <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5">
-      <div class="m-auto col-span-6 row-span-6 w-5/6">
+    <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5 -z-10">
+      <div class="m-auto col-span-6 row-span-6 w-5/6 -z-50">
         <img
           src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920"
-          class="relative m-5 h-auto w-auto"
+          class="static m-5 h-auto w-auto -z-50"
         />
       </div>
 

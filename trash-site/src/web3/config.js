@@ -7,6 +7,8 @@ import ethProvider from "eth-provider";
 
 import { Bitski } from 'bitski';
 
+const infuraID = import.meta.env.VITE_WALLET_CONNECT_ID
+
 // eslint-disable-next-line global-require
 // const { USDT_ADDRESS } = process.env.NODE_ENV === 'production'
 //   ? require('./constants')
@@ -17,7 +19,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: import.meta.env.VITE_WALLET_CONNECT_ID, // TODO infuraId
+      infuraId: infuraID, // TODO infuraId
     },
   },
     // https://github.com/torusresearch/torus-embed#readme

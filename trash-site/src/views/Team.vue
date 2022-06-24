@@ -1,6 +1,6 @@
 <template>
   <div
-    class="team h-auto m-auto p-5 ml-5 mt-24 justify-content-center text-white-light"
+    class="team h-auto m-auto p-5 ml-5 mt-10 justify-content-center text-white-light"
   >
     <h1 class="text-5xl">The Team</h1>
     <div v-for="member in members" :key="member.name">
