@@ -62,9 +62,9 @@
         <div
           class="text-base m-auto max-w-4xl p-5 rounded-md border-white-light border-4 shadow-xl"
         >
-          <h1 class="font-bold text-3xl">Roadmap:</h1>
+          <h1 class="font-bold text-xl sm:text-3xl">Roadmap:</h1>
           
-          <ul class="sm:text-2xl text-lg sm:ml-8 ml-0 p-5">
+          <ul class="sm:text-2xl text-lg sm:ml-8 ml-0 p-1 sm:p-5">
             <li class="mb-5">
               <p>
                 <span class="font-bold text-xl"> 20% </span> We pay back our
