@@ -1,5 +1,5 @@
 <template>
-  <div class="roadmap h-screen text-white-light mt-32 mb-8">
+  <div class="h-screen w-5/6 m-auto text-white-light sm:mt-32 mb-8">
     <div class="text-base m-auto max-w-4xl p-5 bg-gray-light shadow-xl">
       <h1 class="font-bold text-2xl">Roadmap:</h1>
       <br />

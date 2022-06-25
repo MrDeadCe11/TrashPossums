@@ -64,22 +64,22 @@
         >
           <h1 class="font-bold text-3xl">Roadmap:</h1>
           <br />
-          <ul class="text-2xl ml-8">
-            <li>
+          <ul class="sm:text-2xl text-lg ml-8 p-5">
+            <li class="mb-5">
               <p>
                 <span class="font-bold text-xl"> 20% </span> We pay back our
                 wives’ boyfriends
               </p>
             </li>
-            <li>
+            <li class="mb-5">
               <p>
                 <span class="font-bold text-xl"> 40% </span> Launch Trash Dao
               </p>
             </li>
-            <li>
+            <li class="mb-5">
               <p><span class="font-bold text-xl"> 60% </span> Roach Buddies.</p>
             </li>
-            <li>
+            <li class="mb-5">
               <p>
                 <span class="font-bold text-xl"> 80% </span> Special edition pog
                 run.
