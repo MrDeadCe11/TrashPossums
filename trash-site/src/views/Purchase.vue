@@ -1,6 +1,9 @@
 <template>
-<div class="purchase container items-center flex sm:h-screen mx-auto">      
-  <div class="w-4/5 mb-10 p-5 mx-auto bg-gray-light rounded-xl">
+<div class="purchase container items-center flex sm:h-screen m-auto">
+  <div class="md:hidden visible justify-center align-middle">
+    <h1 class="text-white-light text-4xl flex-row">wallet connect does not work on mobile. Please access on a desktop.</h1>
+  </div>      
+  <div v-if="!isMobile" class="w-4/5 mb-10 p-5 mx-auto bg-gray-light rounded-xl">
     <div class="title mb-3">      
     <h1 class="font-bold w-auto text-white-light text-center sm:text-5xl text-xl"> 
            Get you some possums
@@ -189,8 +192,12 @@ export default {
         console.log("IMAGE",image)
         return image
       }
-    
 
+      const isMobile = computed(() =>{
+        let mobile = window.innerWidth <= 760 ? true :false
+       return mobile
+      })
+ 
   return {
       connected: computed(()=>store.getters.getConnected),     
       reservedPossums: computed(()=>store.getters.getReservedPossums),
@@ -206,7 +213,8 @@ export default {
       decrement,
       res,
       submitPurchase,
-      claimSomePossums
+      claimSomePossums,
+      isMobile,
       }
   }
 }

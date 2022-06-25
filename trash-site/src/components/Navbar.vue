@@ -1,10 +1,10 @@
 <template>
- <div class="flex justify-start ml-10">
+ <div class="flex justify-start ml-2 p-2">
      <a class="mr-2" href="https://discord.gg/8WhbqH8JzQ"> <font-awesome-icon :icon="['fab', 'discord']" style="filter: invert(100%); width:fit-content"/></a>
       <a href="https://twitter.com/trash_possums"> <font-awesome-icon :icon="['fab', 'twitter']" style="filter: invert(100%); width:fit-content"/></a>
     </div>
   <div class="w-full z-10">
-   <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig" style="width: 100%"  >
+   <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig" style="width: 100%">
    <div class="p-2 ml-5 mt-2">
       <img class="img p-2 ml-5 mt-2 md:w-2/3 w-96" src="https://ik.imagekit.io/trashpossums/assets/logo_zt0ryp8T_s.png?updatedAt=1639170269961" alt="" width="" srcset="" /> <!-- A slot For your project Logo -->
     </div>
@@ -58,7 +58,7 @@ export default {
       linkFont: "banco", /* FONT FAMILY OF YOUR NAV */
       linkColor: "#dad186", /* FONT COLOR OF YOUR NAV */
       //margin: "10px",
-      width: "100%",
+      //width: "100%",
       responsivePosition: "top", /* FOR CHANGING THE POSITION OF YOUR NAV WHEN RESPONSIVE. BOTTOM or TOP | The only two options */
     });
 
