@@ -43,10 +43,6 @@ export default {
       {
         name: "Team",
         path: "/team",
-      },
-      {
-        name: "Purchase",
-        path: "/purchase"
       }
     ]);
 
@@ -64,9 +60,9 @@ export default {
 
      /* FOR NAV BUTTON CONFIGURATION */
     const btnConfig = ref({
-      btnLink: false, /* FOR INITIALIZING NAV BUTTON USAGE, IF SET TO FALSE, REMOVES THE NAV BUTTON  */
+      btnLink: true, /* FOR INITIALIZING NAV BUTTON USAGE, IF SET TO FALSE, REMOVES THE NAV BUTTON  */
       btnUrl: "/purchase", /* LINK URL OF YOUR NAV BUTTON */
-      btnText: "Connect Wallet", /* NAV BUTTON TEXT */
+      btnText: "Buy a Possum!", /* NAV BUTTON TEXT */
       btnBg: "#6d5934", /* BACKGROUND COLOR OF YOUR NAV BUTTON  */
       btnTextColor: "white", /* FONT COLOR OF YOUR NAV BUTTON*/
       btnBorderWidth: "0", /* BORDER WIDTH OF YOUR NAV BUTTON */
