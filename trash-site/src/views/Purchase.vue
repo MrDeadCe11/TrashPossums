@@ -10,6 +10,7 @@
      </h1>  
      </div>
      <div v-if="!connected">
+     <p class="text-white-light text-xl">Must be connected to Polygon.  Add it <a href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask#polygon-scan" class="underline hover:">here.</a></p>
       <connect-wallet/>
     </div>    
     <div v-else class="flex-col h-auto w-auto justify-center">     
@@ -43,7 +44,7 @@
       </div>
     </div>   
   </div>
-  <div v-if="claimedPossumIds.length > 0" class="grid grid-cols-4">
+  <div v-show="claimedPossumIds.length > 0" class="grid grid-cols-4">
   <Gallery :images="claimedPossumIds" :sliceStart="0" :sliceEnd="claimedPossumIds.length -1"/>  
 </div>
 </template>
@@ -109,7 +110,7 @@ export default {
       }
       )
       
-      const modifyable = computed(()=>{
+      const modifiable = computed(()=>{
         if (numberField.value >= 0 && numberField.value <= 27){    
           return true
         } else {      
@@ -145,21 +146,21 @@ export default {
       
 
       const increment = () => {
-        if(modifyable.value){    
+        if(modifiable.value){    
           numberField.value++
-        }else if(!modifyable.value && numberField.value >26){    
+        }else if(!modifiable.value && numberField.value >26){    
           numberField.value = 27
-        }else if(!modifyable.value && numberField.value < 1){    
+        }else if(!modifiable.value && numberField.value < 1){    
           numberField.value = 0
         }    
         }
 
       const decrement = () => {
-        if(modifyable.value){
+        if(modifiable.value){
           numberField.value--
-        } else if(!modifyable.value && numberField.value < 1){
+        } else if(!modifiable.value && numberField.value < 1){
           numberField.value= 0
-        } else if(!modifyable.value && numberField.value > 26){
+        } else if(!modifiable.value && numberField.value > 26){
           numberField.value = 27
         }
       }
