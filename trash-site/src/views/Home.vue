@@ -45,25 +45,26 @@
         </h1>
         <div class="flex col-span-3">
           <p class="sm:text-2xl text-xl text-white-light ml-10">
-            Trash Possums is attempting to have a totally fair launch. Each
-            token ID is generated randomly at the time of minting using a pseudo
-            random number generator in the contract. After all the possums have
-            been minted or a certain period of time has passed (chosen by the
-            community) we will use an integer chosen by Chainlink VRF to offset
-            the IDs to their final value. All metadata and properties will be
-            revealed on the release date and the final ids will be revealed
-            after minting is complete.
+            Trash Possums is an NFT collection on Polygon. We will have a
+            totally fair launch. Each token ID is generated using a pseudo
+            random number generator in the contract when the user reserves a
+            possum. After all the possums have been minted or a certain period
+            of time has passed (chosen by the community) we will use an integer
+            chosen by Chainlink VRF to offset the IDs to their final value. All
+            metadata and properties will be revealed on the release date and the
+            final token ids will be revealed after minting is complete and the
+            VRF has been fulfilled.
           </p>
         </div>
       </div>
       <div
-        class="roadmap h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8"
+        class="h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8"
       >
         <div
           class="text-base m-auto max-w-4xl p-5 rounded-md border-white-light border-4 shadow-xl"
         >
           <h1 class="font-bold text-xl sm:text-3xl">Roadmap:</h1>
-          
+
           <ul class="sm:text-2xl text-lg sm:ml-8 ml-0 p-1 sm:p-5">
             <li class="mb-5">
               <p>
