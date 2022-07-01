@@ -12,15 +12,15 @@
       <div class="sm:m-auto -m-5 sm:col-span-6 col-span-full p-1 w-full sm:w-5/6">
         <img
           src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920"
-          class="static m-5 h-auto w-auto -z-50"
+          class="m-5 h-auto w-auto -z-50 object-cover"
         />
       </div>
 
-      <h1 class="d-flex col-span-6 mb-3 ml- 10 text-4xl text-white-light">
+      <h1 class="d-flex col-span-6 mb-3 ml- 10 text-3xl sm:text-4xl text-white-light">
         The Trash Possums are Coming!
       </h1>
       <div class="mb-5 flex col-span-4 flex-row">
-        <p class="sm:text-2xl text-xl text-white-light ml-5">
+        <p class="sm:text-2xl text-lg text-white-light ml-5">
           In the year 2421, centuries after irradiated hurricanes caused the
           evolution of rabies into an incurable pestilence across the globe.
           With humanity long extinct, the Trash 'Possums have risen. Shaping
@@ -40,11 +40,11 @@
         </div>
       </div>
       <div class="col-span-4">
-        <h1 class="col-span-2 mb-3 ml-5 text-4xl text-white-light">
+        <h1 class="col-span-2 mb-3 ml-5 text-2xl sm:text-4xl text-white-light">
           Fair launch and minting
         </h1>
         <div class="flex col-span-3">
-          <p class="sm:text-2xl text-xl text-white-light ml-10">
+          <p class="sm:text-2xl text-lg text-white-light ml-10">
             Trash Possums is an NFT collection on Polygon. We will have a
             totally fair launch. Each token ID is generated using a pseudo
             random number generator in the contract when the user reserves a
@@ -55,19 +55,20 @@
             final token ids will be revealed after the VRF has been fulfilled.
           </p>
         </div>
+        </div>
         <div class="col-span-full mt-5">
-          <h1 class="col-span-2 mb-3 ml-5 text-4xl text-white-light">
+          <h1 class="mb-3 ml-5 text-2xl sm:text-4xl text-white-light">
             Reserving and Claiming your NFT
           </h1>
-          <div class="flex col-span-6">
-            <p class="sm:text-2xl text-xl text-white-light ml-10">
+          <div class="">
+            <p class="sm:text-2xl text-lg text-white-light ml-10">
               You can reserve up to 27 Trash possums during the reserve period
               and reserving will cost the full price of the nft. <br />
               When you claim your nft on or after the claim date you will only
               pay gas for the minting of your nft.
             </p>
           </div>
-        </div>
+        
       </div>
       <div
         class="h-auto col-span-full sm:col-span-3 sm:col-start-2 text-white-light mt-32 mb-8"
