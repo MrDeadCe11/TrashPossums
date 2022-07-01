@@ -1,7 +1,7 @@
 <template>
 <div class="purchase container items-center flex sm:h-screen m-auto">
   <div class="md:hidden visible justify-center align-middle">
-    <h1 class="text-white-light text-4xl flex-row">wallet connect does not work on mobile. Please access on a desktop.</h1>
+    <h1 class="text-white-light text-4xl flex-row mb-20">wallet connect does not work on mobile. Please access on a desktop.</h1>
   </div>      
   <div v-if="!isMobile" class="w-4/5 mb-10 p-5 mx-auto bg-gray-light rounded-xl">
     <div class="title mb-3">      
