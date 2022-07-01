@@ -9,7 +9,7 @@
     <h1 class="text-xl">Connect your Wallet</h1>
   </div>
   <div>  
-    <!-- <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br> -->
+    <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="reset"><h1>Reset App</h1></button><br>
     <!-- <button class="text-white-light bg-gray-dark m-2 rounded-md p-5" @click="getAccountAssets"><h1>get Balance</h1></button>     -->
   </div>
 </template>

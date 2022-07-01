@@ -9,8 +9,8 @@
            Get you some possums
      </h1>  
      </div>
-     <div v-if="!connected">
-     <p class="text-white-light text-xl">Must be connected to Polygon.  Add it <a href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask#polygon-scan" class="underline hover:">here.</a></p>
+     <div v-if="!connected" class="flex-row">
+     <p class="text-white-light text-xl text-center mb-3">Must be connected to Polygon.  Add it <a href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask#polygon-scan" class="underline hover:">here.</a></p>
       <connect-wallet/>
     </div>    
     <div v-else class="flex-col h-auto w-auto justify-center">     

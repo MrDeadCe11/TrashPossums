@@ -48,24 +48,34 @@
             Trash Possums is an NFT collection on Polygon. We will have a
             totally fair launch. Each token ID is generated using a pseudo
             random number generator in the contract when the user reserves a
-            possum. After all the possums have been minted or a certain period
+            possum. After all the possums have been reserved or a certain period
             of time has passed (chosen by the community) we will use an integer
             chosen by Chainlink VRF to offset the IDs to their final value. All
             metadata and properties will be revealed on the release date and the
-            final token ids will be revealed after minting is complete and the
-            VRF has been fulfilled.
+            final token ids will be revealed after the VRF has been fulfilled.
           </p>
         </div>
+        <div class="col-span-full mt-5">
+          <h1 class="col-span-2 mb-3 ml-5 text-4xl text-white-light">
+            Reserving and Claiming your NFT
+          </h1>
+          <div class="flex col-span-6">
+            <p class="sm:text-2xl text-xl text-white-light ml-10">
+              You can reserve up to 27 Trash possums during the reserve period
+              and reserving will cost the full price of the nft. When you claim
+              your nft on or after the claim date you will only pay gas for the
+              minting of your nft.
+            </p>
+          </div>
+        </div>
       </div>
-      <div
-        class="h-auto col-span-3 col-start-2 text-white-light mt-32 mb-8"
-      >
+      <div class="h-auto col-span-full sm:col-span-3 sm:col-start-2 text-white-light mt-32 mb-8">
         <div
-          class="text-base m-auto max-w-4xl p-5 rounded-md border-white-light border-4 shadow-xl"
+          class="p-5 rounded-md border-white-light border-4 shadow-xl"
         >
           <h1 class="font-bold text-xl sm:text-3xl">Roadmap:</h1>
 
-          <ul class="sm:text-2xl text-lg sm:ml-8 ml-0 p-1 sm:p-5">
+          <ul class="sm:text-2xl text-lg sm:ml-8 p-1 sm:p-5">
             <li class="mb-5">
               <p>
                 <span class="font-bold text-xl"> 20% </span> We pay back our
