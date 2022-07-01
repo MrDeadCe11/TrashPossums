@@ -62,7 +62,7 @@
           <div class="flex col-span-6">
             <p class="sm:text-2xl text-xl text-white-light ml-10">
               You can reserve up to 27 Trash possums during the reserve period
-              and reserving will cost the full price of the nft. When you claim
+              and reserving will cost the full price of the nft. <br> When you claim
               your nft on or after the claim date you will only pay gas for the
               minting of your nft.
             </p>
