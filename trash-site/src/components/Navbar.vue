@@ -3,7 +3,7 @@
   <div class="w-full z-10">
    <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig" style="width: 100%">
    <div class="p-2 ml-5 mt-2">
-      <div class="flex justify-start ml-2 p-2">
+      <div class="flex justify-start ml-2 p-2 sm:max-w-xs">
      <a class="mr-2" href="https://discord.gg/8WhbqH8JzQ"> <font-awesome-icon :icon="['fab', 'discord']" style="filter: invert(100%); width:fit-content"/></a>
       <a href="https://twitter.com/trash_possums"> <font-awesome-icon :icon="['fab', 'twitter']" style="filter: invert(100%); width:fit-content"/></a>
     
