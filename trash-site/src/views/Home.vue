@@ -8,8 +8,8 @@
       opacity: 1;
     "
   >
-    <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5 -z-10">
-      <div class="m-auto col-span-6 row-span-6 w-5/6 -z-50">
+    <div class="grid grid-cols-6 grid-rows-auto gap-4 p-5">
+      <div class="sm:m-auto -m-5 sm:col-span-6 col-span-full p-1 w-full sm:w-5/6">
         <img
           src="https://ik.imagekit.io/trashpossums/assets/possum_central_naked_Jm05jJafT.png?updatedAt=1639249322920"
           class="static m-5 h-auto w-auto -z-50"
