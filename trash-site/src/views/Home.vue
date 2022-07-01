@@ -62,43 +62,45 @@
           <div class="flex col-span-6">
             <p class="sm:text-2xl text-xl text-white-light ml-10">
               You can reserve up to 27 Trash possums during the reserve period
-              and reserving will cost the full price of the nft. <br> When you claim
-              your nft on or after the claim date you will only pay gas for the
-              minting of your nft.
+              and reserving will cost the full price of the nft. <br />
+              When you claim your nft on or after the claim date you will only
+              pay gas for the minting of your nft.
             </p>
           </div>
         </div>
       </div>
-      <div class="h-auto col-span-full sm:col-span-3 sm:col-start-2 text-white-light mt-32 mb-8">
-        <div
-          class="p-5 rounded-md border-white-light border-4 shadow-xl"
-        >
+      <div
+        class="h-auto col-span-full sm:col-span-3 sm:col-start-2 text-white-light mt-32 mb-8"
+      >
+        <div class="p-5 rounded-md border-white-light border-4 shadow-xl">
           <h1 class="font-bold text-xl sm:text-3xl">Roadmap:</h1>
 
           <ul class="sm:text-2xl text-lg sm:ml-8 p-1 sm:p-5">
             <li class="mb-5">
               <p>
-                <span class="font-bold text-xl"> 20% </span> We pay back our
+                <span class="font-bold text-xl"> 20% - </span> We pay back our
                 wives’ boyfriends
               </p>
             </li>
             <li class="mb-5">
               <p>
-                <span class="font-bold text-xl"> 40% </span> Launch Trash Dao
+                <span class="font-bold text-xl"> 40% - </span> Launch Trash Dao
               </p>
             </li>
             <li class="mb-5">
-              <p><span class="font-bold text-xl"> 60% </span> Roach Buddies.</p>
+              <p>
+                <span class="font-bold text-xl"> 60% - </span> Roach Buddies.
+              </p>
             </li>
             <li class="mb-5">
               <p>
-                <span class="font-bold text-xl"> 80% </span> Special edition pog
-                run.
+                <span class="font-bold text-xl"> 80% - </span> Special edition
+                pog run.
               </p>
             </li>
             <li>
               <p>
-                <span class="font-bold text-xl"> 100%</span> Trash Possums
+                <span class="font-bold text-xl"> 100% - </span> Trash Possums
                 series two.
               </p>
             </li>
