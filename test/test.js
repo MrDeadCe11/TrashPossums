@@ -16,6 +16,7 @@ describe("Trash Possums", function () {
     reserveId3,
     idOffset;
   let trashPossums, randomness;
+  let hardhatVrfCoordinatorMock;
   let addr3tokens = [];
   const startMintDate = 1642282339;
   //approx noon on feb 20th 2022
@@ -70,9 +71,21 @@ describe("Trash Possums", function () {
 
     console.log("Deploying contracts with account", owner.address);
 
+    let vrfCoordinatorMock = await ethers.getContractFactory(
+      "VRFCoordinatorMock"
+    );
+
+    hardhatVrfCoordinatorMock = await vrfCoordinatorMock.deploy(
+      LinkTokenMumbai
+    );
+    console.log("hardhat mock", hardhatVrfCoordinatorMock.address);
+    // await hardhatVrfCoordinatorMock.createSubscription();
+
+    // await hardhatVrfCoordinatorMock.fundSubscription(1, ethers.utils.parseEther("7"))
+
     const Random = await ethers.getContractFactory("Randomness");
     randomness = await Random.connect(owner).deploy(
-      VRFAddressMumbai,
+      hardhatVrfCoordinatorMock.address,
       LinkTokenMumbai,
       keyHashMumbai,
       fee
@@ -84,7 +97,6 @@ describe("Trash Possums", function () {
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     trashPossums = await TrashPossums.connect(owner).deploy(
       possumPrice,
-      startMintDate,
       testUri,
       randomness.address,
       premintCount
@@ -98,15 +110,10 @@ describe("Trash Possums", function () {
 
     console.log("link deployed at:", linkContract.address);
 
-    // VRFContract = new ethers.Contract(VRFAddressMumbai, VRFAbi, provider);
-
-    // console.log("vrfContract deployed at: ", VRFContract.address);
-
     assert(deployed, deployedRandomness);
   });
 
-  it("should fund the contract with ChainLink", async function () {
-
+  it("should fund the contracts with ChainLink", async function () {
     let transfer = await linkContract
       .connect(owner)
       .transfer(randomness.address, ethers.utils.parseEther("10"));
@@ -128,14 +135,15 @@ describe("Trash Possums", function () {
   });
 
   it("should transfer eth from wallet 1 to owner", async function () {
+    const startBal = await provider.getBalance(owner.address)
     const sendEth = await addr1.sendTransaction({
       to: owner.address,
-      value: ethers.utils.parseEther("1"),
+      value: ethers.utils.parseEther("10"),
     });
     const ownerbal = await provider.getBalance(owner.address);
-
+          
     assert(
-      sendEth.value.toString() === ethers.utils.parseEther("1").toString()
+    ownerbal.sub(startBal).toString() == sendEth.value.toString()
     );
   });
 
@@ -143,16 +151,18 @@ describe("Trash Possums", function () {
     const tx = await randomness.connect(owner).setTrash(trashPossums.address);
     await tx.wait();
 
-    const trash = await randomness.getTrash();
+    const trash = await randomness.trashAddress();
 
     assert(trash.toString() === trashPossums.address);
   });
+
   it("should set claimable date on randomness contract", async function () {
     const tx = await randomness.connect(owner).setClaimableDate(startMintDate);
     await tx.wait();
     const date = await randomness.getClaimableDate();
     expect(date).to.equal(startMintDate);
   });
+
   it("should premint 80 possums", async function () {
     const test = await trashPossums.getAvailablePossums();
 
@@ -260,10 +270,15 @@ describe("Trash Possums", function () {
 
   it("should execute offset", async function () {
     const tx = await randomness.executeOffset();
-    tx.wait();
-    const offset = await randomness.getOffset();
+    const {events} = await tx.wait();
+    console.log("events", events)
+    const offset = await randomness.randomIdOffset();
     idOffset = offset.toNumber();
-    expect(await randomness.offsetExecuted()).to.be.equal(true);
+
+    let [reqId] = events.filter( x => x.event === 'RequestedRandomness')[0].args;
+    console.log("OFFSET",idOffset, reqId)
+    expect(await randomness.randomIdOffsetExecuted()).to.be.equal(true);
+    expect( idOffset.toString() !== "0");
   });
 
   it("should claim the nft reserved by addr1", async function () {
@@ -281,7 +296,7 @@ describe("Trash Possums", function () {
     );
   });
 
-  it("should claim nfts reserved by adress 2", async function () {
+  it("should claim nfts reserved by address 2", async function () {
     const tx = await trashPossums.connect(addr2).claimPossums();
     const promise = await tx.wait();
     const transfers = promise.events.filter((e) => e.event === "Transfer");
@@ -344,24 +359,24 @@ describe("Trash Possums", function () {
   });
 
   it("should return the price of the possums", async function () {
-    const price = await trashPossums.getPossumPrice();
+    const price = await trashPossums.possumPrice();
     assert(price.toString() === possumPrice.toString());
   });
 
   it("should change the possum price to 26 ether", async function () {
     const tx = await trashPossums.setPossumPrice(ethers.utils.parseEther("26"));
     const promise = await tx.wait();
-    const price = await trashPossums.getPossumPrice();
+    const price = await trashPossums.possumPrice();
     assert(price.toString() === ethers.utils.parseEther("26").toString());
   });
 
   it("should return the total minted possums", async function () {
-    const supply = await trashPossums.getTotalMintedPossums();
+    const supply = await trashPossums.totalMintedPossums();
     assert(supply.toNumber() === 137);
   });
 
   it("it should return the balance of ether in the contract", async function () {
-    const balance = await trashPossums.getBalance();
+    const balance = await provider.getBalance(trashPossums.address);
     assert(
       ethers.utils.formatEther(balance.toString()) ==
         ethers.utils.formatEther("114000000000000000000")
@@ -369,11 +384,11 @@ describe("Trash Possums", function () {
   });
 
   it("should withdraw the balance of eth in the contract", async function () {
-    const startBal = await provider.getBalance(owner.address);
+  
     const tx = await trashPossums.connect(owner).withdraw();
     await tx.wait();
-    const ownerBal = await provider.getBalance(owner.address);
-    assert(ownerBal.toString() === "118960476672678540799");
+    const contractBalance = await provider.getBalance(trashPossums.contract);
+    assert(contractBalance.toString() == "0");
   });
 
   it("should withdraw ERC20 from contract", async function () {

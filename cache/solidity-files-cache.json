@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/someguy/Code/TrashPossums/contracts/IRandomness.sol": {
-      "lastModificationDate": 1652056011989,
+      "lastModificationDate": 1656793694405,
       "contentHash": "73bb1ae55c6a9674af4dcfad7ef6e1b9",
       "sourceName": "contracts/IRandomness.sol",
       "solcConfig": {
@@ -37,8 +37,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1656694443191,
-      "contentHash": "6325c413b9010298a4442f3a405e5afa",
+      "lastModificationDate": 1656793674690,
+      "contentHash": "32eeb84438ec47b4cad22e3a095854a4",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -630,8 +630,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1656694443187,
-      "contentHash": "c4442bc82634ff6109f9a068a37858a3",
+      "lastModificationDate": 1656794858421,
+      "contentHash": "251913c1da8c2986d6f0dd4982bd368f",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -774,6 +774,117 @@
       ],
       "artifacts": [
         "VRFRequestIDBase"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol": {
+      "lastModificationDate": 1652056049490,
+      "contentHash": "046c45b7218ba8f2d2c7d7dc577219aa",
+      "sourceName": "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/LinkTokenInterface.sol",
+        "../VRFConsumerBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFCoordinatorMock"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/contracts/tests/VRFCoordinatorMock.sol": {
+      "lastModificationDate": 1656796897114,
+      "contentHash": "c7c806d5727e0b03fc2c81bb078094d3",
+      "sourceName": "contracts/tests/VRFCoordinatorMock.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": []
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol": {
+      "lastModificationDate": 1652056049518,
+      "contentHash": "aa0d428a9fb1cd0879b3e5df9e1abc7d",
+      "sourceName": "@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/LinkTokenInterface.sol",
+        "../VRFConsumerBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFConsumer"
       ]
     }
   }

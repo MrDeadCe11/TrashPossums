@@ -24,7 +24,7 @@ async function main() {
   const premintCount = 80;
 
   const [deployer] = await hre.ethers.getSigners();
-  console.log("deployiing with account: ", deployer.address);
+  console.log("deploying with account: ", deployer.address);
 
   const Random = await ethers.getContractFactory("Randomness");
   const randomness = await Random.deploy(

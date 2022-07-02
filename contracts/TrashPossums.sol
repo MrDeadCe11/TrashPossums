@@ -20,7 +20,7 @@ contract TrashPossums is
 
     modifier mintingStarted() {
         require(
-            startMintDate != 0 && startMintDate < block.timestamp,
+            getClaimDate() != 0 && getClaimDate() < block.timestamp,
             "You are too early"
         );
         _;
@@ -39,7 +39,6 @@ contract TrashPossums is
     uint256 public constant maxPossumsPerTransaction = 27;
 
     uint256 public premintCount;
-    uint256 public startMintDate;
     uint256 public possumPrice;
     uint256 public totalMintedPossums;
     uint256 public numberOfReservedPossums;
@@ -53,13 +52,11 @@ contract TrashPossums is
 
     constructor(
         uint256 _possumPrice,
-        uint256 _startMintDate,
         string memory _baseUri,
         address _randomness,
         uint256 _premintCount
     ) ERC721("Trash Possums", "TPOSS") {
         possumPrice = _possumPrice;
-        startMintDate = _startMintDate;
         baseURI = _baseUri;
         randomness = _randomness;
         premintCount = _premintCount;
@@ -115,14 +112,6 @@ contract TrashPossums is
     function setPossumPrice(uint256 _possumPrice) external onlyOwner {
         possumPrice = _possumPrice;
     }
-
-    /**
-     * @dev sets startMintDate in case it needs to be changed after contract launch
-     */
-    function setStartMintDate(uint256 _startMintDate) external onlyOwner {
-        startMintDate = _startMintDate;
-    }
-
     /**
      * @dev change address of randomness contract.
      */
@@ -268,13 +257,6 @@ contract TrashPossums is
     }
 
     /**
-     * @dev Returns how many possums are still available to be claimed
-     */
-    function getNumberOfReservedPossums() public view returns (uint256) {
-        return numberOfReservedPossums;
-    }
-
-    /**
      * @dev Returns number of reserved possums for a wallet
      */
 
@@ -306,47 +288,12 @@ contract TrashPossums is
         }
     }
 
-    /**
-     * @dev Returns the claim price
-     */
-    function getPossumPrice() public view returns (uint256) {
-        return possumPrice;
-    }
-
-    /**
-     * @dev Returns the balance of the contract
-     */
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-
-    /**
-     * @dev Returns the minting start date
-     */
-    function getMintingStartDate() public view returns (uint256) {
-        return startMintDate;
-    }
-
-    /**
+    
+     /**
      * @dev Returns the randomly selected ID offset
      */
     function getClaimDate() public view returns (uint256) {
         return IRandomness(randomness).getClaimableDate();
-    }
-
-    /**
-     * @dev Returns the total supply
-     */
-    function getTotalMintedPossums() public view returns (uint256) {
-        return totalMintedPossums;
-    }
-
-    function getTotalPossums() public pure returns (uint256) {
-        return totalPossums;
-    }
-
-    function getRandomnessAddress() public view returns (address) {
-        return randomness;
     }
 
     /**

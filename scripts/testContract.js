@@ -5,9 +5,11 @@ const randomAbi = require("../artifacts/contracts/Randomness.sol/Randomness.json
 const trashAbi = require("../artifacts/contracts/TrashPossums.sol/TrashPossums.json");
 
 async function main() {
+  const alchmumbai = process.env.ALCHEMY_MUMBAI_RPC_URL
+  const provider = new ethers.providers.JsonRpcProvider(alchmumbai)
   const testUri =
     "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
-  const deployer = await hre.ethers.getSigner();
+  const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
   console.log("owner accounts", deployer.address);
   const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
   const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
@@ -30,9 +32,11 @@ async function main() {
   //const tx = await randomness.executeOffset()
   //await tx.wait();
   //console.log(tx)
+
+  //const tx = await randomness.setClaimableDate(1667203200);
   //await randomness.setTrash(trashPossumsAddress);
   //const trash = await randomness.getTrash();
-  //const avail = await randomness.getClaimableDate();
+  
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
 
@@ -40,7 +44,7 @@ async function main() {
   const date = await randomness.getClaimableDate();
   const offsetExectued = await randomness.offsetExecuted();
   const uri = await trashPossums.contractURI();
-
+  const isOwner = await trashPossums.owner();
   //await trashPossums.setBaseTokenURI(testUri)
 
   // const reserved = await trashPossums.getReservedPossumsPerWallet(deployer.address)
@@ -54,7 +58,8 @@ async function main() {
     "offset",
     offset,
     "uri",
-    uri
+    uri,
+    "is owner", isOwner
   );
   console.log("Offset executed", offsetExectued);
 }

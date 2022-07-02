@@ -37,16 +37,6 @@ contract Randomness is Ownable, VRFConsumerBase {
         _;
     }
 
-    /**
-     * @dev Returns the randomly selected ID offset
-     */
-    function getOffset() public view returns (uint256) {
-        return randomIdOffset;
-    }
-
-    function offsetExecuted() public view returns (bool) {
-        return randomIdOffsetExecuted;
-    }
 
     function getAvailablePossums() public view returns (uint256) {
         return availablePossums.length;
@@ -65,6 +55,10 @@ contract Randomness is Ownable, VRFConsumerBase {
         randomIdOffsetExecuted = true;
 
         return randomIdOffsetExecuted;
+    }
+
+    function getOffset() public view returns(uint256){
+        return randomIdOffset;
     }
 
     function executePremint(uint256 _premintCount) external onlyOwner {
