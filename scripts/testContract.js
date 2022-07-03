@@ -33,7 +33,7 @@ async function main() {
   //await tx.wait();
   //console.log(tx)
 
-  //const tx = await randomness.setClaimableDate(1667203200);
+  const tx = await randomness.setClaimableDate(1656798900);
   //await randomness.setTrash(trashPossumsAddress);
   //const trash = await randomness.getTrash();
   
@@ -42,7 +42,7 @@ async function main() {
 
   const balance = await trashPossums.balanceOf(deployer.address);
   const date = await randomness.getClaimableDate();
-  const offsetExectued = await randomness.offsetExecuted();
+  const offsetExectued = await randomness.randomIdOffsetExecuted();
   const uri = await trashPossums.contractURI();
   const isOwner = await trashPossums.owner();
   //await trashPossums.setBaseTokenURI(testUri)

@@ -5,7 +5,7 @@ async function getPossumPrice(trashPossumsContract, signerAddress) {
   try {
     const possumPrice = await trashPossumsContract
       .connect(signerAddress)
-      .getPossumPrice();
+      .possumPrice();
     store.commit("setPossumPrice", ethers.utils.formatEther(possumPrice));
     return possumPrice;
   } catch (err) {

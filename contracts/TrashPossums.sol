@@ -169,7 +169,7 @@ contract TrashPossums is
     /**
      * @dev RESERVE up to 27 Possums at once.
      */
-    function reservePossums(uint256 amount) public payable mintingStarted {
+    function reservePossums(uint256 amount) public payable {
         uint256 available = getAvailablePossums();
 
         require(

@@ -271,14 +271,15 @@ describe("Trash Possums", function () {
   it("should execute offset", async function () {
     const tx = await randomness.executeOffset();
     const {events} = await tx.wait();
-    console.log("events", events)
+    // console.log("events", events)
     const offset = await randomness.randomIdOffset();
-    idOffset = offset.toNumber();
+    console.log("OFFSET", offset)
+    
 
     let [reqId] = events.filter( x => x.event === 'RequestedRandomness')[0].args;
     console.log("OFFSET",idOffset, reqId)
     expect(await randomness.randomIdOffsetExecuted()).to.be.equal(true);
-    expect( idOffset.toString() !== "0");
+    expect( offset.toString() !== "0");
   });
 
   it("should claim the nft reserved by addr1", async function () {

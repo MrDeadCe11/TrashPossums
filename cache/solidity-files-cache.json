@@ -37,8 +37,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1656793674690,
-      "contentHash": "32eeb84438ec47b4cad22e3a095854a4",
+      "lastModificationDate": 1656798810747,
+      "contentHash": "a29bec40b27fc73626048ad4614ce666",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -815,8 +815,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/tests/VRFCoordinatorMock.sol": {
-      "lastModificationDate": 1656796897114,
-      "contentHash": "c7c806d5727e0b03fc2c81bb078094d3",
+      "lastModificationDate": 1656882871893,
+      "contentHash": "02934ff303a7de27eafe2c761198d8cf",
       "sourceName": "contracts/tests/VRFCoordinatorMock.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -842,12 +842,14 @@
         }
       },
       "imports": [
-        "@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol"
+        "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
       ],
-      "artifacts": []
+      "artifacts": [
+        "MockVRFCoordinator"
+      ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol": {
       "lastModificationDate": 1652056049518,
