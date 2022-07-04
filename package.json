@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@appliedblockchain/chainlink-plugins-fund-link": "^0.0.3",
-    "@chainlink/contracts": "^0.3.1",
+    "@chainlink/contracts": "^0.4.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@openzeppelin/contracts": "^4.3.2",
     "dotenv": "^10.0.0",
