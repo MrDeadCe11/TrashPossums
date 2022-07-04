@@ -173,7 +173,7 @@ describe("Trash Possums", function () {
       expect(date).to.equal(startMintDate);
     });
   });
-
+  describe("Premint", function () {
   
     it("should premint 80 possums", async function () {
       const test = await trashPossums.getAvailablePossums();
@@ -190,6 +190,8 @@ describe("Trash Possums", function () {
         balance.toNumber() === 80 && test.toNumber() - test2.toNumber() === 80
       );
     });
+
+  });
 
     describe("Reserve functions", function () {
     it("should not reserve possums without correct payment", async function () {
