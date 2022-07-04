@@ -16,30 +16,36 @@ async function main() {
   const possumPrice = hre.ethers.utils.parseEther(".02");
   const testUri =
     "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
-  const VRFAddressMumbai = "0x8C7382F9D8f56b33781fE506E897a4F1e2d17255";
+  const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
   const keyHashMumbai =
-    "0x6e75b569a01ef56d18cab6a8e71e6600d6ce853834d4a5748b720d06f878b3a4";
+    "0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f";
+    const CLSubscriptionId = 935;
   const fee = hre.ethers.utils.parseEther(".001");
   const premintCount = 80;
 
   const [deployer] = await hre.ethers.getSigners();
   console.log("deploying with account: ", deployer.address);
 
+  
+ 
+
   const Random = await ethers.getContractFactory("Randomness");
-  const randomness = await Random.deploy(
+  randomness = await Random.deploy(
     VRFAddressMumbai,
+    CLSubscriptionId,
     LinkTokenMumbai,
-    keyHashMumbai,
-    fee
+    keyHashMumbai
   );
+
   await randomness.deployed();
+
   console.log("Randomness deployed at", randomness.address);
 
-  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
+  const TrashPossums = await ethers.getContractFactory("TrashPossums");
+
   const trashPossums = await TrashPossums.deploy(
     possumPrice,
-    startMintDate,
     testUri,
     randomness.address,
     premintCount

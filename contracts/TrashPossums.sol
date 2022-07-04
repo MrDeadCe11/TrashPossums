@@ -9,6 +9,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "./IRandomness.sol";
 
+import "hardhat/console.sol";
+
 contract TrashPossums is
     ERC721,
     ERC721URIStorage,
@@ -144,13 +146,14 @@ contract TrashPossums is
     /**
      * @dev Allows withdrawal of any ether in the contract to the address of the owner.
      */
-    function withdraw() external payable onlyOwner {
-        uint256 totalBalance = address(this).balance;
 
-        // send all Ether to owner
-        // Owner can receive Ether since the address of owner is payable
-        (bool success, ) = payable(owner()).call{value: totalBalance}("");
-        require(success, "Failed to send Ether");
+    function withdraw() external payable onlyOwner {
+        require(address(this).balance > 0, "no ETH in the contract.");
+        uint256 totalBalance = address(this).balance;
+        address _owner = owner();
+        // send all Ether to _owner
+        // Owner can receive Ether since the address of _owner is payable
+        payable(_owner).transfer(totalBalance);
     }
 
     /**

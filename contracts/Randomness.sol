@@ -2,17 +2,26 @@
 pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
+//import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 
-contract Randomness is Ownable, VRFConsumerBase {
-    //Global Variables for Chainlinki VRF
-    uint256 public fee;
+contract Randomness is Ownable, VRFConsumerBaseV2 {
+    //Global Variables for Chainlink VRF
     address public VRFCoordinator;
     bytes32 public keyHash;
+    uint64 subscriptionId;
+    uint32 callbackGasLimit = 200000;
+    uint256 public requestId;
+    uint16 requestConfirmations = 3;
+    uint32 numWords = 2;
+    VRFCoordinatorV2Interface COORDINATOR;
+    LinkTokenInterface LINKTOKEN;
 
     //Variables
-    uint256 public randomIdOffset;
+    uint256[] public randomIdOffset;
     uint256 public claimableDate;
     bool public randomIdOffsetExecuted;
     address public trashAddress;
@@ -23,20 +32,21 @@ contract Randomness is Ownable, VRFConsumerBase {
 
     constructor(
         address _VRFAddress,
-        address _linkToken,
-        bytes32 _keyHash,
-        uint256 _fee
-    ) VRFConsumerBase(_VRFAddress, _linkToken) {
-        keyHash = _keyHash;
+        uint64 _subscriptionId,
+        address _linkTokenAddress,
+        bytes32 _keyHash
+    ) VRFConsumerBaseV2(_VRFAddress) {
+        COORDINATOR = VRFCoordinatorV2Interface(_VRFAddress);
+        LINKTOKEN = LinkTokenInterface(_linkTokenAddress);
+        subscriptionId = _subscriptionId;
         VRFCoordinator = _VRFAddress;
-        fee = _fee;
+        keyHash = _keyHash;
     }
 
     modifier onlyTrash() {
         require(msg.sender == trashAddress, "only Trash can call this");
         _;
     }
-
 
     function getAvailablePossums() public view returns (uint256) {
         return availablePossums.length;
@@ -57,8 +67,12 @@ contract Randomness is Ownable, VRFConsumerBase {
         return randomIdOffsetExecuted;
     }
 
-    function getOffset() public view returns(uint256){
-        return randomIdOffset;
+    function getOffset() public view returns (uint256) {
+        if (randomIdOffset.length == 0) {
+            return 0;
+        } else {
+            return randomIdOffset[0];
+        }
     }
 
     function executePremint(uint256 _premintCount) external onlyOwner {
@@ -152,27 +166,30 @@ contract Randomness is Ownable, VRFConsumerBase {
     @dev Chainlink VRF consumer
     //  */
 
-    function _getRandomNumber() private returns (bytes32 requestId) {
+    function _getRandomNumber() private {
         require(
             claimableDate < block.timestamp && claimableDate != 0,
             "not ready to get random number"
         );
-        require(
-            LINK.balanceOf(address(this)) >= fee,
-            "Not enough Link  in contract to get random number"
+        //for local testing
+        //randomIdOffset = new uint256[](1);
+        //    randomIdOffset[0] = 10;      
+
+        //for deployment
+        requestId = COORDINATOR.requestRandomWords(
+            keyHash,
+            subscriptionId,
+            requestConfirmations,
+            callbackGasLimit,
+            numWords
         );
-        return requestRandomness(keyHash, fee);
     }
 
-    function fulfillRandomness(bytes32 requestId, uint256 randomness)
-        internal
-        override
-    {
-        require(
-            msg.sender == VRFCoordinator && requestId > 0,
-            "only VRF Coordinator can fulfill"
-        );
-        randomIdOffset = (randomness % 6000);
+    function fulfillRandomWords(
+        uint256, /* requestId */
+        uint256[] memory randomWords
+    ) internal override {
+        randomIdOffset = randomWords;
     }
 
     /**
