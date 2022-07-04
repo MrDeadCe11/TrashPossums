@@ -57,7 +57,7 @@ describe("Trash Possums", function () {
   const testUri =
     "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
 
-  before("should successfully deploy the contracts", async function () {
+  before("Deploy the contracts", async function () {
     provider = ethers.provider;
     [owner, addr1, addr2, addr3, ...addresses] = await ethers.getSigners();
 
@@ -70,7 +70,7 @@ describe("Trash Possums", function () {
       "0xECfA90604b8A43DE10e5CC3fA78A938fE122EB36"
     );
 
-    console.log("Deploying contracts with account", owner.address);
+    console.log("Deploying contracts with account: ", owner.address);
 
     let vrfCoordinatorMock = await ethers.getContractFactory(
       "VRFCoordinatorV2Mock"   
@@ -80,7 +80,7 @@ describe("Trash Possums", function () {
       0 , 0  //, VRFAddressMumbai, "0x12162c3E810393dEC01362aBf156D7ecf6159528"
     );
   
-    console.log("hardhat mock", hardhatVrfCoordinatorMock.address);
+    console.log("hardhat mock deployed at: ", hardhatVrfCoordinatorMock.address);
 
     const subscription = await hardhatVrfCoordinatorMock.createSubscription();
     const promise = await subscription.wait()
@@ -98,7 +98,7 @@ describe("Trash Possums", function () {
     );
     const deployedRandomness = await randomness.deployed();
 
-    console.log("Randomness deployed at", randomness.address);
+    console.log("Randomness deployed at: ", randomness.address);
 
     const TrashPossums = await ethers.getContractFactory("TrashPossums");
     trashPossums = await TrashPossums.connect(owner).deploy(
@@ -110,16 +110,16 @@ describe("Trash Possums", function () {
 
     const deployed = await trashPossums.deployed();
 
-    console.log("TrashPossums deployed at", trashPossums.address);
+    console.log("TrashPossums deployed at: ", trashPossums.address);
 
     linkContract = new ethers.Contract(LinkTokenMumbai, linkAbi, provider);
 
-    console.log("link deployed at:", linkContract.address);
+    console.log("link deployed at: ", linkContract.address);
 
     assert(deployed, deployedRandomness);
   });
 
-  describe("basic deployment tests", function () {
+  describe("Basic deployment", function () {
 
     it("should fund the contracts with ChainLink", async function () {
       let transfer = await linkContract
@@ -174,7 +174,7 @@ describe("Trash Possums", function () {
     });
   });
 
-  describe("Reserve functions", function () {
+  
     it("should premint 80 possums", async function () {
       const test = await trashPossums.getAvailablePossums();
 
@@ -191,11 +191,7 @@ describe("Trash Possums", function () {
       );
     });
 
-    it("should get owner", async function () {
-      const tx = await trashPossums.owner();
-      assert(tx === owner.address);
-    });
-
+    describe("Reserve functions", function () {
     it("should not reserve possums without correct payment", async function () {
       await expect(
         trashPossums.connect(addr2).reservePossums(2, { value: possumPrice })
@@ -275,7 +271,7 @@ describe("Trash Possums", function () {
     });
   });
 
-  describe("Chainlink VRF and minting tests", function () {
+  describe("Chainlink VRF V2", function () {
     it("should not be able to claim nfts before offset", async function () {
       await expect(
         trashPossums.connect(addr1).claimPossums()
@@ -294,12 +290,13 @@ describe("Trash Possums", function () {
       await fulfill.wait();
       //check to see if offset has been sent to randomness contract
       idOffset = await randomness.randomIdOffset();
-      console.log("OFFSET", idOffset);
       //check values
       expect(await randomness.randomIdOffsetExecuted()).to.be.equal(true);
       expect(idOffset.toString() !== "0");
     });
-
+  });
+  
+  describe("Claiming reserved nfts", function () {
     it("should claim the nft reserved by addr1", async function () {
       const tx = await trashPossums.connect(addr1).claimPossums();
       const promise = await tx.wait();
@@ -340,7 +337,7 @@ describe("Trash Possums", function () {
     });
   });
 
-  describe("Contract tests and checks", function () {
+  describe("Basic contract variables and functions", function () {
     it("reserved Possums array for addr3 should have length of zero", async function () {
       const reserved = await trashPossums.getReservedPossumsPerWallet(
         addr3.address
@@ -406,8 +403,16 @@ describe("Trash Possums", function () {
           ethers.utils.formatEther("114000000000000000000")
       );
     });
+
+
+    it("should get owner", async function () {
+      const tx = await trashPossums.owner();
+      assert(tx === owner.address);
+    });
   });
-  describe("token and eth withdrawal tests", function () {
+
+  describe("ERC20 token and underlying asset withdrawal", function () {
+    //WHY IS THIS FAILING?!?!?!?!????
     it("should withdraw the balance of eth in the contract", async function () {
       const balance = await provider.getBalance(trashPossums.address);
       const tx = await trashPossums.connect(owner).withdraw();
