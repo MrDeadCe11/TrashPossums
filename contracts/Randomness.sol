@@ -16,12 +16,12 @@ contract Randomness is Ownable, VRFConsumerBaseV2 {
     uint32 callbackGasLimit = 200000;
     uint256 public requestId;
     uint16 requestConfirmations = 3;
-    uint32 numWords = 2;
+    uint32 numWords = 1;
     VRFCoordinatorV2Interface COORDINATOR;
     LinkTokenInterface LINKTOKEN;
 
     //Variables
-    uint256[] public randomIdOffset;
+    uint256 public randomIdOffset;
     uint256 public claimableDate;
     bool public randomIdOffsetExecuted;
     address public trashAddress;
@@ -29,6 +29,8 @@ contract Randomness is Ownable, VRFConsumerBaseV2 {
 
     // array of available possums
     uint256[] availablePossums = new uint256[](7000);
+
+    event RequestedRandomness(uint256 requestId);
 
     constructor(
         address _VRFAddress,
@@ -68,11 +70,7 @@ contract Randomness is Ownable, VRFConsumerBaseV2 {
     }
 
     function getOffset() public view returns (uint256) {
-        if (randomIdOffset.length == 0) {
-            return 0;
-        } else {
-            return randomIdOffset[0];
-        }
+            return randomIdOffset;
     }
 
     function executePremint(uint256 _premintCount) external onlyOwner {
@@ -183,13 +181,15 @@ contract Randomness is Ownable, VRFConsumerBaseV2 {
             callbackGasLimit,
             numWords
         );
+
+        emit RequestedRandomness(requestId);
     }
 
     function fulfillRandomWords(
         uint256, /* requestId */
         uint256[] memory randomWords
     ) internal override {
-        randomIdOffset = randomWords;
+        randomIdOffset = randomWords[0] % 6000;
     }
 
     /**

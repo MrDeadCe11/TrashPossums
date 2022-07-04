@@ -23,7 +23,7 @@ async function main() {
 
   const offset = await randomness.getOffset();
 
-  const offsetExectued = await randomness.offsetExecuted();
+  const offsetExectued = await randomness.randomIdOffsetExecuted();
 
   console.log("offset", offset);
   console.log("Offset executed", offsetExectued);

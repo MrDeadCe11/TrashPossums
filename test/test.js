@@ -17,7 +17,7 @@ describe("Trash Possums", function () {
     idOffset;
   let trashPossums, randomness;
   let hardhatVrfCoordinatorMock,vrfCoordinatorV2TestHelper;
-  const CLSubscriptionId = 935;
+  let CLSubscriptionId;
   let addr3tokens = [];
   const startMintDate = 1642282339;
   //approx noon on feb 20th 2022
@@ -71,27 +71,23 @@ describe("Trash Possums", function () {
     );
 
     console.log("Deploying contracts with account", owner.address);
-//     const vrft2 = await ethers.getContractFactory("VRFCoordinatorV2TestHelper")
-//     // const vrfTx = await deploy("VRFCoordinatorV2TestHelper", {
-//     //   from: owner,
-//     //   log: true,
-//     //   args: [linkAddress, blockHashStore, linkEthFeed],
-//     //   contract:
-//     //     "contracts/test/VRFCoordinatorV2TestHelper.sol:VRFCoordinatorV2TestHelper",
-//     // });
-//     vrfCoordinatorV2TestHelper = vrft2.deploy(LinkTokenMumbai, VRFAddressMumbai, "0x12162c3E810393dEC01362aBf156D7ecf6159528")
-// ``
+
     let vrfCoordinatorMock = await ethers.getContractFactory(
-      "VRFCoordinatorMock"
+      "VRFCoordinatorV2Mock"   
      );
 
     hardhatVrfCoordinatorMock = await vrfCoordinatorMock.deploy(
-      LinkTokenMumbai //, VRFAddressMumbai, "0x12162c3E810393dEC01362aBf156D7ecf6159528"
+      0 , 0  //, VRFAddressMumbai, "0x12162c3E810393dEC01362aBf156D7ecf6159528"
     );
+  
     console.log("hardhat mock", hardhatVrfCoordinatorMock.address);
-    //await hardhatVrfCoordinatorMock.createSubscription();
 
-    //await hardhatVrfCoordinatorMock.fundSubscription(1, ethers.utils.parseEther("7"))
+    const subscription = await hardhatVrfCoordinatorMock.createSubscription();
+    const promise = await subscription.wait()
+    CLSubscriptionId = promise.events[0].args.subId
+
+    await hardhatVrfCoordinatorMock.fundSubscription(1, ethers.utils.parseEther("7"))
+   
 
     const Random = await ethers.getContractFactory("Randomness");
     randomness = await Random.connect(owner).deploy(
@@ -124,6 +120,7 @@ describe("Trash Possums", function () {
   });
 
   describe("basic deployment tests", function () {
+
     it("should fund the contracts with ChainLink", async function () {
       let transfer = await linkContract
         .connect(owner)
@@ -141,6 +138,8 @@ describe("Trash Possums", function () {
       const trashBalance = await linkContract
         .connect(owner)
         .balanceOf(trashPossums.address);
+
+        await linkContract.connect(owner).transfer(hardhatVrfCoordinatorMock.address, ethers.utils.parseEther("10"));
 
       assert(balance > 0 && trashBalance > 0);
     });
@@ -284,14 +283,19 @@ describe("Trash Possums", function () {
     });
 
     it("should execute offset", async function () {
+      //execute vrf request on randomness
       const tx = await randomness.executeOffset();
-      const { events } = await tx.wait();
-      //console.log("events", events)
-      idOffset = await randomness.randomIdOffset(0);
+      //catch events in returned promise
+      const {events} = await tx.wait();     
+        //find requested randomness event emitted from randomness contract
+      let [reqId] = events.filter((x) => x.event === "RequestedRandomness")
+        //force mock coordinator to fulfill randomness request must past request ID and invoker address to mock contract
+      const fulfill = await hardhatVrfCoordinatorMock.fulfillRandomWords(reqId.args.requestId, randomness.address);
+      await fulfill.wait();
+      //check to see if offset has been sent to randomness contract
+      idOffset = await randomness.randomIdOffset();
       console.log("OFFSET", idOffset);
-
-      //let [reqId] = events.filter((x) => x.event === "RequestedRandomness")[0]
-      
+      //check values
       expect(await randomness.randomIdOffsetExecuted()).to.be.equal(true);
       expect(idOffset.toString() !== "0");
     });
@@ -301,7 +305,7 @@ describe("Trash Possums", function () {
       const promise = await tx.wait();
       const event = promise.events.find((e) => e.event === "Transfer");
       tokenId1 = event.args.tokenId.toNumber();
-      console.log("id1 and offset", reserveId1, idOffset, tokenId1)
+     
       expect(event.args.to).to.equal(addr1.address);
       expect(tokenId1).to.equal(+reserveId1 + +idOffset);
     });

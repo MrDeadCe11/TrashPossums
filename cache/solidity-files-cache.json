@@ -631,8 +631,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1656962274202,
-      "contentHash": "969e53eeb8d5effa5df4db91b39d0933",
+      "lastModificationDate": 1656969426928,
+      "contentHash": "58d27ca0fb3155ecb39f43fe4bbf1ce5",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -818,8 +818,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/tests/VRFCoordinatorMock.sol": {
-      "lastModificationDate": 1656958184420,
-      "contentHash": "b7e7bbdc779c61f2440c73bde9ba940c",
+      "lastModificationDate": 1656967459173,
+      "contentHash": "349f09838d13a45afda83c7bf7210a37",
       "sourceName": "contracts/tests/VRFCoordinatorMock.sol",
       "solcConfig": {
         "version": "0.8.10",
