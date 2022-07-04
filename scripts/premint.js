@@ -3,9 +3,9 @@ const hre = require("hardhat");
 
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
-  console.log("owner accounts", deployer.address);
-  const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
-  const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
+  console.log("owner account", deployer.address);
+  const randomnessAddress = process.env.NEW_RANDOMNESS;
+  const trashPossumsAddress = process.env.NEW_TRASH;
 
   const trashPossums = await hre.ethers.getContractAt(
     "TrashPossums",
@@ -16,16 +16,12 @@ async function main() {
     randomnessAddress
   );
 
-  //const tx = await randomness.connect(deployer).setTrash(trashPossumsAddress);
-  //const tx = await randomness.executeOffset()
-  //await tx.wait();
-  //console.log(tx)
   const premint = await trashPossums.premintPossums();
   const randpremint = await randomness.executePremint(80);
   await premint.wait();
   await randpremint.wait();
 
-  const premintCount = await trashPossums.getTotalMintedPossums();
+  const premintCount = await trashPossums.totalMintedPossums();
 
   console.log("preminted", premintCount);
 }

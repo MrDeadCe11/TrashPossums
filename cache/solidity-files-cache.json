@@ -37,8 +37,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1656798810747,
-      "contentHash": "a29bec40b27fc73626048ad4614ce666",
+      "lastModificationDate": 1656954896332,
+      "contentHash": "6a9025f9366871bd7db32f00c4aca180",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -70,7 +70,8 @@
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         "@openzeppelin/contracts/security/Pausable.sol",
-        "./IRandomness.sol"
+        "./IRandomness.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.10"
@@ -80,7 +81,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1652056048702,
+      "lastModificationDate": 1656887110549,
       "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -117,7 +118,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-      "lastModificationDate": 1652056048126,
+      "lastModificationDate": 1656887110173,
       "contentHash": "ead7082e39cf31875ff89b22f473500d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
@@ -160,7 +161,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1652056048562,
+      "lastModificationDate": 1656887110421,
       "contentHash": "302d9755e46bc69d7058b0cbe7185e37",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -195,7 +196,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
-      "lastModificationDate": 1652056048274,
+      "lastModificationDate": 1656887110245,
       "contentHash": "580a443491d9d70eb064b0130fc3cd01",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
@@ -232,7 +233,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
-      "lastModificationDate": 1652056048182,
+      "lastModificationDate": 1656887110201,
       "contentHash": "88095889e59d16821879a8083f906503",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
       "solcConfig": {
@@ -270,7 +271,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1652056048710,
+      "lastModificationDate": 1656887110557,
       "contentHash": "9c2dccab8e3a43a18c41e358763fe4d8",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
@@ -307,7 +308,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1652056044234,
+      "lastModificationDate": 1656887109693,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -342,7 +343,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1652056048590,
+      "lastModificationDate": 1656887110461,
       "contentHash": "27d219ec6f69478d065fdbfa7931da68",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
@@ -379,7 +380,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1652056048618,
+      "lastModificationDate": 1656887110481,
       "contentHash": "592df588492d45fdcf46b3cb608c0fbf",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
@@ -414,7 +415,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1652056048610,
+      "lastModificationDate": 1656887110477,
       "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
@@ -451,7 +452,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1652056041986,
+      "lastModificationDate": 1656887109481,
       "contentHash": "4cff8b2ea0d958750786b4e3ca308445",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
@@ -486,7 +487,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1652056048786,
+      "lastModificationDate": 1656887110617,
       "contentHash": "9c54c6c065d9e590fdcdd72c451425b9",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
@@ -521,7 +522,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1652056047758,
+      "lastModificationDate": 1656887110021,
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -558,7 +559,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1652056048530,
+      "lastModificationDate": 1656887110397,
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
@@ -593,7 +594,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
-      "lastModificationDate": 1652056048598,
+      "lastModificationDate": 1656887110473,
       "contentHash": "f69eb47f667b846a8698697d25eeff4e",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
       "solcConfig": {
@@ -630,8 +631,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1656794858421,
-      "contentHash": "251913c1da8c2986d6f0dd4982bd368f",
+      "lastModificationDate": 1656969426928,
+      "contentHash": "58d27ca0fb3155ecb39f43fe4bbf1ce5",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -658,8 +659,10 @@
       },
       "imports": [
         "@openzeppelin/contracts/access/Ownable.sol",
-        "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+        "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
+        "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol"
       ],
       "versionPragmas": [
         "^0.8.10"
@@ -669,8 +672,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/VRFConsumerBase.sol": {
-      "lastModificationDate": 1652056048842,
-      "contentHash": "a70ea296de2000548ba2211a166432fe",
+      "lastModificationDate": 1656948632700,
+      "contentHash": "c05c2205d74e9eb8267d6ae133c98e73",
       "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -707,7 +710,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol": {
-      "lastModificationDate": 1652056049462,
+      "lastModificationDate": 1656948633204,
       "contentHash": "da5a0c3bd86c896f6a407f909c57edf3",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
       "solcConfig": {
@@ -742,7 +745,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol": {
-      "lastModificationDate": 1652056048846,
+      "lastModificationDate": 1656948632700,
       "contentHash": "e7fc1c36cb6d9f4b7d64c59dfd2c6211",
       "sourceName": "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol",
       "solcConfig": {
@@ -777,7 +780,7 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol": {
-      "lastModificationDate": 1652056049490,
+      "lastModificationDate": 1656948633300,
       "contentHash": "046c45b7218ba8f2d2c7d7dc577219aa",
       "sourceName": "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol",
       "solcConfig": {
@@ -815,8 +818,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/tests/VRFCoordinatorMock.sol": {
-      "lastModificationDate": 1656882871893,
-      "contentHash": "02934ff303a7de27eafe2c761198d8cf",
+      "lastModificationDate": 1656967459173,
+      "contentHash": "349f09838d13a45afda83c7bf7210a37",
       "sourceName": "contracts/tests/VRFCoordinatorMock.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -842,14 +845,12 @@
         }
       },
       "imports": [
-        "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorMock.sol"
+        "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
       ],
-      "artifacts": [
-        "MockVRFCoordinator"
-      ]
+      "artifacts": []
     },
     "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/tests/VRFConsumer.sol": {
       "lastModificationDate": 1652056049518,
@@ -887,6 +888,516 @@
       ],
       "artifacts": [
         "VRFConsumer"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol": {
+      "lastModificationDate": 1656948633300,
+      "contentHash": "56ec852a2aeddf81bf5a5720a7fc6a63",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFCoordinatorV2Interface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol": {
+      "lastModificationDate": 1656948632700,
+      "contentHash": "eb9cc526ef59dfc4d644f56ddca0633a",
+      "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "VRFConsumerBaseV2"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1656887111589,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol": {
+      "lastModificationDate": 1656948633300,
+      "contentHash": "0e99ed258a59dc48bc432008b39453cd",
+      "sourceName": "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/LinkTokenInterface.sol",
+        "../interfaces/VRFCoordinatorV2Interface.sol",
+        "../VRFConsumerBaseV2.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "VRFCoordinatorV2Mock"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/dev/VRFCoordinatorV2.sol": {
+      "lastModificationDate": 1656948633196,
+      "contentHash": "a8354b98ab809b0ba593e7afaf3f4c9c",
+      "sourceName": "@chainlink/contracts/src/v0.8/dev/VRFCoordinatorV2.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/LinkTokenInterface.sol",
+        "../interfaces/BlockhashStoreInterface.sol",
+        "../interfaces/AggregatorV3Interface.sol",
+        "../interfaces/VRFCoordinatorV2Interface.sol",
+        "../interfaces/TypeAndVersionInterface.sol",
+        "../interfaces/ERC677ReceiverInterface.sol",
+        "./VRF.sol",
+        "../ConfirmedOwner.sol",
+        "../VRFConsumerBaseV2.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "VRFCoordinatorV2"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/BlockhashStoreInterface.sol": {
+      "lastModificationDate": 1656948633200,
+      "contentHash": "842fa56dd44a26339c202c65e93c2306",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/BlockhashStoreInterface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "BlockhashStoreInterface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol": {
+      "lastModificationDate": 1656948633200,
+      "contentHash": "611f626b2447ccff9ba5332460fd217f",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AggregatorV3Interface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/TypeAndVersionInterface.sol": {
+      "lastModificationDate": 1656948633300,
+      "contentHash": "99239ca600c3a8878735c8c17d46981a",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/TypeAndVersionInterface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "TypeAndVersionInterface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/ERC677ReceiverInterface.sol": {
+      "lastModificationDate": 1656948633200,
+      "contentHash": "26d371857fda5a1bf087572b40bc1538",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/ERC677ReceiverInterface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "ERC677ReceiverInterface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/dev/VRF.sol": {
+      "lastModificationDate": 1656948633192,
+      "contentHash": "f01459567c88246bf1e7218a558b1e6e",
+      "sourceName": "@chainlink/contracts/src/v0.8/dev/VRF.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRF"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/ConfirmedOwner.sol": {
+      "lastModificationDate": 1656948632676,
+      "contentHash": "16d64572b0310127fc8a771e63be6d20",
+      "sourceName": "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ConfirmedOwnerWithProposal.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ConfirmedOwner"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/ConfirmedOwnerWithProposal.sol": {
+      "lastModificationDate": 1656948632676,
+      "contentHash": "8b1c5f02622cd87472493bda6595d1be",
+      "sourceName": "@chainlink/contracts/src/v0.8/ConfirmedOwnerWithProposal.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/OwnableInterface.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ConfirmedOwnerWithProposal"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/interfaces/OwnableInterface.sol": {
+      "lastModificationDate": 1656948633300,
+      "contentHash": "2e814c8a9f77897f6995436d97c23d99",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/OwnableInterface.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "OwnableInterface"
+      ]
+    },
+    "/home/someguy/Code/TrashPossums/node_modules/@chainlink/contracts/src/v0.8/tests/VRFCoordinatorV2TestHelper.sol": {
+      "lastModificationDate": 1656948633308,
+      "contentHash": "b45bf3dd39b419a2b7036aae15d24d53",
+      "sourceName": "@chainlink/contracts/src/v0.8/tests/VRFCoordinatorV2TestHelper.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../dev/VRFCoordinatorV2.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFCoordinatorV2TestHelper"
       ]
     }
   }

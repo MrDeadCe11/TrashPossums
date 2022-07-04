@@ -11,8 +11,8 @@ async function main() {
     "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
   const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
   console.log("owner accounts", deployer.address);
-  const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
-  const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
+  const randomnessAddress = process.env.NEW_RANDOMNESS;
+  const trashPossumsAddress = process.env.NEW_TRASH;
 
   const randomness = new ethers.Contract(
     randomnessAddress,
@@ -33,7 +33,7 @@ async function main() {
   //await tx.wait();
   //console.log(tx)
 
-  const tx = await randomness.setClaimableDate(1656798900);
+  //const tx = await randomness.setClaimableDate(1656798900);
   //await randomness.setTrash(trashPossumsAddress);
   //const trash = await randomness.getTrash();
   
@@ -44,6 +44,7 @@ async function main() {
   const date = await randomness.getClaimableDate();
   const offsetExectued = await randomness.randomIdOffsetExecuted();
   const uri = await trashPossums.contractURI();
+  const totalMintedPossums = await trashPossums.totalMintedPossums();
   const isOwner = await trashPossums.owner();
   //await trashPossums.setBaseTokenURI(testUri)
 
@@ -59,7 +60,8 @@ async function main() {
     offset,
     "uri",
     uri,
-    "is owner", isOwner
+    "is owner", isOwner,
+    "total minted", totalMintedPossums
   );
   console.log("Offset executed", offsetExectued);
 }
