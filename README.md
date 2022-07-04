@@ -18,7 +18,7 @@ check it out
 
 clone the repo,
 install dependencies,
-`npx hardhat test.`
+`npx hardhat test`
 
 to deploy
 `npx hardhat run scripts/deployMumbai.js`
