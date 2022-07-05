@@ -25,3 +25,5 @@ to deploy
 
 to premint
 `npx hardhat run scripts/premint.js`
+
+the website is deployed at https://trashpossums.io
