@@ -426,7 +426,7 @@ describe("Trash Possums", function () {
       const balance = await provider.getBalance(trashPossums.address);
       const tx = await trashPossums.connect(owner).withdraw();
       await tx.wait();
-      const contractBalance = await provider.getBalance(trashPossums.contract);
+      const contractBalance = await provider.getBalance(trashPossums.address);
       assert(contractBalance.toString() == "0");
     });
 
