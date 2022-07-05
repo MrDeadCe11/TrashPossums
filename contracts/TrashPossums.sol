@@ -147,7 +147,7 @@ contract TrashPossums is
      * @dev Allows withdrawal of any ether in the contract to the address of the owner.
      */
 
-    function withdraw() external payable onlyOwner {
+    function withdraw() external onlyOwner {
         require(address(this).balance > 0, "no ETH in the contract.");
         uint256 totalBalance = address(this).balance;
         address _owner = owner();

@@ -15,7 +15,7 @@ async function main() {
   const startMintDate = 1642282339; //approx noon on feb 20th 2022
   const possumPrice = hre.ethers.utils.parseEther(".02");
   const testUri =
-    "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
+    "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
   const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
   const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
   const keyHashMumbai =

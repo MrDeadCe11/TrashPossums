@@ -7,9 +7,9 @@ const trashAbi = require("../artifacts/contracts/TrashPossums.sol/TrashPossums.j
 async function main() {
   const deployer = await hre.ethers.getSigner();
   console.log("owner accounts", deployer.address);
-  const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
-  const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
-  const provider = ethers.getDefaultProvider(process.env.MUMBAI_RPC_URL);
+  const randomnessAddress = process.env.NEW_RANDOMNESS;
+  const trashPossumsAddress = process.env.NEW_TRASH;
+  const provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_MUMBAI_RPC_URL);
 
   const randomness = new ethers.Contract(
     randomnessAddress,
@@ -22,13 +22,19 @@ async function main() {
     trashAbi.abi,
     deployer
   );
-
+    const feeData = await provider.getFeeData()
+    console.log(feeData)
   //const randomness = await hre.ethers.getContractAt("Randomness", randomnessAddress);
-
-  //const tx = await trashPossums.withdraw();
+    const txcount = await provider.getTransactionCount(trashPossums.address);
+  const poptx = await trashPossums.populateTransaction.withdraw();
+  
+  const tx = await trashPossums.connect(deployer).withdraw();
+  const promise = await tx.wait()
+  
+  console.log(poptx, tx, promise);
   const balance = await provider.getBalance(trashPossumsAddress);
 
-  console.log("balance", balance);
+  console.log("balance", balance, txcount);
 }
 
 main()

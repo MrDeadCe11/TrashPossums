@@ -8,7 +8,7 @@ async function main() {
   const alchmumbai = process.env.ALCHEMY_MUMBAI_RPC_URL
   const provider = new ethers.providers.JsonRpcProvider(alchmumbai)
   const testUri =
-    "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
+    "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
   const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
   console.log("owner accounts", deployer.address);
   const randomnessAddress = process.env.NEW_RANDOMNESS;
@@ -36,7 +36,7 @@ async function main() {
   //const tx = await randomness.setClaimableDate(1656798900);
   //await randomness.setTrash(trashPossumsAddress);
   //const trash = await randomness.getTrash();
-  
+  await trashPossums.setBaseTokenURI(testUri)
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
 
@@ -46,12 +46,13 @@ async function main() {
   const uri = await trashPossums.contractURI();
   const totalMintedPossums = await trashPossums.totalMintedPossums();
   const isOwner = await trashPossums.owner();
-  //await trashPossums.setBaseTokenURI(testUri)
+  
 
   // const reserved = await trashPossums.getReservedPossumsPerWallet(deployer.address)
   // const reservedIds = await trashPossums.getReservedPossumIds(deployer.address)
 
   console.log(
+    "TRASH ADDRESS", trashPossums.address,
     "claimed Possums",
     balance,
     "claimable date",

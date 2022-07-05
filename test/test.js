@@ -56,6 +56,7 @@ describe("Trash Possums", function () {
 
   const testUri =
     "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
+    const testUri2 = "https://ipfs.io/ipfs/0xc11fbD225611EcBCBede82Fbed15981D78949cd6"
 
   before("Deploy the contracts", async function () {
     provider = ethers.provider;
@@ -340,6 +341,12 @@ describe("Trash Possums", function () {
   });
 
   describe("Basic contract variables and functions", function () {
+    it("should change the baseURI", async function () {
+      const tx = await trashPossums.setBaseTokenURI(testUri2);
+      const promise = await tx.wait()
+      const uri = await trashPossums.contractURI();
+      assert(testUri2 == uri);
+    })
     it("reserved Possums array for addr3 should have length of zero", async function () {
       const reserved = await trashPossums.getReservedPossumsPerWallet(
         addr3.address
