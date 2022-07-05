@@ -26,15 +26,9 @@ async function main() {
     deployer
   );
 
-  //const randomness = await hre.ethers.getContractAt("Randomness", randomnessAddress);
-
-  //const tx = await randomness.setTrash(trashPossumsAddress);
-  //const tx = await randomness.executeOffset()
-  //await tx.wait();
-  //console.log(tx)
 
   //const tx = await randomness.setClaimableDate(1656798900);
-  //await randomness.setTrash(trashPossumsAddress);
+  
   //const trash = await randomness.getTrash();
   await trashPossums.setBaseTokenURI(testUri)
   //const avail = await randomness.getAvailablePossums();
@@ -47,9 +41,6 @@ async function main() {
   const totalMintedPossums = await trashPossums.totalMintedPossums();
   const isOwner = await trashPossums.owner();
   
-
-  // const reserved = await trashPossums.getReservedPossumsPerWallet(deployer.address)
-  // const reservedIds = await trashPossums.getReservedPossumIds(deployer.address)
 
   console.log(
     "TRASH ADDRESS", trashPossums.address,
