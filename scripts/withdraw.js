@@ -25,13 +25,13 @@ async function main() {
     const feeData = await provider.getFeeData()
     console.log(feeData)
   //const randomness = await hre.ethers.getContractAt("Randomness", randomnessAddress);
-    const txcount = await provider.getTransactionCount(trashPossums.address);
-  const poptx = await trashPossums.populateTransaction.withdraw();
+  //   const txcount = await provider.getTransactionCount(trashPossums.address);
+  // const poptx = await trashPossums.populateTransaction.withdraw();
   
   const tx = await trashPossums.connect(deployer).withdraw();
   const promise = await tx.wait()
   
-  console.log(poptx, tx, promise);
+  console.log(promise);
   const balance = await provider.getBalance(trashPossumsAddress);
 
   console.log("balance", balance, txcount);
