@@ -13,51 +13,61 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
   const startMintDate = 1667203200; //8am gmt oct 31 2022
-  const possumPrice = hre.ethers.utils.parseEther("100");
-  const ipfsURI =
-    "https://ipfs.io/ipfs/QmdZS745Y4UL3Ub3oCsrxPjcfXzn2qoeCBNGbTuyHpZ7SK";
+  const possumPrice = hre.ethers.utils.parseEther("50");
+  const ipfsURI = "";
   const VRFAddressPolygon = "";
   const LinkTokenPolygon = "";
-  const keyHashPolygon =
-    "";
-  const fee = hre.ethers.utils.parseEther(".001");
+  const keyHashPolygon = "";
+  const CLSubscriptionId = 0;
   const premintCount = 80;
-
+  let trashPossums, randomness
   const [deployer] = await hre.ethers.getSigners();
-  console.log("deploying with account: ", deployer.address);
 
-  const Random = await ethers.getContractFactory("Randomness");
-  const randomness = await Random.deploy(
-    VRFAddressPolygon,
-    LinkTokenPolygon,
-    keyHashPolygon,
-    fee
-  );
-  await randomness.deployed();
-  console.log("Randomness deployed at", randomness.address);
+      console.log("deploying with account: ", deployer.address);
 
-  const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
-  const trashPossums = await TrashPossums.deploy(
-    possumPrice,
-    startMintDate,
-    ipfsURI,
-    randomness.address,
-    premintCount
-  );
+    if(VRFAddressPolygon.length !== 0 && LinkTokenPolygon.length !== 0 && keyHashPolygon.length !== 0 & CLSubscriptionId !== 0){
+        const Random = await ethers.getContractFactory("Randomness");
+        randomness = await Random.deploy(
+          VRFAddressPolygon,
+          CLSubscriptionId,
+          LinkTokenPolygon,
+          keyHashPolygon
+        );
+        await randomness.deployed();
+          console.log("Randomness deployed at", randomness.address);
+    }
+  
 
-  await trashPossums.deployed();
+    if(ipfsURI.length !== 0){
 
-  console.log("Trash Possums deployed to:", trashPossums.address);
+        const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
+        trashPossums = await TrashPossums.deploy(
+          possumPrice,
+          startMintDate,
+          ipfsURI,
+          randomness.address,
+          premintCount
+        );
+      
 
-  await randomness.setClaimableDate(startMintDate);
-  const setmint = await randomness.getClaimableDate();
-  console.log("mint date is set to:", setmint);
-  await randomness.setTrash(trashPossums.address);
-  saveFrontendFiles(trashPossums);
-  saveFrontendFiles(randomness);
+      await trashPossums.deployed();
+
+        console.log("Trash Possums deployed to:", trashPossums.address);
+    }
+
+    if(trashPossums && randomness){
+        await randomness.setClaimableDate(startMintDate);
+        const setMint = await randomness.getClaimableDate();
+          console.log("mint date is set to:", setMint);
+        await randomness.setTrash(trashPossums.address);
+        saveFrontendFiles("TrashPossums",trashPossums);
+        saveFrontendFiles("Randomness",randomness);
+    } else {
+      throw new Error("Contracts were not deployed.")
+    }
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(name, file) {
   const fs = require("fs");
   const contractsDir = __dirname + "/../trash-site/src/contracts";
 
@@ -67,14 +77,14 @@ function saveFrontendFiles(token) {
 
   fs.writeFileSync(
     contractsDir + "/contract-address.json",
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    JSON.stringify({ name: file.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  const ContractArtifact = artifacts.readArtifactSync(name);
 
   fs.writeFileSync(
-    contractsDir + "/Token.json",
-    JSON.stringify(TokenArtifact, null, 2)
+    contractsDir + "/Contract.json",
+    JSON.stringify(ContractArtifact, null, 2)
   );
 }
 
@@ -83,6 +93,6 @@ function saveFrontendFiles(token) {
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error);
+      console.error(error);
     process.exit(1);
   });

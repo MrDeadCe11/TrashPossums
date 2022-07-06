@@ -12,23 +12,21 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-  const startMintDate = 1642282339; //approx noon on feb 20th 2022
-  const possumPrice = hre.ethers.utils.parseEther(".02");
-  const testUri =
-    "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
-  const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
-  const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
-  const keyHashMumbai =
-    "0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f";
+    const startMintDate = 1642282339; //approx noon on feb 20th 2022
+    const possumPrice = hre.ethers.utils.parseEther(".02");
+    const testUri =
+      "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
+    const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
+    const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
+    const keyHashMumbai =
+      "0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f";
     const CLSubscriptionId = 935;
-  const fee = hre.ethers.utils.parseEther(".001");
-  const premintCount = 80;
+    const fee = hre.ethers.utils.parseEther(".001");
+    const premintCount = 80;
 
   const [deployer] = await hre.ethers.getSigners();
-  console.log("deploying with account: ", deployer.address);
 
-  
- 
+    console.log("deploying with account: ", deployer.address); 
 
   const Random = await ethers.getContractFactory("Randomness");
   randomness = await Random.deploy(
@@ -40,7 +38,7 @@ async function main() {
 
   await randomness.deployed();
 
-  console.log("Randomness deployed at", randomness.address);
+    console.log("Randomness deployed at", randomness.address);
 
   const TrashPossums = await ethers.getContractFactory("TrashPossums");
 
@@ -53,19 +51,22 @@ async function main() {
 
   await trashPossums.deployed();
 
-  console.log("Trash Possums deployed to:", trashPossums.address);
+    console.log("Trash Possums deployed to:", trashPossums.address);
 
   await randomness.setClaimableDate(startMintDate);
-  const setmint = await randomness.getClaimableDate();
-  console.log("mint date is set to:", setmint);
+
+  const setMint = await randomness.getClaimableDate();
+    console.log("mint date is set to:", setMint);
+
   await randomness.setTrash(trashPossums.address);
-  saveFrontendFiles(trashPossums);
-  saveFrontendFiles(randomness);
+
+  saveFrontendFiles("TrashPossums", trashPossums);
+  saveFrontendFiles("Randomness", randomness);
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(name, file) {
   const fs = require("fs");
-  const contractsDir = __dirname + "/../trash-site/src/contracts";
+  const contractsDir = __dirname + "/../trash-site/src/contracts/test";
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
@@ -73,14 +74,14 @@ function saveFrontendFiles(token) {
 
   fs.writeFileSync(
     contractsDir + "/contract-address.json",
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    JSON.stringify({ name: file.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  const ContractArtifact = artifacts.readArtifactSync(name);
 
   fs.writeFileSync(
-    contractsDir + "/Token.json",
-    JSON.stringify(TokenArtifact, null, 2)
+    contractsDir + "/Contract.json",
+    JSON.stringify(ContractArtifact, null, 2)
   );
 }
 
