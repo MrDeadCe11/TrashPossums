@@ -12,6 +12,9 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
+
+  //declare variables
+
   const startMintDate = 1667203200; //8am gmt oct 31 2022
   const possumPrice = hre.ethers.utils.parseEther("50");
   const ipfsURI = "";
@@ -20,13 +23,20 @@ async function main() {
   const keyHashPolygon = "";
   const CLSubscriptionId = 0;
   const premintCount = 80;
-  let trashPossums, randomness
-  const [deployer] = await hre.ethers.getSigners();
+  let trashPossums, randomness;
+
+  // begin deployment   
+
+  const [deployer] = await hre.ethers.getSigner(process.env.PRIVATE_KEY_DEPLOYER_WALLET);
 
       console.log("deploying with account: ", deployer.address);
 
+    //check if necessary info has been entered
+
     if(VRFAddressPolygon.length !== 0 && LinkTokenPolygon.length !== 0 && keyHashPolygon.length !== 0 & CLSubscriptionId !== 0){
+      
         const Random = await ethers.getContractFactory("Randomness");
+
         randomness = await Random.deploy(
           VRFAddressPolygon,
           CLSubscriptionId,
@@ -35,12 +45,16 @@ async function main() {
         );
         await randomness.deployed();
           console.log("Randomness deployed at", randomness.address);
+    } else {
+      throw Error("Randomness was not deployed")
     }
   
+    //check if ipfs address has been entered
 
     if(ipfsURI.length !== 0){
 
         const TrashPossums = await hre.ethers.getContractFactory("TrashPossums");
+        
         trashPossums = await TrashPossums.deploy(
           possumPrice,
           startMintDate,
@@ -50,20 +64,34 @@ async function main() {
         );
       
 
-      await trashPossums.deployed();
+        await trashPossums.deployed();
 
-        console.log("Trash Possums deployed to:", trashPossums.address);
+          console.log("Trash Possums deployed to:", trashPossums.address);
+    } else {
+      throw Error("Trash Possums were not deployed")
     }
 
+    //check for correct deployment
+
     if(trashPossums && randomness){
+      //set start mint date in randomness
         await randomness.setClaimableDate(startMintDate);
+        //check that date was set
         const setMint = await randomness.getClaimableDate();
+
           console.log("mint date is set to:", setMint);
+          //set trash possums address in randomness for security checks
         await randomness.setTrash(trashPossums.address);
+        //check that address has been set
+        const setTrash = await randomness.getTrash()
+
+        //save addresses in front end
         saveFrontendFiles("TrashPossums",trashPossums);
         saveFrontendFiles("Randomness",randomness);
     } else {
-      throw new Error("Contracts were not deployed.")
+      //throw error if contracts were not deployed
+
+      throw Error("Contracts were not successfully deployed.")
     }
 }
 

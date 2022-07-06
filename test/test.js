@@ -172,8 +172,8 @@ describe("Trash Possums", function () {
 
       const tx = await trashPossums.connect(owner).premintPossums();
         await tx.wait();
-      const rand = await randomness.connect(owner).executePremint(premintCount);
-        await rand.wait();
+      // const rand = await randomness.connect(owner).executePremint(premintCount);
+      //   await rand.wait();
       const balance = await trashPossums.balanceOf(owner.address);
 
       const test2 = await trashPossums.getAvailablePossums();
@@ -181,6 +181,7 @@ describe("Trash Possums", function () {
       assert(
         balance.toNumber() === 80 && test.toNumber() - test2.toNumber() === 80
       );
+      expect(await randomness.getAvailablePossums()).to.equal("6920");
     });
 
   });

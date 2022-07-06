@@ -37,8 +37,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1656980134168,
-      "contentHash": "ada7226f4004bd0257d2f424b6f8ca99",
+      "lastModificationDate": 1657129492340,
+      "contentHash": "79457c46b1ae89364dbade659cd3fd30",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -631,8 +631,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/Randomness.sol": {
-      "lastModificationDate": 1656972075786,
-      "contentHash": "58d27ca0fb3155ecb39f43fe4bbf1ce5",
+      "lastModificationDate": 1657129783758,
+      "contentHash": "176015335167925b9e1524f6924f5dbf",
       "sourceName": "contracts/Randomness.sol",
       "solcConfig": {
         "version": "0.8.10",

@@ -73,7 +73,7 @@ contract Randomness is Ownable, VRFConsumerBaseV2 {
             return randomIdOffset;
     }
 
-    function executePremint(uint256 _premintCount) external onlyOwner {
+    function executePremint(uint256 _premintCount) external onlyTrash {
         require(!premintExecuted, "can only premint once");
         for (uint256 i; i < _premintCount; i++) {
             availablePossums[i] = availablePossums.length - 1;

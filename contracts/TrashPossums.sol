@@ -132,7 +132,7 @@ contract TrashPossums is
             mint(msg.sender, i);
         }
 
-        //IRandomness(randomness).executePremint(premintCount);
+        IRandomness(randomness).executePremint(premintCount);
     }
 
     /**

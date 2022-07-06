@@ -17,7 +17,7 @@ async function main() {
   );
 
   const premint = await trashPossums.premintPossums();
-  const randpremint = await randomness.executePremint(80);
+  //const randpremint = await randomness.executePremint(80);
   await premint.wait();
   await randpremint.wait();
 
