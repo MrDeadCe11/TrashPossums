@@ -45,7 +45,7 @@ export default {
         {
           name: "Marsu Poss: Starbage Hauler",
           image:
-            "https://ik.imagekit.io/trashpossums/assets/E5649160-1121-4CDD-8EB8-D2A2FB36FA10_ABvFzZupcSM.png?updatedAt=1639522052774",
+            "https://ik.imagekit.io/trashpossums/assets/Marsu_poss_starbage_hauler_AydMLZ2tG.png?ik-sdk-version=javascript-1.4.3&updatedAt=1657500077890",
           description:
             "A spacefaring rogue trader and seeker of trash from across the Milky Way. Aboard the starbage hauler Hopium, with his tail droid Mr. Pinchy, he naps and hauls and collects his way through the galaxy looking for anything and everything that can better possumkind.",
         },
