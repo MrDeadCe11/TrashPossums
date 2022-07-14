@@ -213,6 +213,7 @@ export default function UseWallet() {
     );
 
     const randomnessAddress = import.meta.env.VITE_RANDOMNESS_ADDRESS
+ 
 
     const randomnessContract = new ethers.Contract(
       randomnessAddress,

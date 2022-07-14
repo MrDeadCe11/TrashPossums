@@ -17,11 +17,12 @@ async function main() {
 
   const startMintDate = 1667203200; //8am gmt oct 31 2022
   const possumPrice = hre.ethers.utils.parseEther("50");
-  const ipfsURI = "";
-  const VRFAddressPolygon = "";
-  const LinkTokenPolygon = "";
-  const keyHashPolygon = "";
-  const CLSubscriptionId = 0;
+  const ipfsURI =
+    `https://ipfs.io/ipfs/${process.env.IPFSCID}`;
+  const VRFAddressPolygon = "0xae975071be8f8ee67addbc1a82488f1c24858067";
+  const LinkTokenPolygon = "0xb0897686c545045afc77cf20ec7a532e3120e0f1";
+  const keyHashPolygon = "0xd729dc84e21ae57ffb6be0053bf2b0668aa2aaf300a2a7b2ddf7dc0bb6e875a8";
+  const CLSubscriptionId = 147;
   const premintCount = 80;
   let trashPossums, randomness;
 
@@ -33,7 +34,7 @@ async function main() {
 
     //check if necessary info has been entered
 
-    if(VRFAddressPolygon.length !== 0 && LinkTokenPolygon.length !== 0 && keyHashPolygon.length !== 0 & CLSubscriptionId !== 0){
+    if(VRFAddressPolygon.length !== 0 && LinkTokenPolygon.length !== 0 && keyHashPolygon.length !== 0 & CLSubscriptionId !== 0 && ipfsURI){
       
         const Random = await ethers.getContractFactory("Randomness");
 

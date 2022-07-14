@@ -69,6 +69,8 @@ export default {
     
       let numberField = ref(0);
       let res = ref(false);
+      const contract = store.getters.getTrashpossums;
+      const signerAddress = store.getters.getAddress;
 
 
 
@@ -94,16 +96,14 @@ export default {
       })
 
       async function claimSomePossums(){
-        const contract = store.getters.getTrashpossums
-        const signerAddress = store.getters.getAddress
         await claimPossums(contract, signerAddress);  
       }
 
       let claimDate = computed(()=>{
-        const date = store.getters.getClaimDate
+        const date = store.getters.getClaimDate;
           if(date > 0){
             const fulldate = getDate(new Date(date));
-            return fulldate
+            return fulldate;
           } else {
             return "NEVER!";
           }
@@ -124,19 +124,17 @@ export default {
       }
       
       async function submitPurchase(e){
-         const trashPossumsContract = store.getters.getTrashpossums
-        const signer = store.getters.getAddress
         if(numberField.value>0){  
             e.preventDefault();
             toggleRes();
         try{          
-          console.log("number", numberField.value, "contract",trashPossumsContract,"signer", signer)
-            await reservePossums(numberField.value, trashPossumsContract, signer);
+          console.log("number", numberField.value, "contract",contract,"signer", signer)
+            await reservePossums(numberField.value, contract, signer);
             
         } catch(error){
             console.error(error)
         }
-            await reservedPossums(trashPossumsContract, signer); 
+            await reservedPossums(contract, signer); 
             toggleRes();     
       }
         else {
@@ -166,23 +164,30 @@ export default {
       }
 
       const claimedPossumIds = computed(()=>{
+      
       let ids = store.getters.getClaimedIds
       ids?ids.toString():null
       let uri = store.getters.getBaseURI
       let uriArray = [];
-        if(ids && uri.length>0){
-      //const ipfsHash = uri.slice()
+        if(ids && uri){
           ids.forEach((entry, index)=> {
             uriArray.push(uri +'/'+entry.toString()+'.json')
+           
           })
-
+        
         let imageURIArray = []
 
         uriArray.forEach((entry, index)=> {
-          axios.get(uriArray[index]).then(res => imageURIArray.push(res.data)).catch((error)=>console.log(error))})
+          try{
+          axios.get(entry).then(res => imageURIArray.push(res.data)).catch((error)=>console.log(error))
+          } catch (err) {
+            console.error("there was a problem retrieving image data", err)
+          }
+          });
         console.log(imageURIArray)
         return imageURIArray
-        } else {
+        
+          } else {
           return uriArray
         }
        })

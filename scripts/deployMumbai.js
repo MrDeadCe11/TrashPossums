@@ -15,7 +15,8 @@ async function main() {
     const startMintDate = 1642282339; //approx noon on feb 20th 2022
     const possumPrice = hre.ethers.utils.parseEther(".02");
     const testUri =
-      "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
+    `https://ipfs.io/ipfs/${process.env.IPFSCID}`; //"https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
+    console.log(testUri)
     const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
     const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
     const keyHashMumbai =
@@ -67,6 +68,9 @@ async function main() {
 function saveFrontendFiles(name, file) {
   const fs = require("fs");
   const contractsDir = __dirname + "/../trash-site/src/contracts/test";
+  const content = {
+    name: name,
+    address: file.address} ;
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
@@ -74,13 +78,13 @@ function saveFrontendFiles(name, file) {
 
   fs.writeFileSync(
     contractsDir + "/contract-address.json",
-    JSON.stringify({ name: file.address }, undefined, 2)
+    JSON.stringify(content, undefined, 2)
   );
 
-  const ContractArtifact = artifacts.readArtifactSync(name);
+  const ContractArtifact = artifacts.readArtifactSync(content.address);
 
   fs.writeFileSync(
-    contractsDir + "/Contract.json",
+    contractsDir + "/ContractABI.json",
     JSON.stringify(ContractArtifact, null, 2)
   );
 }

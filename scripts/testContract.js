@@ -8,11 +8,11 @@ async function main() {
   const alchmumbai = process.env.ALCHEMY_MUMBAI_RPC_URL
   const provider = new ethers.providers.JsonRpcProvider(alchmumbai)
   const testUri =
-    "https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
+    `https://ipfs.io/ipfs/${process.env.IPFSCID}`;
   const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
   console.log("owner accounts", deployer.address);
-  const randomnessAddress = process.env.NEW_RANDOMNESS;
-  const trashPossumsAddress = process.env.NEW_TRASH;
+  const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
+  const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
 
   const randomness = new ethers.Contract(
     randomnessAddress,
@@ -30,7 +30,9 @@ async function main() {
   //const tx = await randomness.setClaimableDate(1656798900);
   
   //const trash = await randomness.getTrash();
-  await trashPossums.setBaseTokenURI(testUri)
+  const tx = await trashPossums.setBaseTokenURI(testUri)
+  const promise = await tx.wait();
+  console.log("promise", promise);
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
 

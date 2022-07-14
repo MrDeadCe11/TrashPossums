@@ -82,6 +82,7 @@ async function getOffset(randomnessContract) {
   }
 }
 
+//get number of claimed possums from contract
 async function claimedPossums(trashPossumsContract, signerAddress) {
   try {
     const claimedPossums = await trashPossumsContract.balanceOf(signerAddress);
@@ -91,7 +92,7 @@ async function claimedPossums(trashPossumsContract, signerAddress) {
     console.error(err);
   }
 }
-
+//get id's of claimed possums
 async function getClaimedPossumsIds(trashPossumsContract, signerAddress) {
   try {
     const balanceOf = await trashPossumsContract.balanceOf(signerAddress);
@@ -118,6 +119,14 @@ async function getClaimDate(randomnessContract) {
     return claimDate;
   } catch (err) {
     console.error(err);
+  }
+}
+
+async function getPossumJSON(possumIDS){
+  try{
+
+  }catch (err){
+    console.error("error getting json data from ipfs",err)
   }
 }
 

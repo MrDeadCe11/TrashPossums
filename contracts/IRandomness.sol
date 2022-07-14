@@ -13,7 +13,7 @@ interface IRandomness {
 
     function getAvailablePossums() external view returns(uint256);
 
-    function executePremint(uint256) external;
+    function executePremint(uint256) external returns(bool);
 
     function getPossumToBeClaimed() external returns(uint256);
 

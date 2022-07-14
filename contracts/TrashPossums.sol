@@ -127,12 +127,13 @@ contract TrashPossums is
     function premintPossums() external onlyOwner {
         bool premintingComplete = IRandomness(randomness).getPremint();
         require(!premintingComplete, "You can only premint the Possums once");
-
+        require(IRandomness(randomness).executePremint(premintCount));
+        
         for (uint256 i; i < premintCount; i++) {
             mint(msg.sender, i);
         }
 
-        IRandomness(randomness).executePremint(premintCount);
+        
     }
 
     /**
