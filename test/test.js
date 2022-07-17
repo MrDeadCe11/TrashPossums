@@ -6,6 +6,7 @@ describe("Trash Possums", function () {
   let provider;
   let tokenId1,
     tokenId2,
+    tokenId3,
     reserveId1,
     idOffset;
   let trashPossums, randomness;
@@ -43,8 +44,8 @@ describe("Trash Possums", function () {
   ];
 
   const testUri =
-    "https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
-  const testUri2 = "https://ipfs.io/ipfs/0xc11fbD225611EcBCBede82Fbed15981D78949cd6"
+    "ipfs://Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu/";
+  const testUri2 = "ipfs://Qmefa7YCGNjFjvZkWcYPerLT9Fj2oi41MxLeaEDNBcrMYG/"
 
   before("Deploy the contracts", async function () {
     provider = ethers.provider;
@@ -239,8 +240,8 @@ describe("Trash Possums", function () {
       const possnum = await trashPossums.getReservedPossumsPerWallet(
         addr3.address
       );
+      
       const availNum = await trashPossums.getAvailablePossums();
-      const randavail = await randomness.getAvailablePossums();
 
       addr3tokens = await trashPossums.getReservedPossumIds(addr3.address);
       expect(possnum.toNumber()).to.equal(27);
@@ -309,10 +310,10 @@ describe("Trash Possums", function () {
       const tx = await trashPossums.connect(addr1).claimPossums();
       const promise = await tx.wait();
       const event = promise.events.find((e) => e.event === "Transfer");
+      const totalPoss = await trashPossums.totalPossums();
       tokenId1 = event.args.tokenId.toNumber();
-     
       expect(event.args.to).to.equal(addr1.address);
-      expect(tokenId1).to.equal(+reserveId1 + +idOffset);
+      expect(tokenId1).to.equal((+reserveId1 + +idOffset) > (totalPoss -1)? ((+reserveId1 + +idOffset) - (totalPoss - 1 ))+( premintCount -1) : +reserveId1 + +idOffset);
     });
 
     it("should NOT be able to claim the nft reserved by addr1", async function () {
@@ -357,6 +358,12 @@ describe("Trash Possums", function () {
       const uri = await trashPossums.contractURI();
       assert(testUri2 == uri);
     });
+
+    it("should return correct token URI with .json", async function () {
+      const tx = await trashPossums.tokenURI(1);
+      assert(tx === "ipfs://Qmefa7YCGNjFjvZkWcYPerLT9Fj2oi41MxLeaEDNBcrMYG/1.json"
+      )
+    })
 
     it("reserved Possums array for addr3 should have length of zero", async function () {
 

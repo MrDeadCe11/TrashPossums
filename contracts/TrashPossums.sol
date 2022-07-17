@@ -87,7 +87,8 @@ contract TrashPossums is
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return super.tokenURI(tokenId);
+        return string(
+    abi.encodePacked(super.tokenURI(tokenId),".json"));
     }
 
     function supportsInterface(bytes4 interfaceId)
@@ -253,7 +254,6 @@ contract TrashPossums is
             "all Possums have been minted"
         );
         _safeMint(_to, _tokenId);
-        _setTokenURI(_tokenId, baseURI);
 
         totalMintedPossums++;
 

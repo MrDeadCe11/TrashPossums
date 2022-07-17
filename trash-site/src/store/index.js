@@ -23,6 +23,7 @@ const state = {
   trashpossums: null,
   randomness: null,
   baseURI: "",
+  baseCID: import.meta.env.VITE_IPFSCID
 };
 
 const mutations = {
@@ -183,6 +184,9 @@ const getters = {
   getBaseURI(state) {
     return state.baseURI;
   },
+  getCID(state) {
+    return state.baseCID;
+  }
 };
 
 const actions = {

@@ -18,7 +18,7 @@ async function main() {
   const startMintDate = 1667203200; //8am gmt oct 31 2022
   const possumPrice = hre.ethers.utils.parseEther("50");
   const ipfsURI =
-    `https://ipfs.io/ipfs/${process.env.IPFSCID}`;
+    `ipfs:/ /${process.env.IPFSCID}/`;
   const VRFAddressPolygon = "0xae975071be8f8ee67addbc1a82488f1c24858067";
   const LinkTokenPolygon = "0xb0897686c545045afc77cf20ec7a532e3120e0f1";
   const keyHashPolygon = "0xd729dc84e21ae57ffb6be0053bf2b0668aa2aaf300a2a7b2ddf7dc0bb6e875a8";
@@ -104,16 +104,19 @@ function saveFrontendFiles(name, file) {
     fs.mkdirSync(contractsDir);
   }
 
+  const data = { address : file.address };
+
+
   fs.writeFileSync(
-    contractsDir + "/contract-address.json",
-    JSON.stringify({ name: file.address }, undefined, 2)
+    contractsDir + `/address-${name}.json`, JSON.stringify(data), undefined, 2
   );
+
 
   const ContractArtifact = artifacts.readArtifactSync(name);
 
   fs.writeFileSync(
-    contractsDir + "/Contract.json",
-    JSON.stringify(ContractArtifact, null, 2)
+    contractsDir + `/ABI-${name}.json`,
+    JSON.stringify({ContractArtifact}, null, 2)
   );
 }
 

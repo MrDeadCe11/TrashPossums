@@ -167,22 +167,20 @@ export default {
       
       let ids = store.getters.getClaimedIds
       ids?ids.toString():null
-      let uri = store.getters.getBaseURI
+      let cid = store.getters.getCID
       let uriArray = [];
-        if(ids && uri){
+        if(ids && cid){
           ids.forEach((entry, index)=> {
-            uriArray.push(uri +'/'+entry.toString()+'.json')
+            uriArray.push('https://gateway.pinata.cloud/ipfs/' + cid +'/'+ entry.toString()+'.json')
            
           })
-        
+        console.log(uriArray)
         let imageURIArray = []
 
         uriArray.forEach((entry, index)=> {
-          try{
-          axios.get(entry).then(res => imageURIArray.push(res.data)).catch((error)=>console.log(error))
-          } catch (err) {
-            console.error("there was a problem retrieving image data", err)
-          }
+    
+          axios.get(entry).then(res => imageURIArray.push(res.data.image)).catch((error)=>console.log("there was an error fetching image data",error))
+          
           });
         console.log(imageURIArray)
         return imageURIArray

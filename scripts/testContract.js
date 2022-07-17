@@ -8,7 +8,7 @@ async function main() {
   const alchmumbai = process.env.ALCHEMY_MUMBAI_RPC_URL
   const provider = new ethers.providers.JsonRpcProvider(alchmumbai)
   const testUri =
-    `https://ipfs.io/ipfs/${process.env.IPFSCID}`;
+    `ipfs://${process.env.IPFSCID}/`;
   const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
   console.log("owner accounts", deployer.address);
   const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
@@ -32,9 +32,10 @@ async function main() {
   //const trash = await randomness.getTrash();
   const tx = await trashPossums.setBaseTokenURI(testUri)
   const promise = await tx.wait();
-  console.log("promise", promise);
+  //console.log("promise", promise);
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
+  const tokenURI = await trashPossums.tokenURI(1);
 
   const balance = await trashPossums.balanceOf(deployer.address);
   const date = await randomness.getClaimableDate();
@@ -55,7 +56,8 @@ async function main() {
     "uri",
     uri,
     "is owner", isOwner,
-    "total minted", totalMintedPossums
+    "total minted", totalMintedPossums,
+    "token URI 1", tokenURI
   );
   console.log("Offset executed", offsetExectued);
 }

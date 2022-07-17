@@ -15,7 +15,7 @@ async function main() {
     const startMintDate = 1642282339; //approx noon on feb 20th 2022
     const possumPrice = hre.ethers.utils.parseEther(".02");
     const testUri =
-    `https://ipfs.io/ipfs/${process.env.IPFSCID}`; //"https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
+    `ipfs://${process.env.IPFSCID}/`; //"https://ipfs.io/ipfs/QmRjiC7G633t2jDGmBk9awN6PPSfYo7T7B2dLFoGUQEHGg";
     console.log(testUri)
     const VRFAddressMumbai = "0x7a1bac17ccc5b313516c5e16fb24f7659aa5ebed";
     const LinkTokenMumbai = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
@@ -24,6 +24,7 @@ async function main() {
     const CLSubscriptionId = 935;
     const fee = hre.ethers.utils.parseEther(".001");
     const premintCount = 80;
+    let randomness, trashPossums;
 
   const [deployer] = await hre.ethers.getSigners();
 
@@ -41,9 +42,11 @@ async function main() {
 
     console.log("Randomness deployed at", randomness.address);
 
+    
+
   const TrashPossums = await ethers.getContractFactory("TrashPossums");
 
-  const trashPossums = await TrashPossums.deploy(
+  trashPossums = await TrashPossums.deploy(
     possumPrice,
     testUri,
     randomness.address,
@@ -60,32 +63,35 @@ async function main() {
     console.log("mint date is set to:", setMint);
 
   await randomness.setTrash(trashPossums.address);
-
-  saveFrontendFiles("TrashPossums", trashPossums);
+  
   saveFrontendFiles("Randomness", randomness);
+  saveFrontendFiles("TrashPossums", trashPossums);
+ 
 }
-
+  
 function saveFrontendFiles(name, file) {
   const fs = require("fs");
   const contractsDir = __dirname + "/../trash-site/src/contracts/test";
-  const content = {
-    name: name,
-    address: file.address} ;
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
   }
+ 
+ 
+
+  const data = { address : file.address };
+
 
   fs.writeFileSync(
-    contractsDir + "/contract-address.json",
-    JSON.stringify(content, undefined, 2)
+    contractsDir + `/address-${name}.json`, JSON.stringify(data), undefined, 2
   );
 
-  const ContractArtifact = artifacts.readArtifactSync(content.address);
+
+  const ContractArtifact = artifacts.readArtifactSync(name);
 
   fs.writeFileSync(
-    contractsDir + "/ContractABI.json",
-    JSON.stringify(ContractArtifact, null, 2)
+    contractsDir + `/ABI-${name}.json`,
+    JSON.stringify({ContractArtifact}, null, 2)
   );
 }
 

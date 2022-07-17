@@ -37,8 +37,8 @@
       ]
     },
     "/home/someguy/Code/TrashPossums/contracts/TrashPossums.sol": {
-      "lastModificationDate": 1657561589479,
-      "contentHash": "ea6ce72607b1ee0bf464e07e9f1b6c3f",
+      "lastModificationDate": 1658036041509,
+      "contentHash": "cb5c1c2835b152f4e2e00b1ddd42f7c3",
       "sourceName": "contracts/TrashPossums.sol",
       "solcConfig": {
         "version": "0.8.10",
