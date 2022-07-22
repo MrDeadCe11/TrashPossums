@@ -5,14 +5,20 @@ const randomAbi = require("../artifacts/contracts/Randomness.sol/Randomness.json
 const trashAbi = require("../artifacts/contracts/TrashPossums.sol/TrashPossums.json");
 
 async function main() {
-  const alchmumbai = process.env.ALCHEMY_MUMBAI_RPC_URL
-  const provider = new ethers.providers.JsonRpcProvider(alchmumbai)
-  const testUri =
-    `ipfs://${process.env.IPFSCID}/`;
-  const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
-  console.log("owner accounts", deployer.address);
+
+  const startMintDate = 1667203200; //8am gmt oct 31 2022
+  const IPFSCID = `ipfs:/ /${process.env.IPFSCID}/`;
   const randomnessAddress = process.env.RANDOMNESS_ADDRESS;
   const trashPossumsAddress = process.env.TRASHPOSSUMS_ADDRESS;
+
+    const provider = new hre.ethers.providers.JsonRpcProvider(process.env.POLYGON_MAINNET_RPC_URL)
+
+    const deployer = new hre.ethers.Wallet(process.env.PRIVATE_KEY_DEPLOYER_WALLET, provider);
+ 
+
+  
+  console.log("owner accounts", deployer.address);
+
 
   const randomness = new ethers.Contract(
     randomnessAddress,
@@ -25,17 +31,37 @@ async function main() {
     trashAbi.abi,
     deployer
   );
+  const testUri =
+  `ipfs://${process.env.IPFSCID}/`;
 
+  // try{
+  //   await randomness.setClaimableDate(startMintDate, {gasPrice: 150000000000});
+  //   //check that date was set
+  //   const setMint = await randomness.getClaimableDate();
+
+  //   console.log("mint date is set to:", setMint);
+  //   } catch(err){
+  //     console.log(err)
+  //   }
+  //   try{
+  //   //set trash possums address in randomness for security checks
+  //   await randomness.setTrash(trashPossums.address, {gasPrice: 150000000000});
+  //   //check that address has been set
+  //   const setTrash = await randomness.getTrash();
+  //     console.log("trash set");
+  //   } catch (err){
+  //     console.log(err)
+  //   }
 
   //const tx = await randomness.setClaimableDate(1656798900);
   
   //const trash = await randomness.getTrash();
-  // const tx = await trashPossums.setBaseTokenURI(testUri)
-  // const promise = await tx.wait();
+ // const tx = await trashPossums.setBaseTokenURI(testUri)
+  //const promise = await tx.wait();
   //console.log("promise", promise);
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
-  const tokenURI = await trashPossums.tokenURI(1);
+  //const tokenURI = await trashPossums.tokenURI(1);
 
   const balance = await trashPossums.balanceOf(deployer.address);
   const date = await randomness.getClaimableDate();
@@ -56,8 +82,7 @@ async function main() {
     "uri",
     uri,
     "is owner", isOwner,
-    "total minted", totalMintedPossums,
-    "token URI 1", tokenURI
+    "total minted", totalMintedPossums
   );
   console.log("Offset executed", offsetExectued);
 }

@@ -41,8 +41,10 @@ module.exports = {
     polygon: {      
       url: POLYGON_MAINNET_RPC_URL,
       accounts: [PRIVATE_KEY],
-      gas: 15688778,
-      gasPrice: 8000000000,
+      blockGasLimit: 28870697,
+     // maxPriorityFeePerGas: 150000000000,
+      gasLimit: 28000000,
+      gasPrice: 15500000000,
     },     
     mumbai: {
       url: MUMBAI_RPC_URL,
