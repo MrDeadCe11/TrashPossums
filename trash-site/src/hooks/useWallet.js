@@ -127,8 +127,8 @@ export default function UseWallet() {
     });
   };
 
-  // targets mumbai chain, id 80001
-  const targetNetworkId = "0x13881";
+  // targets polygon chain,  137 or 0x89
+  const targetNetworkId = "0x89"
 
   // checks if current chain matches with the one we need
   // and returns true/false
