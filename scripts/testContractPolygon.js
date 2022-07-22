@@ -33,6 +33,7 @@ async function main() {
   );
   const testUri =
   `ipfs://${process.env.IPFSCID}/`;
+  const possumPrice = hre.ethers.utils.parseEther("20");
 
   // try{
   //   await randomness.setClaimableDate(startMintDate, {gasPrice: 150000000000});
@@ -54,7 +55,9 @@ async function main() {
   //   }
 
   //const tx = await randomness.setClaimableDate(1656798900);
-  
+
+  //await trashPossums.setPossumPrice(possumPrice, {gasPrice: 100000000000});
+  const possPrice = await trashPossums.possumPrice()
   //const trash = await randomness.getTrash();
  //const tx = await trashPossums.setBaseTokenURI(testUri, {gasPrice: 100000000000})
   //const promise = await tx.wait();
@@ -83,7 +86,8 @@ async function main() {
     uri,
     "is owner", isOwner,
     "total minted", totalMintedPossums,
-    "token URI", tokenURI
+    "token URI", tokenURI,
+    "possum price", possPrice
   );
   console.log("Offset executed", offsetExectued);
 }
