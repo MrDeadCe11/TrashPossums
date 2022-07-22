@@ -21,7 +21,7 @@ async function main() {
 
   const startMintDate = 1667203200; //8am gmt oct 31 2022
   const possumPrice = hre.ethers.utils.parseEther("50");
-  const ipfsURI = `ipfs:/ /${process.env.IPFSCID}/`;
+  const ipfsURI = `ipfs://${process.env.IPFSCID}/`;
   const VRFAddressPolygon = "0xae975071be8f8ee67addbc1a82488f1c24858067";
   const LinkTokenPolygon = "0xb0897686c545045afc77cf20ec7a532e3120e0f1";
   const keyHashPolygon =

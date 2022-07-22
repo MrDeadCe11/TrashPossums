@@ -1,5 +1,6 @@
 const { defaultAccounts } = require("ethereum-waffle");
 const hre = require("hardhat");
+const { getNameOfJSDocTypedef } = require("typescript");
 
 async function main() {
 
@@ -21,7 +22,16 @@ async function main() {
     randomnessAddress
   );
 
-  const premint = await trashPossums.premintPossums();
+  const deployerBal = await provider.getBalance(deployer.address);
+  console.log("deployer balance", ethers.utils.formatEther(deployerBal));
+
+  const gasEstimate =  await trashPossums.connect(deployer).estimateGas.premintPossums();
+  console.log("gas est",  gasEstimate)
+  const feeData = await provider.getFeeData();
+  const gasCost = feeData.gasPrice.mul(gasEstimate);
+  console.log("gas Cost estimate in matic", ethers.utils.formatEther(gasCost));
+
+  const premint = await trashPossums.connect(deployer).premintPossums({gasPrice: 100000000000, gasLimit: 20000000});
   //const randpremint = await randomness.executePremint(80);
   await premint.wait();
   //await randpremint.wait();

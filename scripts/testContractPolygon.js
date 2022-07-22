@@ -56,12 +56,12 @@ async function main() {
   //const tx = await randomness.setClaimableDate(1656798900);
   
   //const trash = await randomness.getTrash();
- // const tx = await trashPossums.setBaseTokenURI(testUri)
+ //const tx = await trashPossums.setBaseTokenURI(testUri, {gasPrice: 100000000000})
   //const promise = await tx.wait();
   //console.log("promise", promise);
   //const avail = await randomness.getAvailablePossums();
   const offset = await randomness.getOffset();
-  //const tokenURI = await trashPossums.tokenURI(1);
+  const tokenURI = await trashPossums.tokenURI(1);
 
   const balance = await trashPossums.balanceOf(deployer.address);
   const date = await randomness.getClaimableDate();
@@ -82,7 +82,8 @@ async function main() {
     "uri",
     uri,
     "is owner", isOwner,
-    "total minted", totalMintedPossums
+    "total minted", totalMintedPossums,
+    "token URI", tokenURI
   );
   console.log("Offset executed", offsetExectued);
 }
