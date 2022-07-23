@@ -204,7 +204,7 @@ export default function UseWallet() {
 
     const ethersSigner = ethersProvider.getSigner();
 
-    const trashAddress = import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
+    const trashAddress = "0x3C39044c3c17f34E01f7008bE4908123280Ea306"//import.meta.env.VITE_TRASHPOSSUMS_ADDRESS
     
     const trashPossumsContract = new ethers.Contract(
       trashAddress,
@@ -212,7 +212,7 @@ export default function UseWallet() {
       ethersSigner
     );
 
-    const randomnessAddress = import.meta.env.VITE_RANDOMNESS_ADDRESS
+    const randomnessAddress = "0xc580cE5162bD7482694166e1a8b0f6D896dC45D1"//import.meta.env.VITE_RANDOMNESS_ADDRESS
  
 
     const randomnessContract = new ethers.Contract(
@@ -244,7 +244,6 @@ export default function UseWallet() {
     assets,
     resetApp,
     getAccountAssets,
-    //
     web3Modal,
     // methods
     onConnect,
