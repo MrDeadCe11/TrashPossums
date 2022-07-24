@@ -44,9 +44,9 @@
       </div>
     </div>   
   </div>
-  <div v-show="claimedPossumIds.length > 0" class="grid grid-cols-4">
+  <!-- <div v-show="claimedPossumIds.length > 0" class="grid grid-cols-4">
   <Gallery :images="claimedPossumIds" :sliceStart="0" :sliceEnd="claimedPossumIds.length -1"/>  
-</div>
+</div> -->
 </template>
 
 
@@ -70,8 +70,7 @@ export default {
       let numberField = ref(0);
       let res = ref(false);
       const contract = store.getters.getTrashpossums;
-      const signerAddress = store.getters.getAddress;
-
+      const signer = store.getters.getSigner;
 
 
       const getDate = (date) => {
@@ -97,6 +96,8 @@ export default {
       })
 
       async function claimSomePossums(){
+         const contract = store.getters.getTrashpossums;
+         const signerAddress = store.getters.getAddress;
         await claimPossums(contract, signerAddress);  
       }
 
@@ -129,7 +130,10 @@ export default {
             e.preventDefault();
             toggleRes();
         try{          
-          console.log("number", numberField.value, "contract",contract,"signer", signer)
+       
+              const contract = store.getters.getTrashpossums;
+              const signer = store.getters.getSigner;
+            console.log("number", numberField.value, "contract",contract,"signer", signer)
             await reservePossums(numberField.value, contract, signer);
             
         } catch(error){
@@ -166,29 +170,29 @@ export default {
 
       const claimedPossumIds = computed(()=>{
       
-      let ids = store.getters.getClaimedIds
-      ids?ids.toString():null
-      let cid = store.getters.getCID
-      let uriArray = [];
-        if(ids && cid){
-          ids.forEach((entry, index)=> {
-            uriArray.push('https://gateway.pinata.cloud/ipfs/' + cid +'/'+ entry.toString()+'.json')
-           
-          })
-        console.log(uriArray)
-        let imageURIArray = []
+        let ids = store.getters.getClaimedIds
+        ids?ids.toString():null
+        let cid = store.getters.getCID
+        let uriArray = [];
+          if(ids && cid){
+            ids.forEach((entry, index)=> {
+              uriArray.push('https://gateway.pinata.cloud/ipfs/' + cid +'/'+ entry.toString()+'.json')
+            
+            })
+          console.log(uriArray)
+          let imageURIArray = []
 
-        uriArray.forEach((entry, index)=> {
-    
-          axios.get(entry).then(res => imageURIArray.push(res.data.image)).catch((error)=>console.log("there was an error fetching image data",error))
+          uriArray.forEach((entry, index)=> {
+      
+            axios.get(entry).then(res => imageURIArray.push(res.data.image)).catch((error)=>console.log("there was an error fetching image data",error))
+            
+            });
+          console.log(imageURIArray)
+          return imageURIArray
           
-          });
-        console.log(imageURIArray)
-        return imageURIArray
-        
-          } else {
-          return uriArray
-        }
+            } else {
+            return uriArray
+          }
        })
 
       async function fetchImage(url){
