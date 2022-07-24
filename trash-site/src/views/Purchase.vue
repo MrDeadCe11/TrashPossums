@@ -79,7 +79,6 @@ export default {
         const year = date.getFullYear();
         const twentyFourHour = date.getHours();
         const minute = date.getMinutes();
-        console.log("MINUTES", minute)
         const hour = Number(twentyFourHour) > 12 ? Number(twentyFourHour) - 12 : twentyFourHour 
         const fullDate = `${month.toString().padStart(2, "0")}/${day.toString().padStart(2, "0")}/${year.toString().padStart(2, "0")} at ${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")} ${Number(twentyFourHour) >12 ? "pm" : "am"} (UTC)` 
         return fullDate
@@ -133,7 +132,7 @@ export default {
        
               const contract = store.getters.getTrashpossums;
               const signer = store.getters.getSigner;
-            console.log("number", numberField.value, "contract",contract,"signer", signer)
+         
             await reservePossums(numberField.value, contract, signer);
             
         } catch(error){

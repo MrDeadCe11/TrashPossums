@@ -373,7 +373,7 @@ describe("Trash Possums", function () {
       expect(reserved.toNumber()).to.equal(0);
     });
 
-    it("should not be able to reserve more possumst to addr3 ", async function () {
+    it("should not be able to reserve more possums to addr3 ", async function () {
 
       const value = possumPrice.mul(2);
       await expect(
